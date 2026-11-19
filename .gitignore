@@ -1,0 +1,16 @@
+.tools/
+Build/Windows/
+Build/*.log
+Build/screens/
+UnityGame/[Ll]ibrary/
+UnityGame/[Tt]emp/
+UnityGame/[Oo]bj/
+UnityGame/[Ll]ogs/
+UnityGame/[Uu]ser[Ss]ettings/
+UnityGame/*.csproj
+UnityGame/*.sln
+UnityGame/*.slnx
+JavaEngine/target/
+JavaEngine/data/
+*.class
+__pycache__/
