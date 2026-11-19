@@ -37,7 +37,7 @@ namespace Apex.UI
             raw.raycastTarget = false;
             UIFactory.Label(transform, "GT3 RACING SIMULATOR", 20, UITheme.Metal, UITheme.Mono, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(100f, -70f - lrt.sizeDelta.y - 6f), 600f);
 
-            var list = UIFactory.VerticalList(transform, "Menu", new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(70f, 150f), new Vector2(640f, 520f), 6f);
+            var list = UIFactory.VerticalList(transform, "Menu", new Vector2(0, 1f), new Vector2(0, 1f), new Vector2(70f, -340f), new Vector2(640f, 520f), 6f);
             var q = UIFactory.MenuItem(list, "01", "QUICK RACE", "Five-car sprint against AI rivals with a standing start", () => QuickRace?.Invoke());
             UIFactory.MenuItem(list, "02", "TIME TRIAL", "Hot laps against the clock and your reference lap", () => TimeTrial?.Invoke());
             UIFactory.MenuItem(list, "03", "GARAGE", "Inspect and select your GT3 machine", () => Garage?.Invoke());
@@ -68,7 +68,9 @@ namespace Apex.UI
             {
                 case LinkState.Online:
                     _statusDot.color = UITheme.Green;
-                    _status.text = $"JAVA ENGINE ONLINE  ·  v{be.ServerVersion}  ·  {be.LatencyMs:0} ms  ·  AI + PERSISTENCE ACTIVE";
+                    string ver = string.IsNullOrEmpty(be.ServerVersion) ? "" : $"  ·  v{be.ServerVersion}";
+                    string lat = be.LatencyMs > 0f ? $"  ·  {be.LatencyMs:0} ms" : "";
+                    _status.text = $"JAVA ENGINE ONLINE{ver}{lat}  ·  AI + PERSISTENCE ACTIVE";
                     break;
                 case LinkState.Connecting:
                     _statusDot.color = UITheme.Yellow;
@@ -148,7 +150,8 @@ namespace Apex.UI
             foreach (var s in new[] { _diff, _opp, _laps })
             {
                 s.interactable = race;
-                var cg = s.GetComponent<CanvasGroup>() ?? s.gameObject.AddComponent<CanvasGroup>();
+                var cg = s.GetComponent<CanvasGroup>();
+                if (cg == null) cg = s.gameObject.AddComponent<CanvasGroup>();
                 cg.alpha = race ? 1f : 0.35f;
             }
         }

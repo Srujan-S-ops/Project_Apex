@@ -182,7 +182,9 @@ namespace Apex.Vehicle
                 Vector3 contact = grounded ? hit.point : wc.transform.position - wc.transform.up * (wc.radius + wc.suspensionDistance);
 
                 var em = _smoke[i].emission;
-                float smokeRate = grounded && !offRoad ? Mathf.Clamp01((slip - 0.45f) * 2f) * 60f * Mathf.Clamp01(_car.SpeedMs / 4f + fwd) : 0f;
+                bool burnout = !_car.InputLocked && _car.ThrottleInput > 0.6f && _car.Gear > 0 && i >= 2;
+                float moving = Mathf.Clamp01((_car.SpeedMs - 1.5f) / 3f);
+                float smokeRate = grounded && !offRoad && (moving > 0f || burnout) ? Mathf.Clamp01((slip - 0.45f) * 2f) * 60f * Mathf.Max(moving, burnout ? 1f : 0f) : 0f;
                 em.rateOverTime = smokeRate;
                 _smoke[i].transform.position = contact + Vector3.up * 0.25f;
 
@@ -190,7 +192,7 @@ namespace Apex.Vehicle
                 dem.rateOverTime = offRoad ? Mathf.Clamp01(_car.SpeedMs / 15f) * 45f : 0f;
                 _dust[i].transform.position = contact + Vector3.up * 0.2f;
 
-                bool skid = grounded && !offRoad && slip > 0.55f && _car.SpeedMs > 3f;
+                bool skid = grounded && !offRoad && slip > 0.55f && _car.SpeedMs > 4f;
                 _skids[i].emitting = skid;
                 _skids[i].transform.position = contact + hit.normal * 0.02f;
             }

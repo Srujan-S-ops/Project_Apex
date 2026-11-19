@@ -60,7 +60,8 @@ class PersonalityTest {
 
     @Test
     void easyDifficultyShrinksOvertakingWindow() {
-        DecisionContext c = ctx(1.0, Double.POSITIVE_INFINITY, 3, CornerType.MEDIUM, 400);
+        // Balanced base window 0.85 s: HARD -> 0.98 s (attacks at 0.9 s), EASY -> 0.60 s (does not)
+        DecisionContext c = ctx(0.9, Double.POSITIVE_INFINITY, 3, CornerType.MEDIUM, 400);
         assertEquals(TacticalMode.OVERTAKE, new BalancedPersonality(Difficulty.HARD).decide(withDifficulty(c, Difficulty.HARD)).mode());
         assertNotEquals(TacticalMode.OVERTAKE, new BalancedPersonality(Difficulty.EASY).decide(withDifficulty(c, Difficulty.EASY)).mode());
     }

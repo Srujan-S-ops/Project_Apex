@@ -8,6 +8,45 @@ using UnityEngine;
 
 namespace Apex.Core
 {
+    /// <summary>
+    /// Autotest safety net: records every error/exception to exceptions.log and terminates the run if
+    /// it exceeds its wall-clock budget, so an unattended test can never hang.
+    /// </summary>
+    public sealed class AutoTestWatchdog : MonoBehaviour
+    {
+        private float _limit;
+        private string _log;
+        public static int ErrorCount;
+
+        public void Begin(AutoTestOptions o)
+        {
+            _limit = 300f + o.Laps * 300f;
+            Directory.CreateDirectory(o.OutputDir);
+            _log = Path.Combine(o.OutputDir, "exceptions.log");
+            File.WriteAllText(_log, "");
+            Application.logMessageReceived += OnLog;
+        }
+
+        private void OnLog(string message, string stack, LogType type)
+        {
+            if (type != LogType.Exception && type != LogType.Error && type != LogType.Assert) return;
+            ErrorCount++;
+            try { File.AppendAllText(_log, $"[{Time.realtimeSinceStartup:0.0}s] {type}: {message}\n{stack}\n"); } catch { /* ignore */ }
+        }
+
+        private void Update()
+        {
+            if (Time.realtimeSinceStartup < _limit) return;
+            Debug.LogError("[AutoTest] watchdog: wall-clock limit reached, aborting");
+            enabled = false;
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.Exit(3);
+#else
+            Application.Quit(3);
+#endif
+        }
+    }
+
     /// <summary>Screenshot capture for automated test runs.</summary>
     public static class AutoTestCapture
     {
@@ -69,7 +108,7 @@ namespace Apex.Core
             float p99 = sorted.Count > 0 ? sorted[Mathf.Min(sorted.Count - 1, (int)(sorted.Count * 0.99f))] : 0f;
             sb.AppendLine("{");
             sb.AppendLine($"  \"mode\": \"{_race.Config.mode}\", \"laps\": {_race.Config.laps}, \"difficulty\": \"{_race.Config.difficulty}\",");
-            sb.AppendLine($"  \"failure\": \"{_failure ?? ""}\",");
+            sb.AppendLine($"  \"failure\": \"{_failure ?? ""}\", \"loggedErrors\": {AutoTestWatchdog.ErrorCount},");
             sb.AppendLine($"  \"raceTime\": {_race.RaceTime:0.000}, \"wallClock\": {Time.realtimeSinceStartup - _startRealtime:0.0},");
             sb.AppendLine($"  \"fpsAvg\": {(avg > 0 ? 1f / avg : 0):0.0}, \"fps1pctLow\": {(p99 > 0 ? 1f / p99 : 0):0.0}, \"frames\": {sorted.Count},");
             sb.AppendLine($"  \"backendOnlineShare\": {(_totalTime > 0 ? _onlineTime / _totalTime : 0):0.00}, \"backendReconnects\": {be.ReconnectCount}, \"msgIn\": {be.MessagesIn}, \"msgOut\": {be.MessagesOut}, \"aiLineSource\": \"{_race.AiSource}\",");
@@ -80,7 +119,7 @@ namespace Apex.Core
             {
                 var r = results[i];
                 var p = _race.Field[r.driverId];
-                sb.AppendLine($"    {{\"pos\": {r.position}, \"code\": \"{r.code}\", \"player\": {r.isPlayer.ToString().ToLower()}, \"personality\": \"{p.Personality}\", \"laps\": {r.laps}, \"total\": {r.totalTime:0.000}, \"best\": {r.bestLap:0.000}, \"finished\": {p.Finished.ToString().ToLower()}, \"recoveries\": {p.Recoveries}, \"trackLimits\": {p.TrackLimitWarnings}, \"topSpeedKmh\": {p.TopSpeed * 3.6f:0.0}, \"gridPos\": {p.StartPosition}}}{(i < results.Count - 1 ? "," : "")}");
+                sb.AppendLine($"    {{\"pos\": {r.position}, \"code\": \"{r.code}\", \"player\": {r.isPlayer.ToString().ToLower()}, \"personality\": \"{p.Personality}\", \"laps\": {r.laps}, \"total\": {r.totalTime:0.000}, \"best\": {r.bestLap:0.000}, \"finished\": {p.Finished.ToString().ToLower()}, \"recoveries\": {p.Recoveries}, \"trackLimits\": {p.TrackLimitWarnings}, \"topSpeedKmh\": {p.TopSpeed * 3.6f:0.0}, \"carHits\": {p.Car.CarContacts}, \"wallHits\": {p.Car.WallContacts}, \"gridPos\": {p.StartPosition}}}{(i < results.Count - 1 ? "," : "")}");
             }
             sb.AppendLine("  ],");
             sb.AppendLine("  \"events\": [");

@@ -213,6 +213,7 @@ namespace Apex.Race
                 {
                     p.LapValid = false;
                     p.TrackLimitWarnings++;
+                    Debug.Log($"[TrackLimits] {p.Code} line={p.DistFromLine:0} centre={proj.Distance:0} lateral={proj.Lateral:0.00} halfWidth={s.Width[proj.Index] * 0.5f:0.00} curvature={s.Curvature[proj.Index]:0.0000} speed={car.SpeedMs * 3.6f:0}");
                     if (p.IsPlayer) Message?.Invoke("TRACK LIMITS — LAP INVALIDATED", new Color(1f, 0.8f, 0.1f));
                 }
             }

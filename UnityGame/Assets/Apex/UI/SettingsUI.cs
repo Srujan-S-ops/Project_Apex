@@ -49,7 +49,7 @@ namespace Apex.UI
                 _tabLabels.Add(t);
                 _tabBars.Add(UIFactory.Image(t.transform, "Bar", UITheme.Solid, UITheme.Red, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0.5f, 0), Vector2.zero, new Vector2(0f, 3f)));
             }
-            UIFactory.Label(panel, "Q / E  or  LB / RB  to switch tabs", 16, UITheme.Steel, UITheme.Body, TextAnchor.UpperRight, new Vector2(1, 1), new Vector2(-60f, -180f), 400f);
+            UIFactory.Label(panel, "Q / E  or  LB / RB  to switch tabs   ·   ESC  to apply", 16, UITheme.Steel, UITheme.Body, TextAnchor.LowerLeft, new Vector2(0, 0), new Vector2(60f, 58f), 600f);
 
             for (int i = 0; i < Tabs.Length; i++)
             {
@@ -119,7 +119,7 @@ namespace Apex.UI
             {
                 _s.postProcessing = i == 1;
                 foreach (var v in FindObjectsByType<UnityEngine.Rendering.Volume>(FindObjectsSortMode.None)) v.enabled = _s.postProcessing;
-            }, 1060f, "Bloom, tone mapping, motion blur, depth of field");
+            }, 1060f, "Bloom, tone mapping, colour grading, depth of field");
         }
 
         private void BuildAudio(Transform p)

@@ -29,7 +29,8 @@ namespace Apex.Rendering
             if (m == null)
             {
                 Debug.LogError($"[MaterialLibrary] Missing template material '{name}'. Run Apex > Setup Project.");
-                var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
+                var shader = Shader.Find("Universal Render Pipeline/Lit");
+                if (shader == null) shader = Shader.Find("Standard");
                 m = new Material(shader);
             }
             Templates[name] = m;

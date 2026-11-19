@@ -1,0 +1,42 @@
+{
+  "mode": "QuickRace", "laps": 2, "difficulty": "Hard",
+  "failure": "", "loggedErrors": 0,
+  "raceTime": 206.456, "wallClock": 221.1,
+  "fpsAvg": 143.7, "fps1pctLow": 98.3, "frames": 29663,
+  "backendOnlineShare": 1.00, "backendReconnects": 0, "msgIn": 2373, "msgOut": 2008, "aiLineSource": "JAVA ENGINE",
+  "sectorEvents": 30, "lapEvents": 10, "collisions": 772, "overallBestLap": 87.141,
+  "results": [
+    {"pos": 1, "code": "VAR", "player": false, "personality": "Aggressive", "laps": 2, "total": 179.615, "best": 0.000, "finished": true, "recoveries": 0, "trackLimits": 2, "topSpeedKmh": 240.8, "carHits": 0, "wallHits": 145, "gridPos": 1},
+    {"pos": 2, "code": "MOR", "player": false, "personality": "Defensive", "laps": 2, "total": 181.928, "best": 87.421, "finished": true, "recoveries": 0, "trackLimits": 1, "topSpeedKmh": 243.3, "carHits": 0, "wallHits": 147, "gridPos": 2},
+    {"pos": 3, "code": "ASA", "player": false, "personality": "Balanced", "laps": 2, "total": 186.043, "best": 0.000, "finished": true, "recoveries": 0, "trackLimits": 2, "topSpeedKmh": 241.7, "carHits": 10, "wallHits": 142, "gridPos": 3},
+    {"pos": 4, "code": "LIN", "player": false, "personality": "Balanced", "laps": 2, "total": 194.069, "best": 87.141, "finished": true, "recoveries": 0, "trackLimits": 1, "topSpeedKmh": 243.1, "carHits": 18, "wallHits": 149, "gridPos": 4},
+    {"pos": 5, "code": "YOU", "player": true, "personality": "Balanced", "laps": 2, "total": 206.446, "best": 0.000, "finished": true, "recoveries": 0, "trackLimits": 2, "topSpeedKmh": 242.4, "carHits": 12, "wallHits": 149, "gridPos": 5}
+  ],
+  "events": [
+    "LIGHT 1",
+    "LIGHT 2",
+    "LIGHT 3",
+    "LIGHT 4",
+    "LIGHT 5",
+    "LIGHTS OUT",
+    "15.82s MSG TRACK LIMITS — LAP INVALIDATED",
+    "92.54s LAP VAR L1 92.537 valid=False s1=34.364 s2=26.755 s3=31.417",
+    "94.51s LAP MOR L1 94.507 valid=False s1=36.169 s2=26.830 s3=31.508",
+    "98.37s LAP ASA L1 98.372 valid=False s1=38.598 s2=28.321 s3=31.453",
+    "106.93s LAP LIN L1 106.928 valid=False s1=47.731 s2=27.804 s3=31.394",
+    "110.67s LAP YOU L1 110.664 valid=False s1=38.933 s2=39.772 s3=31.959",
+    "110.67s MSG FINAL LAP",
+    "135.96s MSG TRACK LIMITS — LAP INVALIDATED",
+    "179.62s LAP VAR L2 87.078 valid=False s1=28.951 s2=26.730 s3=31.397",
+    "179.62s FINISH VAR order=1 time=179.615",
+    "181.93s LAP MOR L2 87.421 valid=True s1=29.099 s2=26.830 s3=31.491",
+    "181.93s FINISH MOR order=2 time=181.928",
+    "186.05s LAP ASA L2 87.670 valid=False s1=29.299 s2=26.935 s3=31.436",
+    "186.05s FINISH ASA order=3 time=186.043",
+    "194.07s LAP LIN L2 87.141 valid=True s1=28.981 s2=26.761 s3=31.398",
+    "194.07s FINISH LIN order=4 time=194.069",
+    "206.46s LAP YOU L2 95.782 valid=False s1=35.890 s2=27.949 s3=31.943",
+    "206.46s MSG CHEQUERED FLAG — P5",
+    "206.46s FINISH YOU order=5 time=206.446"
+  ]
+}

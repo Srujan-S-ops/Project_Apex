@@ -43,6 +43,7 @@ namespace Apex.Core
             Physics.defaultSolverVelocityIterations = 4;
 
             AutoTest = AutoTestOptions.FromCommandLine();
+            if (AutoTest.Enabled) gameObject.AddComponent<AutoTestWatchdog>().Begin(AutoTest);
             Settings = GameSettings.Load();
             Records = new RecordsStore();
             AudioLib = new AudioLibrary();

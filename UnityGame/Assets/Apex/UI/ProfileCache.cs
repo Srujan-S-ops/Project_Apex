@@ -51,7 +51,7 @@ namespace Apex.UI
             float best = pb > 0 && (tt <= 0 || pb < tt) ? pb : tt;
             string lastLocal = rec.History.Count > 0 ? $"LAST  P{rec.History[0].playerPosition}/{rec.History[0].fieldSize}  {rec.History[0].mode.ToUpper()}" : "LAST  —";
             return $"RACES  <b>{rec.Races}</b>     WINS  <b>{rec.Wins}</b>     PODIUMS  <b>{rec.Podiums}</b>\n" +
-                   $"BEST LAP  <b>{UITheme.FormatTime(best)}</b>     LAPS  <b>{rec.TotalLaps}</b>\n{lastLocal}\n<color=#6B7079>SOURCE  LOCAL RECORDS (ENGINE OFFLINE)</color>";
+                   $"BEST LAP  <b>{UITheme.FormatTime(best)}</b>     LAPS  <b>{rec.TotalLaps}</b>\n{lastLocal}\n<color=#6B7079>SOURCE  LOCAL RECORDS{(GameServices.Instance.Backend.IsOnline ? " · SYNCING WITH ENGINE" : " (ENGINE OFFLINE)")}</color>";
         }
     }
 

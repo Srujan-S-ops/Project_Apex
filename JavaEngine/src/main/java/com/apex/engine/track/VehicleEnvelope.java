@@ -10,6 +10,6 @@ public record VehicleEnvelope(double mu, double massKg, double downforceCoef, do
     }
 
     public static VehicleEnvelope gt3() {
-        return new VehicleEnvelope(1.55, 1300, 0.5 * 1.225 * 3.1, 7.5, 13.5, 78);
+        return new VehicleEnvelope(1.35, 1300, 0.5 * 1.225 * 3.1, 7.5, 13.5, 78);
     }
 }

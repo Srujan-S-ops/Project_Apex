@@ -24,7 +24,7 @@ namespace Apex.Vehicle
                     frictionCombine = PhysicsMaterialCombine.Minimum, bounceCombine = PhysicsMaterialCombine.Average
                 };
             }
-            AddBox(root, new Vector3(0f, 0.5f, -0.05f), new Vector3(1.94f, 0.62f, 4.55f));
+            AddBox(root, new Vector3(0f, 0.57f, -0.05f), new Vector3(1.94f, 0.54f, 4.55f));
             AddBox(root, new Vector3(0f, 1.0f, -0.35f), new Vector3(1.3f, 0.4f, 1.6f));
             AddBox(root, new Vector3(0f, 1.2f, -2.25f), new Vector3(1.9f, 0.12f, 0.35f));   // wing
 

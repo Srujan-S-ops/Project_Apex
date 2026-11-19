@@ -30,7 +30,7 @@ namespace Apex.UI
             UIFactory.Image(transform, "Side", UITheme.GradientH, new Color(0f, 0f, 0f, 0.95f), new Vector2(0, 0), new Vector2(0.45f, 1), new Vector2(0, 0.5f), Vector2.zero, Vector2.zero)
                 .rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             UIFactory.Heading(transform, "SESSION · PAUSED", "PAUSED", new Vector2(0, 1), new Vector2(96f, -110f));
-            var list = UIFactory.VerticalList(transform, "Menu", new Vector2(0, 0.5f), new Vector2(0, 0.5f), new Vector2(70f, 120f), new Vector2(640f, 520f), 6f);
+            var list = UIFactory.VerticalList(transform, "Menu", new Vector2(0, 1f), new Vector2(0, 1f), new Vector2(70f, -290f), new Vector2(640f, 520f), 6f);
             var first = UIFactory.MenuItem(list, "01", "RESUME", "Back to the action", () => Resume?.Invoke());
             UIFactory.MenuItem(list, "02", "RESTART", "Restart this session from the start", () => Restart?.Invoke());
             if (_race.Config.mode == GameMode.TimeTrial)

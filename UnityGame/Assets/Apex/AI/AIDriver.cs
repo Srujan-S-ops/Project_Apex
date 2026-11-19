@@ -78,6 +78,9 @@ namespace Apex.AI
             float follow = float.MaxValue;
             float avoidTarget = 0f;
             float myLine = _model.OffsetAt(d);
+            float curvAhead = spline.Curvature[spline.IndexAt(d + 25f + speed * 0.5f)];
+            bool cornerAhead = Mathf.Abs(curvAhead) > 1f / 150f;
+            int insideSide = curvAhead > 0f ? 1 : -1;
             float baseLateral = Mathf.Lerp(myLine, cmd.LateralTarget, _tacticalBlend * 0.8f);
             foreach (var o in _field)
             {
@@ -87,7 +90,7 @@ namespace Apex.AI
                 if (along > -6f && along < 5.5f && Mathf.Abs(dLat) < 2.5f)
                 {
                     // alongside: keep a car's width
-                    avoidTarget += -Mathf.Sign(dLat == 0 ? 1f : dLat) * (2.6f - Mathf.Abs(dLat)) * 1.2f;
+                    avoidTarget += -Mathf.Sign(dLat == 0 ? 1f : dLat) * (2.6f - Mathf.Abs(dLat)) * (cornerAhead ? 0.7f : 1.2f);
                 }
                 else if (along >= 5.5f && along < 45f + speed * 0.4f)
                 {
@@ -109,6 +112,8 @@ namespace Apex.AI
                         else if (roomLeft > 0f) side = -1;
 
                         bool attempt = side != 0 && (Profile.Eagerness > 0.5f || cmd.Mode == TacticalMode.Overtake || closing > 4f);
+                        // racecraft: never start a pass around the outside of a corner
+                        if (cornerAhead && side != insideSide) attempt = false;
                         if (attempt)
                             avoidTarget = (o.Lateral + side * 3.0f) - baseLateral;
                         else
@@ -123,7 +128,7 @@ namespace Apex.AI
             // ---------- path following (pure pursuit)
             float look = Mathf.Clamp(7f + speed * 0.42f, 9f, 40f);
             float lateralAhead = Mathf.Lerp(_model.OffsetAt(d + look), cmd.LateralTarget, _tacticalBlend * 0.8f) + _avoidOffset;
-            float limit = spline.Width[spline.IndexAt(d + look)] * 0.5f - 1.15f;
+            float limit = spline.Width[spline.IndexAt(d + look)] * 0.5f - 1.6f;
             lateralAhead = Mathf.Clamp(lateralAhead, -limit, limit);
             Vector3 target = spline.PointAt(d + look, lateralAhead);
             Vector3 local = car.transform.InverseTransformPoint(target);
@@ -135,6 +140,10 @@ namespace Apex.AI
             steer += Mathf.Clamp(car.SlipAngleDeg / maxAngle * 0.6f, -0.5f, 0.5f);
             _noiseT += dt;
             steer += (Mathf.PerlinNoise(_noiseT * 0.7f, _seed) - 0.5f) * Profile.SteerNoise * 2f;
+            // track-edge awareness: drifting toward the outside edge → steer back toward the track
+            float edgeExcess = Mathf.Abs(_self.Lateral) - (halfWidth - 0.9f);
+            bool drifting = edgeExcess > 0f && Mathf.Sign(_self.Lateral) != Mathf.Sign(spline.Curvature[idx] == 0f ? -_self.Lateral : spline.Curvature[idx]);
+            if (edgeExcess > 0f) steer += -Mathf.Sign(_self.Lateral) * Mathf.Clamp01(edgeExcess / 1.5f) * 0.35f;
             steer = Mathf.Clamp(steer, -1f, 1f);
             steer = Mathf.Lerp(_prevSteer, steer, Mathf.Clamp01(dt * 18f));
             _prevSteer = steer;
@@ -148,9 +157,11 @@ namespace Apex.AI
             float tgt = limitSpeed * pace * (inCorner ? Profile.CornerCommitment : 1f);
             // off the racing line → lower grip margin
             float offLine = Mathf.Abs(lateralAhead - _model.OffsetAt(d + look));
-            tgt *= Mathf.Lerp(1f, 0.93f, Mathf.Clamp01(offLine / 4f) * (inCorner ? 1f : 0.2f));
+            bool cornerNear = inCorner || cornerAhead;
+            tgt *= Mathf.Lerp(1f, 0.86f, Mathf.Clamp01(offLine / 3f) * (cornerNear ? 1f : 0.2f));
             tgt = Mathf.Min(tgt, follow);
             if (_self.OffTrack) tgt = Mathf.Min(tgt, 22f);
+            if (drifting) tgt *= Mathf.Lerp(1f, 0.85f, Mathf.Clamp01(edgeExcess / 1.2f));
             TargetSpeed = tgt;
 
             float err = tgt - speed;

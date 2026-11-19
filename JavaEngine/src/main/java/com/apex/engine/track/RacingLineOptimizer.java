@@ -16,7 +16,7 @@ public final class RacingLineOptimizer {
     }
 
     public RacingLineOptimizer() {
-        this(1.4, 400, 3);
+        this(1.9, 400, 3);
     }
 
     public double[] optimise(TrackModel t) {

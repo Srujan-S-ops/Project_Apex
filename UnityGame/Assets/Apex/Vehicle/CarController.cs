@@ -52,6 +52,8 @@ namespace Apex.Vehicle
 
         public event Action<int, int> GearChanged;            // (from, to)
         public event Action<float, Vector3> Collided;         // (impact speed, point)
+        public int CarContacts { get; private set; }          // impacts > 4 m/s with another car
+        public int WallContacts { get; private set; }         // impacts > 4 m/s with scenery
         public event Action Backfire;
 
         private CarInputState _input;
@@ -471,6 +473,11 @@ namespace Apex.Vehicle
         private void OnCollisionEnter(Collision c)
         {
             float impact = c.relativeVelocity.magnitude;
+            if (impact > 4f && c.contactCount > 0)
+            {
+                if (c.rigidbody != null) CarContacts++;
+                else if (Mathf.Abs(c.GetContact(0).normal.y) < 0.5f) WallContacts++;
+            }
             if (impact > 1.5f && c.contactCount > 0) Collided?.Invoke(impact, c.GetContact(0).point);
         }
 

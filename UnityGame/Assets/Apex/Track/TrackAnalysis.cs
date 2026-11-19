@@ -15,7 +15,7 @@ namespace Apex.Track
 
         public static VehicleEnvelope Gt3 => new VehicleEnvelope
         {
-            Mu = 1.55f, MassKg = 1300f, DownforceCoef = 0.5f * 1.225f * 3.1f, MaxAccel = 7.5f, MaxBrake = 13.5f, TopSpeed = 78f
+            Mu = 1.35f, MassKg = 1300f, DownforceCoef = 0.5f * 1.225f * 3.1f, MaxAccel = 7.5f, MaxBrake = 13.5f, TopSpeed = 78f
         };
     }
 
@@ -43,7 +43,7 @@ namespace Apex.Track
         public static TrackAnalysis Compute(TrackSpline s, VehicleEnvelope env)
         {
             var a = new TrackAnalysis();
-            a.LineOffset = ComputeRacingLine(s, 1.4f, 400);
+            a.LineOffset = ComputeRacingLine(s, 1.9f, 400);
             a.LineCurvature = ComputeLineCurvature(s, a.LineOffset);
             a.Speed = ComputeSpeedProfile(s.Length / s.Count, a.LineCurvature, env);
             a.ExtractCorners(s);
@@ -165,7 +165,7 @@ namespace Apex.Track
             }
             for (int i = 0; i < n; i++)
             {
-                if (Speed[(i + 1) % n] < Speed[i] - 0.05f && Speed[(i - 1 + n) % n] >= Speed[i] - 0.05f && Speed[i] > Speed[(i + 30) % n] + 8f)
+                if (Speed[(i + 1) % n] < Speed[i] - 0.05f && Speed[(i - 1 + n) % n] <= Speed[i] + 0.05f && Speed[i] > Speed[(i + 30) % n] + 8f)
                     BrakingZones.Add(i);
             }
         }

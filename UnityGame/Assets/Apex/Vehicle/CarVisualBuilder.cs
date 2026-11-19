@@ -67,8 +67,8 @@ namespace Apex.Vehicle
                 vCoords.Add(t);
             }
             body.AddLoft(rings, true, 1f, vCoords);
-            body.AddCap(rings[rings.Count - 1], Vector3.forward, false);
-            body.AddCap(rings[0], Vector3.back, true);
+            body.AddCap(rings[rings.Count - 1], Vector3.forward, false, new Vector2(0.22f, 0.98f));
+            body.AddCap(rings[0], Vector3.back, true, new Vector2(0.22f, 0.05f));
             body.Build("Body", root, paint);
 
             // ---------- greenhouse (glass) + roof

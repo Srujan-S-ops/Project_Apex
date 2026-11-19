@@ -191,14 +191,16 @@ namespace Apex.Rendering
         }
 
         /// <summary>Triangle-fan cap over a ring (ring assumed roughly planar & convex-ish).</summary>
-        public void AddCap(Vector3[] ring, Vector3 normal, bool reverse)
+        public void AddCap(Vector3[] ring, Vector3 normal, bool reverse) => AddCap(ring, normal, reverse, new Vector2(0.5f, 0.5f));
+
+        public void AddCap(Vector3[] ring, Vector3 normal, bool reverse, Vector2 uv)
         {
             Vector3 center = Vector3.zero;
             foreach (var p in ring) center += p;
             center /= ring.Length;
-            int c = AddVertex(center, normal, new Vector2(0.5f, 0.5f));
+            int c = AddVertex(center, normal, uv);
             int start = Vertices.Count;
-            foreach (var p in ring) AddVertex(p, normal, new Vector2(0.5f, 0.5f));
+            foreach (var p in ring) AddVertex(p, normal, uv);
             for (int i = 0; i < ring.Length; i++)
             {
                 int a = start + i, b = start + (i + 1) % ring.Length;

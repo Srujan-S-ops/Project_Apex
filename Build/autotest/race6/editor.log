@@ -1,0 +1,818 @@
+VBCSCompilerServerWatchdog: watching VBCSCompiler (PID 23648)
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.3/respin/6000.3.28f1-21f78c3e21d1' branch; Version is '6000.3.28f1 (8f082d2fe476) revision 9373741'; Using compiler version '194234433'; Build Type 'Release'
+[Licensing::IpcConnector] Channel LicenseClient-salma doesn't exist
+OS: 'Windows 11  (10.0.26300) CoreSingleLanguage' Language: 'en' Physical Memory: 15654 MB
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-11-19T22:31:08Z
+[Licensing::Module] Successfully launched the LicensingClient (PId: 28528)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-salma" at "2026-11-19T22:31:08.1996174Z"
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Unity.exe
+-projectPath
+E:\PROJECT_APEX_2\UnityGame
+-executeMethod
+Apex.EditorTools.ApexAutoPlay.Run
+-apexAutotest
+-apexScreens
+-apexOut
+E:\PROJECT_APEX_2\Build\autotest\race6
+-apexLaps
+3
+-apexDifficulty
+Hard
+-logFile
+E:\PROJECT_APEX_2\Build\autotest\race6\editor.log
+Successfully changed project path to: E:\PROJECT_APEX_2\UnityGame
+E:/PROJECT_APEX_2/UnityGame
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-remapper-allocator-initial-capacity=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+Player connection [4244]  Target information:
+
+Player connection [4244]  * "[IP] 192.168.1.5 [Port] 55504 [Flags] 2 [Guid] 2238535542 [EditorId] 2238535542 [Version] 1048832 [Id] WindowsEditor(7,Airox) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [4244] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [4244] Host joined alternative multi-casting on [225.0.0.222:34997]...
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 28528, path: "C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.19.0+4cc3dda
+  Session Id:              c9e7d4242fda4ab4b4787c6b045284db
+  Correlation Id:          3afcf266a82454393bc5e933566045ab
+  External correlation Id: 4866233668609531020
+  Machine Id:              ZUPLM2X4he7/Klz5EIf3QUf3OXQ=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-salma" (connect: 0.06s, validation: 0.02s, handshake: 0.07s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-salma-notifications" at "2026-11-19T22:31:08.2918868Z"
+[Licensing::Module] Connected to LicensingClient (PId: 28528, launch time: 0.01, total connection time: 0.16s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 13470001587802-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.17s
+[Package Manager] Connected to IPC stream "Upm-30436" after 0.2 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Refreshing native plugins compatible for Editor in 0.04 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 6000.3.28f1 (8f082d2fe476)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/PROJECT_APEX_2/UnityGame/Assets
+[D3D12 Device Filter] Vendor Name: NVIDIA
+[D3D12 Device Filter] Device Name: NVIDIA GeForce RTX 4050 Laptop GPU
+[D3D12 Device Filter] Driver Version: 32.0.16.2124
+[D3D12 Device Filter] Feature Level: 12.2
+[D3D12 Device Filter] Graphics Memory: 5920 MB
+[D3D12 Device Filter] Processor Count: 16
+[D3D12 Device Filter] Device Type: Discrete
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        NVIDIA GeForce RTX 4050 Laptop GPU (ID=0x28a1)
+    Vendor:          NVIDIA
+    VRAM:            5920 MB
+    App VRAM Budget: 5152 MB
+    Driver:          32.0.16.2124
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56436
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.3.28f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003091 seconds.
+- Loaded All Assemblies, in  0.430 seconds
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.367 seconds
+Domain Reload Profiling: 793ms
+	BeginReloadAssembly (152ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (13ms)
+	RebuildCommonClasses (42ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (51ms)
+	LoadAllAssembliesAndSetupDomain (169ms)
+		LoadAssemblies (134ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (165ms)
+			TypeCache.Refresh (163ms)
+				TypeCache.ScanAssembly (147ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (368ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (336ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (46ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (75ms)
+			ProcessInitializeOnLoadAttributes (123ms)
+			ProcessInitializeOnLoadMethodAttributes (89ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 51 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.ide.visualstudio@2.0.26 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.ide.visualstudio@a99d56dec63f)
+    com.unity.inputsystem@1.20.1 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.inputsystem@2436e68c60c4)
+    com.unity.searcher@4.9.5 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.searcher@a463122f2c00)
+    com.unity.burst@1.8.31 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.burst@bfa84123c21a)
+    com.unity.mathematics@1.3.3 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.mathematics@19a9377c4ffa)
+    com.unity.collections@2.7.1 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.collections@88d5bf65ce66)
+    com.unity.nuget.mono-cecil@1.11.6 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.test-framework.performance@3.5.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.test-framework.performance@8b56083ec0f0)
+  Built-in packages:
+    com.unity.render-pipelines.universal@17.3.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.render-pipelines.universal@029be7ffa662)
+    com.unity.test-framework@1.6.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.test-framework@bd7f943e9647)
+    com.unity.ugui@2.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.ugui@44a561608371)
+    com.unity.modules.accessibility@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.ext.nunit@2.0.5 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.ext.nunit@d8c07649098d)
+    com.unity.render-pipelines.core@17.3.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.render-pipelines.core@3424017a4ec3)
+    com.unity.shadergraph@17.3.0 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.shadergraph@d526115bb944)
+    com.unity.render-pipelines.universal-config@17.0.3 (location: E:\PROJECT_APEX_2\UnityGame\Library\PackageCache\com.unity.render-pipelines.universal-config@8dc1aab4af1d)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.02 seconds
+Starting: C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/PROJECT_APEX_2/UnityGame
+ExitCode: 4 Duration: 0s214ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[509/636    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.18 seconds), 1 items updated, 508 evaluated
+Starting: C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Data\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: E:/PROJECT_APEX_2/UnityGame
+ExitCode: 0 Duration: 0s467ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.3.28f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: E:/PROJECT_APEX_2/UnityGame
+ExitCode: 0 Duration: 0s276ms
+Finished compiling graph: 639 nodes, 10430 flattened edges (8812 ToBuild, 94 ToUse), maximum node priority 667
+[509/636    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.25 seconds), 1 items updated, 636 evaluated
+AssetDatabase: script compilation time: 1.402875s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.712 seconds
+Refreshing native plugins compatible for Editor in 0.24 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.519 seconds
+Domain Reload Profiling: 3225ms
+	BeginReloadAssembly (338ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (33ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (164ms)
+	RebuildCommonClasses (39ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (288ms)
+		LoadAssemblies (272ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (125ms)
+			TypeCache.Refresh (85ms)
+				TypeCache.ScanAssembly (74ms)
+			BuildScriptInfoCaches (31ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (2520ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2223ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (28ms)
+			SetLoadedEditorAssemblies (7ms)
+			BeforeProcessingInitializeOnLoad (158ms)
+			ProcessInitializeOnLoadAttributes (1946ms)
+			ProcessInitializeOnLoadMethodAttributes (70ms)
+			AfterProcessingInitializeOnLoad (13ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (27ms)
+Asset Pipeline Refresh (id=8d61e7721cca1c2458bfd902eb5cc7c6): Total: 5.070 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=2819 ms
+		Asset DB Callback time: managed=73 ms, native=25 ms
+		Scripting: domain reloads=1, domain reload time=712 ms, compile time=1404 ms, other=34 ms
+		Project Asset Count: scripts=862, non-scripts=1709
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 28.140ms
+	ApplyChangesToAssetFolders: 0.622ms
+	Scan: 68.721ms
+	OnSourceAssetsModified: 0.003ms
+	CategorizeAssetsWithTransientArtifact: 18.545ms
+	ProcessAssetsWithTransientArtifactChanges: 52.800ms
+	CategorizeAssets: 32.461ms
+	ImportOutOfDateAssets: 2524.051ms (1118.550ms without children)
+		CompileScripts: 1404.198ms
+		ReloadNativeAssets: 0.031ms
+		UnloadImportedAssets: 0.655ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.281ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 0.335ms
+	PostProcessAllAssets: 73.521ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.003ms
+	UnloadStreamsBegin: 2.193ms
+	PersistCurrentRevisions: 0.059ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 2.037ms
+	Untracked: 2268.799ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Scanning for USB devices : 0.580ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-PROJECT APEX
+Unloading 18 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/Scenes/MainMenu.unity'
+	Deserialize:            0.826 ms
+	Integration:            202.218 ms
+	Integration of assets:  0.006 ms
+	Thread Wait Time:       0.025 ms
+	Total Operation Time:   203.075 ms
+Unloading 3706 unused Assets / (4.2 MB). Loaded Objects now: 4570.
+Memory consumption went from 188.6 MB to 184.4 MB.
+Total: 7.337100 ms (FindLiveObjects: 0.432300 ms CreateObjectMapping: 0.150900 ms MarkObjects: 5.382400 ms  DeleteObjects: 1.370600 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+[LAYOUT] About to save layout E:\PROJECT_APEX_2\UnityGame\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/salma/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+Opening scene 'Assets/Scenes/MainMenu.unity'
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/Scenes/MainMenu.unity'
+	Deserialize:            0.556 ms
+	Integration:            271.348 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       1073.157 ms
+	Total Operation Time:   1345.063 ms
+Unloading 2 unused Assets / (17.2 KB). Loaded Objects now: 5583.
+Memory consumption went from 315.6 MB to 315.5 MB.
+Total: 13.909000 ms (FindLiveObjects: 0.350500 ms CreateObjectMapping: 0.095600 ms MarkObjects: 13.430600 ms  DeleteObjects: 0.030900 ms)
+
+<RI> Initializing input.
+Using Windows.Gaming.Input
+[Project] Loading completed in 13.041 seconds
+	Project init time: 				10.173 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.242 seconds
+		Asset Database init time: 		1.287 seconds
+		Global illumination init time: 	0.002 seconds
+		Assemblies load time: 			0.825 seconds
+		Unity extensions init time: 	0.022 seconds
+		Asset Database refresh time: 	5.070 seconds
+	Scene opening time: 			2.695 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1795127481149,"processId":30436,"projectLoad":13.0407776,"projectInit":10.1732375,"templateInit":0.0,"packageManagerInit":0.242254,"assetDatabaseInit":1.2867538,"globalIlluminationInit":0.0024005,"assembliesLoad":0.8252707,"unityExtensionsInit":0.0220773,"assetDatabaseRefresh":5.0700732,"sceneOpening":2.6948044}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1795127481149,"processId":30436,"editorVersion":"6000.3.28f1 (8f082d2fe476)","branch":"6000.3/respin/6000.3.28f1-21f78c3e21d1","buildType":"Release","platform":"Windows"}
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.728 seconds
+Refreshing native plugins compatible for Editor in 0.36 ms, found 0 plugins.
+Native extension for WindowsStandalone target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.335 seconds
+Domain Reload Profiling: 2059ms
+	BeginReloadAssembly (500ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (75ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (266ms)
+	RebuildCommonClasses (43ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (140ms)
+		LoadAssemblies (149ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (107ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			BuildScriptInfoCaches (74ms)
+			ResolveRequiredComponents (24ms)
+	FinalizeReload (1335ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (485ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (19ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (123ms)
+			ProcessInitializeOnLoadAttributes (268ms)
+			ProcessInitializeOnLoadMethodAttributes (60ms)
+			AfterProcessingInitializeOnLoad (12ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (529ms)
+Asset Pipeline Refresh (id=d6a77d15857b8f547af2c2c8f57041c3): Total: 2.180 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1413 ms
+		Asset DB Callback time: managed=20 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=743 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=862, non-scripts=1709
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 2.550ms
+	ApplyChangesToAssetFolders: 0.372ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.002ms
+	CategorizeAssetsWithTransientArtifact: 0.003ms
+	ProcessAssetsWithTransientArtifactChanges: 2.467ms
+	CategorizeAssets: 40.145ms
+	ImportOutOfDateAssets: 1340.547ms (1335.242ms without children)
+		CompileScripts: 1.288ms
+		CollectScriptTypesHashes: 1.553ms
+		ReloadNativeAssets: 0.742ms
+		UnloadImportedAssets: 1.159ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.312ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.251ms
+	PostProcessAllAssets: 20.681ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.089ms
+	UnloadStreamsBegin: 1.431ms
+	PersistCurrentRevisions: 0.072ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 3.621ms
+	Untracked: 771.427ms
+
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            0.386 ms
+	Integration:            394.665 ms
+	Integration of assets:  0.002 ms
+	Thread Wait Time:       0.014 ms
+	Total Operation Time:   395.068 ms
+Asset Pipeline Refresh (id=fd3a084af4a936a4aae32d695a5d2d1e): Total: 0.006 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start Indexing on Editor startup
+[Indexing] Starting Initial Indexing for Assets
+[Launcher] started backend: C:\Program Files\Eclipse Adoptium\jdk-21.0.13.9-hotspot\bin\java.exe -jar E:\PROJECT_APEX_2\JavaEngine\target\apex-engine.jar
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Net.BackendLauncher/<Run>d__6:MoveNext () (at Assets/Apex/Net/BackendLauncher.cs:47)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Net/BackendLauncher.cs Line: 47)
+
+Asset Pipeline Refresh (id=2da0d29d519d220438317efb3ef3f475): Total: 0.004 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Created GICache directory at C:/Users/salma/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.023s, timestamps: [16.278 - 16.301]
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\01_main_menu.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.UI.MenuDirector/<Start>d__10:MoveNext () (at Assets/Apex/UI/MenuDirector.cs:54)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\02_garage.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.UI.MenuDirector/<Start>d__10:MoveNext () (at Assets/Apex/UI/MenuDirector.cs:57)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\03_race_setup.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.UI.MenuDirector/<Start>d__10:MoveNext () (at Assets/Apex/UI/MenuDirector.cs:60)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.025700 ms
+Loaded scene 'Assets/Scenes/Race.unity'
+	Deserialize:            0.667 ms
+	Integration:            189.517 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       12.231 ms
+	Total Operation Time:   202.418 ms
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+Unloading 141 unused Assets / (135.5 KB). Loaded Objects now: 5793.
+Memory consumption went from 331.1 MB to 330.9 MB.
+Total: 12.819200 ms (FindLiveObjects: 0.358400 ms CreateObjectMapping: 0.092000 ms MarkObjects: 11.789400 ms  DeleteObjects: 0.577900 ms)
+
+[Environment] 478 buildings placed
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Track.EnvironmentBuilder:BuildCity () (at Assets/Apex/Track/EnvironmentBuilder.cs:627)
+Apex.Track.EnvironmentBuilder/<Build>d__27:MoveNext () (at Assets/Apex/Track/EnvironmentBuilder.cs:76)
+Apex.Race.RaceDirector/<Start>d__16:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:63)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Track/EnvironmentBuilder.cs Line: 627)
+
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+[AI] Using backend racing line and speed profile.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.AI.AITrackModel:TryApplyBackend (single[],single[]) (at Assets/Apex/AI/AITrackModel.cs:34)
+Apex.Race.RaceManager:OnBackendMessage (string,string) (at Assets/Apex/Race/RaceManager.cs:628)
+Apex.Net.BackendClient:Update () (at Assets/Apex/Net/BackendClient.cs:107)
+
+(Filename: Assets/Apex/AI/AITrackModel.cs Line: 34)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\04_grid.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<Start>d__16:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:98)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\05_start_lights.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<Start>d__16:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:101)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+TrimDiskCacheJob: Current cache size 0mb
+[TrackLimits] LIN line=509 centre=749 lateral=-8.85 halfWidth=6.90 curvature=0.0139 speed=97
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] ASA line=515 centre=755 lateral=-8.75 halfWidth=6.83 curvature=0.0123 speed=98
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] MOR line=521 centre=761 lateral=-8.67 halfWidth=6.75 curvature=0.0110 speed=97
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] YOU line=528 centre=768 lateral=-8.57 halfWidth=6.65 curvature=0.0095 speed=104
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\06_racing_chase.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<AutoTestRoutine>d__28:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:278)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\07_racing_tv.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<AutoTestRoutine>d__28:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:278)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\08_racing_hood.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<AutoTestRoutine>d__28:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:278)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[TrackLimits] MOR line=532 centre=772 lateral=-8.54 halfWidth=6.61 curvature=0.0090 speed=103
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] YOU line=528 centre=768 lateral=-8.58 halfWidth=6.65 curvature=0.0095 speed=104
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] LIN line=1964 centre=2204 lateral=-8.19 halfWidth=6.27 curvature=0.0082 speed=118
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] YOU line=1002 centre=1242 lateral=-8.41 halfWidth=6.50 curvature=0.0087 speed=152
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[TrackLimits] LIN line=1029 centre=1269 lateral=-8.43 halfWidth=6.50 curvature=0.0086 speed=113
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:Track1 (Apex.Race.RaceParticipant,single,bool) (at Assets/Apex/Race/RaceManager.cs:216)
+Apex.Race.RaceManager:FixedUpdate () (at Assets/Apex/Race/RaceManager.cs:174)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 216)
+
+[Race] Backend saved race #97 (PB 0.000)
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Race.RaceManager:OnBackendMessage (string,string) (at Assets/Apex/Race/RaceManager.cs:655)
+Apex.Net.BackendClient:Update () (at Assets/Apex/Net/BackendClient.cs:107)
+
+(Filename: Assets/Apex/Race/RaceManager.cs Line: 655)
+
+[AutoTest] screenshot E:\PROJECT_APEX_2\Build\autotest\race6\09_results.png
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestCapture:Shot (string) (at Assets/Apex/Core/AutoTest.cs:59)
+Apex.Race.RaceDirector/<ShowResults>d__27:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:255)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 59)
+
+[AutoTest] report written: E:\PROJECT_APEX_2\Build\autotest\race6\report_QuickRace.json
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Apex.Core.AutoTestRecorder:WriteReport () (at Assets/Apex/Core/AutoTest.cs:132)
+Apex.Race.RaceDirector/<ShowResults>d__27:MoveNext () (at Assets/Apex/Race/RaceDirector.cs:256)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)
+
+(Filename: Assets/Apex/Core/AutoTest.cs Line: 132)
+
+[LAYOUT] About to save layout E:\PROJECT_APEX_2\UnityGame\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/salma/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+[Licensing::IpcConnector] LicenseClient-salma-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-salma channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1795127825774,"processId":30436,"allocatedMemory":13614053,"memoryLabels":[{"Default":29313},{"Permanent":15236},{"NewDelete":66921},{"Thread":4241544},{"Manager":821376},{"VertexData":8},{"Geometry":816},{"Texture":296},{"Shader":89493},{"Material":24},{"GfxDevice":57936},{"GfxThread":10752},{"Animation":392},{"Audio":2664},{"FreeType":8},{"FontEngine":736},{"Physics":3890},{"Physics2D":16},{"Serialization":207064},{"Input":14984},{"JobScheduler":33024},{"TextLib":19960},{"Mono":32},{"MonoCode":64},{"ScriptingNativeRuntime":155060},{"BaseObject":1624848},{"Resource":1336},{"Renderer":3000},{"Transform":4685},{"File":6854},{"WebCam":616},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":9880},{"DynamicArray":96372},{"HashMap":126320},{"Utility":2660866},{"Curl":48},{"PoolAlloc":2248},{"AI":80},{"TypeTree":5341},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7792},{"Director":8240},{"CloudService":7048},{"WebRequest":13687},{"VR":48034},{"SceneManager":504},{"Video":208},{"LazyScriptCache":32},{"NativeArray":540},{"Camera":17},{"Secure":2377},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":464},{"Hierarchy":608},{"CoreStats":13112},{"Identifiers":6480},{"Gui":141},{"EditorUtility":199343},{"VersionControl":4},{"Undo":947},{"AssetDatabase":2583059},{"EditorGi":328},{"UnityConnect":29344},{"Upm":1896},{"AssetCompliance":64},{"DrivenProperties":72},{"LocalIPC":211},{"ProfilerEditor":9746},{"CoreBusinessMetrics":3498},{"Licensing":1264},{"AssetReference":32},{"IPCStream":32}]}

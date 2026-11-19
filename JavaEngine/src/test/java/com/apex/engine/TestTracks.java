@@ -17,7 +17,7 @@ public final class TestTracks {
             z[i] = (float) (Math.sin(a) * r);
             w[i] = width;
         }
-        return new Dtos.TrackData("circle", x, y, z, w, 1.55f, 1300f, 0.5f * 1.225f * 3.1f, 7.5f, 13.5f, 78f);
+        return new Dtos.TrackData("circle", x, y, z, w, 1.35f, 1300f, 0.5f * 1.225f * 3.1f, 7.5f, 13.5f, 78f);
     }
 
     /** Stadium: two 400 m straights joined by 40 m-radius hairpins (clockwise). */

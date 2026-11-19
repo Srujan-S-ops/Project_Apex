@@ -148,12 +148,7 @@ namespace Apex.Rendering
                 dof.focalLength.Override(55f);
                 dof.aperture.Override(4f);
             }
-            else
-            {
-                var mb = profile.Add<MotionBlur>(true);
-                mb.intensity.Override(0.18f);
-                mb.quality.Override(MotionBlurQuality.Low);
-            }
+
             vol.sharedProfile = profile;
             vol.enabled = GameServices.Instance == null || GameServices.Instance.Settings.postProcessing;
             return vol;

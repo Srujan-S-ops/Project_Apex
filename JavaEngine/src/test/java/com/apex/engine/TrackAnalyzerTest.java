@@ -19,7 +19,7 @@ class TrackAnalyzerTest {
         TrackAnalysis a = analyzer.analyse(TestTracks.circle(r, 12f));
         VehicleEnvelope e = VehicleEnvelope.gt3();
         // the racing line hugs the inside: radius ≈ r - (w/2 - margin)
-        double rLine = r - (6 - 1.4);
+        double rLine = r - (6 - 1.9);
         double k = 1 / rLine;
         double expected = Math.sqrt(e.mu() * 9.81 / (k - e.mu() * e.downforceCoef() / e.massKg()));
         double mid = a.speed()[a.speed().length / 2];
@@ -30,7 +30,7 @@ class TrackAnalyzerTest {
     void racingLineRespectsTrackLimits() {
         TrackAnalysis a = analyzer.analyse(TestTracks.stadium());
         for (int i = 0; i < a.lineOffset().length; i++) {
-            assertTrue(Math.abs(a.lineOffset()[i]) <= 13 / 2.0 - 1.4 + 1e-6, "offset within limits at " + i);
+            assertTrue(Math.abs(a.lineOffset()[i]) <= 13 / 2.0 - 1.9 + 1e-6, "offset within limits at " + i);
         }
     }
 

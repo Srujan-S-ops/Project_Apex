@@ -46,7 +46,8 @@ namespace Apex.Rendering
         public void PlayIntro()
         {
             _introT = 0f;
-            _introStart = Target != null ? Target.transform.position + Target.transform.forward * 14f + Target.transform.right * 6f + Vector3.up * 3f : transform.position;
+            _introStart = Target != null ? Target.transform.position + Target.transform.forward * 7.5f + Target.transform.right * 1.2f + Vector3.up * 1.6f : transform.position;
+            _vel = Vector3.zero;
             transform.position = _introStart;
         }
 

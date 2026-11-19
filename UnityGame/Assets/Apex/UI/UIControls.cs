@@ -115,7 +115,8 @@ namespace Apex.UI
         protected void InitScreen()
         {
             Root = GetComponent<RectTransform>();
-            Group = gameObject.GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
+            Group = gameObject.GetComponent<CanvasGroup>();
+            if (Group == null) Group = gameObject.AddComponent<CanvasGroup>();   // Unity fake-null: never use ?? on components
             Group.alpha = 0f;
             Group.interactable = false;
             Group.blocksRaycasts = false;

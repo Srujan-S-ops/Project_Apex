@@ -105,7 +105,8 @@ public class TrackAnalyzer {
         int n = speed.length;
         List<Integer> zones = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            boolean startsDecel = speed[(i + 1) % n] < speed[i] - 0.05 && speed[(i - 1 + n) % n] >= speed[i] - 0.05;
+            // local maximum followed by deceleration = the braking point
+            boolean startsDecel = speed[(i + 1) % n] < speed[i] - 0.05 && speed[(i - 1 + n) % n] <= speed[i] + 0.05;
             if (startsDecel && speed[i] > speed[(i + 30) % n] + 8) {
                 zones.add(i);
             }

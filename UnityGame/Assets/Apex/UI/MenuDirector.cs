@@ -51,13 +51,16 @@ namespace Apex.UI
             if (auto.Enabled)
             {
                 yield return new WaitForSecondsRealtime(auto.Screenshots ? 3f : 1f);
-                if (auto.Screenshots) AutoTestCapture.Shot("01_main_menu");
+                if (auto.Screenshots) { AutoTestCapture.Shot("01_main_menu"); yield return new WaitForSecondsRealtime(0.5f); }
+                Show(_settings);
+                yield return new WaitForSecondsRealtime(1f);
+                if (auto.Screenshots) { AutoTestCapture.Shot("01b_settings"); yield return new WaitForSecondsRealtime(0.5f); }
                 Show(_garage); _camera.Mode = ShowroomCamera.CameraMode.Garage;
                 yield return new WaitForSecondsRealtime(2f);
-                if (auto.Screenshots) AutoTestCapture.Shot("02_garage");
+                if (auto.Screenshots) { AutoTestCapture.Shot("02_garage"); yield return new WaitForSecondsRealtime(0.5f); }
                 Show(_setup);
                 yield return new WaitForSecondsRealtime(1f);
-                if (auto.Screenshots) AutoTestCapture.Shot("03_race_setup");
+                if (auto.Screenshots) { AutoTestCapture.Shot("03_race_setup"); yield return new WaitForSecondsRealtime(0.5f); }
                 RaceConfig.Current.mode = auto.Mode;
                 RaceConfig.Current.laps = auto.Laps;
                 RaceConfig.Current.difficulty = auto.Difficulty;

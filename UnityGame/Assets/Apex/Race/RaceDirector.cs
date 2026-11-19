@@ -204,6 +204,7 @@ namespace Apex.Race
             _paused = paused;
             Time.timeScale = paused ? 0f : 1f;
             AudioListener.pause = paused;
+            _hud.SetVisible(!paused);
             if (paused) _pause.Show();
             else { _pause.Hide(); _settingsUI.Hide(); }
         }
@@ -255,12 +256,30 @@ namespace Apex.Race
                 if (_auto.Screenshots) AutoTestCapture.Shot("09_results");
                 _recorder.WriteReport();
                 yield return new WaitForSecondsRealtime(1.5f);
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.Exit(0);
+#else
                 Application.Quit();
+#endif
             }
         }
 
         private IEnumerator AutoTestRoutine()
         {
+            // pause / resume round-trip
+            while (_race.RaceTime < 12f && _race.Phase != RacePhase.Results) yield return null;
+            if (_race.Phase != RacePhase.Results)
+            {
+                float before = _race.RaceTime;
+                SetPaused(true);
+                yield return new WaitForSecondsRealtime(1.5f);
+                if (_auto.Screenshots) AutoTestCapture.Shot("05b_pause");
+                yield return new WaitForSecondsRealtime(0.5f);
+                bool frozen = Mathf.Abs(_race.RaceTime - before) < 0.05f;
+                Debug.Log($"[AutoTest] pause froze race clock: {frozen}");
+                if (!frozen) _recorder.Fail("pause did not freeze race time");
+                SetPaused(false);
+            }
             var shots = new[] { (CameraView.ChaseNear, "06_racing_chase"), (CameraView.TV, "07_racing_tv"), (CameraView.Hood, "08_racing_hood") };
             float[] at = { 22f, 40f, 55f };
             for (int i = 0; i < shots.Length; i++)
