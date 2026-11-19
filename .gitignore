@@ -14,3 +14,4 @@ JavaEngine/target/
 JavaEngine/data/
 *.class
 __pycache__/
+Build/autotest/
