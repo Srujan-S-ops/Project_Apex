@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
@@ -71,29 +72,46 @@ namespace Apex.UI
             return Image(parent, name, sprite, color, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
         }
 
-        public static Text Text(Transform parent, string name, string text, int size, Color color, Font font, TextAnchor align,
+        public static TMP_Text Text(Transform parent, string name, string text, int size, Color color, TMP_FontAsset font, TextAnchor align,
             Vector2 anchorMin, Vector2 anchorMax, Vector2 pivot, Vector2 pos, Vector2 sizeDelta, FontStyle style = FontStyle.Normal)
         {
             var rt = Rect(name, parent, anchorMin, anchorMax, pivot, pos, sizeDelta);
-            var t = rt.gameObject.AddComponent<Text>();
+            var t = rt.gameObject.AddComponent<TextMeshProUGUI>();
             t.font = font;
             t.text = text;
             t.fontSize = size;
             t.color = color;
-            t.alignment = align;
-            t.fontStyle = style;
+            t.alignment = Align(align);
+            t.fontStyle = style == FontStyle.Bold ? FontStyles.Bold : (style == FontStyle.Italic ? FontStyles.Italic : (style == FontStyle.BoldAndItalic ? FontStyles.Bold | FontStyles.Italic : FontStyles.Normal));
             t.raycastTarget = false;
-            t.horizontalOverflow = HorizontalWrapMode.Overflow;
-            t.verticalOverflow = VerticalWrapMode.Overflow;
-            t.supportRichText = true;
+            t.textWrappingMode = TextWrappingModes.NoWrap;
+            t.overflowMode = TextOverflowModes.Overflow;
+            t.richText = true;
+            t.extraPadding = true;
             return t;
         }
 
         /// <summary>Text anchored at a point (pivot / anchor at the same spot).</summary>
-        public static Text Label(Transform parent, string text, int size, Color color, Font font, TextAnchor align, Vector2 anchor, Vector2 pos, float width = 600f)
+        public static TMP_Text Label(Transform parent, string text, int size, Color color, TMP_FontAsset font, TextAnchor align, Vector2 anchor, Vector2 pos, float width = 600f)
         {
             Vector2 pivot = AlignPivot(align);
             return Text(parent, "Text", text, size, color, font, align, anchor, anchor, pivot, pos, new Vector2(width, size * 1.4f));
+        }
+
+        public static TextAlignmentOptions Align(TextAnchor a)
+        {
+            switch (a)
+            {
+                case TextAnchor.UpperLeft: return TextAlignmentOptions.TopLeft;
+                case TextAnchor.UpperCenter: return TextAlignmentOptions.Top;
+                case TextAnchor.UpperRight: return TextAlignmentOptions.TopRight;
+                case TextAnchor.MiddleLeft: return TextAlignmentOptions.Left;
+                case TextAnchor.MiddleCenter: return TextAlignmentOptions.Center;
+                case TextAnchor.MiddleRight: return TextAlignmentOptions.Right;
+                case TextAnchor.LowerLeft: return TextAlignmentOptions.BottomLeft;
+                case TextAnchor.LowerCenter: return TextAlignmentOptions.Bottom;
+                default: return TextAlignmentOptions.BottomRight;
+            }
         }
 
         public static Vector2 AlignPivot(TextAnchor a)

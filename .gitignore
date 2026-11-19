@@ -15,3 +15,4 @@ JavaEngine/data/
 *.class
 __pycache__/
 Build/autotest/
+Assets_Source/Downloaded/*/*.zip

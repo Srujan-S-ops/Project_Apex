@@ -1,5 +1,6 @@
 using System;
 using Apex.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,8 +12,8 @@ namespace Apex.UI
     {
         public Image Background;
         public Image Accent;
-        public Text Label;
-        public Text Sub;
+        public TMP_Text Label;
+        public TMP_Text Sub;
         public RectTransform Content;
         public Color IdleText = UITheme.Metal;
         public Color ActiveText = UITheme.White;
@@ -65,7 +66,7 @@ namespace Apex.UI
     {
         public string[] Options = Array.Empty<string>();
         public int Index;
-        public Text ValueText;
+        public TMP_Text ValueText;
         public Action<int> Changed;
         public Image[] Pips;
 

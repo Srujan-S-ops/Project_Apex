@@ -1,5 +1,6 @@
 using System.Collections;
 using Apex.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ namespace Apex.UI
     {
         private CanvasGroup _group;
         private Image _fill;
-        private Text _percent, _tip, _title, _subtitle;
+        private TMP_Text _percent, _tip, _title, _subtitle;
         private RawImage _art;
         private float _progress, _shown;
         private float _tipTimer;

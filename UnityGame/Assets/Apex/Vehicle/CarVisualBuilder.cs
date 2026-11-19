@@ -15,7 +15,7 @@ namespace Apex.Vehicle
         private const float ZRear = -2.36f, ZFront = 2.27f;
         private const float FrontAxle = 1.356f, RearAxle = -1.303f;
         private const float ArchRadius = 0.44f, ArchTop = 0.745f;
-        private const int Ring = 32;
+        private const int Ring = 48;
 
         private static readonly float[] WidthKeys = { -2.36f, 1.84f, -2.2f, 1.97f, -1.75f, 2.04f, -1.3f, 2.07f, -0.85f, 2.0f, -0.4f, 1.9f, 0.3f, 1.9f, 0.9f, 1.98f, 1.36f, 2.03f, 1.85f, 1.96f, 2.12f, 1.8f, 2.27f, 1.56f };
         private static readonly float[] TopKeys = { -2.36f, 0.93f, -2.05f, 0.99f, -1.3f, 0.985f, -0.95f, 0.965f, 0.0f, 0.93f, 0.62f, 0.9f, 1.0f, 0.855f, 1.36f, 0.865f, 1.9f, 0.73f, 2.15f, 0.6f, 2.27f, 0.47f };
@@ -36,16 +36,24 @@ namespace Apex.Vehicle
 
             // ---------- materials
             Texture2D liveryTex = LiveryPainter.Paint(livery);
-            var paint = MaterialLibrary.Lit(Color.white, 0.35f, 0.86f, liveryTex);
-            var carbon = MaterialLibrary.Lit(new Color(0.55f, 0.55f, 0.58f), 0.25f, 0.78f, MaterialLibrary.Tex("carbon"), new Vector2(6f, 6f));
-            var glass = MaterialLibrary.Transparent(new Color(0.04f, 0.05f, 0.07f, 0.62f), 0.97f, 0.2f);
+            // clear-coated metallic paint with flake normals (URP Complex Lit)
+            var paint = MaterialLibrary.CarPaint(liveryTex, 0.55f, 0.6f);
+            // clear-coated carbon weave
+            var carbon = MaterialLibrary.CarPaint(MaterialLibrary.Tex("carbon"), 0.3f, 0.5f);
+            carbon.SetTextureScale("_BaseMap", new Vector2(6f, 6f));
+            carbon.SetFloat("_BumpScale", 0.05f);
+            var glass = MaterialLibrary.Transparent(new Color(0.015f, 0.02f, 0.03f, 0.74f), 0.985f, 0.35f);
+            var lensMat = MaterialLibrary.Transparent(new Color(0.85f, 0.9f, 1f, 0.16f), 1f, 0f);
+            var tailGlass = MaterialLibrary.Transparent(new Color(0.45f, 0.01f, 0.02f, 0.6f), 0.98f, 0.1f);
+            var seal = MaterialLibrary.Lit(new Color(0.015f, 0.015f, 0.017f), 0f, 0.35f);
             var trim = MaterialLibrary.Lit(livery.Trim, 0.1f, 0.45f);
             var rubber = MaterialLibrary.Lit(new Color(0.06f, 0.06f, 0.065f), 0f, 0.28f, MaterialLibrary.Tex("tyre_sidewall"));
-            var rim = MaterialLibrary.Lit(new Color(0.12f, 0.12f, 0.13f), 0.9f, 0.72f);
-            var chrome = MaterialLibrary.Lit(new Color(0.8f, 0.8f, 0.82f), 1f, 0.92f);
+            var rim = MaterialLibrary.PBR("brushed", new Vector2(2f, 2f), new Color(0.2f, 0.2f, 0.22f), 1f, 0.6f);
+            var chrome = MaterialLibrary.Lit(new Color(0.86f, 0.86f, 0.88f), 1f, 0.95f);
             var caliperMat = MaterialLibrary.Lit(new Color(0.85f, 0.05f, 0.05f), 0.3f, 0.7f);
             var nutMat = MaterialLibrary.Lit(livery.Accent, 0.8f, 0.8f);
-            var headMat = MaterialLibrary.Emissive(new Color(0.9f, 0.95f, 1f), new Color(0.85f, 0.92f, 1f), 3.5f);
+            var headMat = MaterialLibrary.Emissive(new Color(0.9f, 0.95f, 1f), new Color(0.85f, 0.92f, 1f), 4.5f);
+            var drlMat = MaterialLibrary.Emissive(Color.white, new Color(0.9f, 0.95f, 1f), 7f);
             var tailMat = MaterialLibrary.Emissive(new Color(0.5f, 0.02f, 0.02f), new Color(1f, 0.05f, 0.03f), 1.2f);
             var intakeMat = MaterialLibrary.Lit(new Color(0.02f, 0.02f, 0.02f), 0f, 0.25f, MaterialLibrary.Tex("mesh_grille"), new Vector2(8, 3));
             var decalMat = MaterialLibrary.Cutout(MaterialLibrary.Tex("sponsors"), Color.white, 0.4f, null, 0.7f);
@@ -58,7 +66,7 @@ namespace Apex.Vehicle
             var body = new MeshBuilder();
             var rings = new List<Vector3[]>();
             var vCoords = new List<float>();
-            int stations = highDetail ? 70 : 44;
+            int stations = highDetail ? 110 : 56;
             for (int i = 0; i <= stations; i++)
             {
                 float t = i / (float)stations;
@@ -73,6 +81,7 @@ namespace Apex.Vehicle
 
             // ---------- greenhouse (glass) + roof
             BuildCabin(root, glass, paint, highDetail);
+            BuildWindowSeals(root, seal);
 
             // ---------- aero, trim & details
             var cb = new MeshBuilder();   // carbon
@@ -115,8 +124,27 @@ namespace Apex.Vehicle
                 var mb = new MeshBuilder();
                 mb.AddSphere(new Vector3(s * 1.02f, 1.0f, 0.46f), new Vector3(0.1f, 0.055f, 0.075f), 14);
                 mb.Build("Mirror", root, paint);
-                tb.AddBox(new Vector3(s * 1.02f, 1.0f, 0.39f), new Vector3(0.16f, 0.08f, 0.005f));
+                var mg = new MeshBuilder();
+                mg.AddBox(new Vector3(s * 1.02f, 1.0f, 0.392f), new Vector3(0.15f, 0.07f, 0.004f));
+                mg.Build("MirrorGlass", root, chrome, false);
             }
+            // roof scoop + antenna
+            cb.AddBox(new Vector3(0f, CabinTop(-0.15f) + 0.035f, -0.15f), new Vector3(0.36f, 0.07f, 0.42f), Quaternion.Euler(3f, 0f, 0f));
+            tb.AddBox(new Vector3(0f, CabinTop(-0.15f) + 0.055f, -0.36f), new Vector3(0.3f, 0.05f, 0.012f));
+            tb.AddCylinder(new Vector3(0f, CabinTop(-0.62f), -0.62f), new Vector3(0f, CabinTop(-0.62f) + 0.22f, -0.7f), 0.005f, 5, false);
+            // rear valance, reverse / fog light housing and number plate
+            tb.AddBox(new Vector3(0f, 0.36f, -2.36f), new Vector3(1.55f, 0.12f, 0.06f));
+            var plate = new MeshBuilder();
+            plate.AddBox(new Vector3(0f, 0.5f, -2.385f), new Vector3(0.42f, 0.11f, 0.01f));
+            plate.Build("NumberPlate", root, MaterialLibrary.Lit(new Color(0.95f, 0.95f, 0.93f), 0f, 0.5f), false);
+            var plateText = new MeshBuilder();
+            plateText.AddQuad(new Vector3(0.19f, 0.455f, -2.392f), new Vector3(0.19f, 0.545f, -2.392f), new Vector3(-0.19f, 0.545f, -2.392f), new Vector3(-0.19f, 0.455f, -2.392f),
+                Cell(7, 0, 0), Cell(7, 0, 1), Cell(7, 1, 1), Cell(7, 1, 0));
+            FixWindingTowards(plateText, Vector3.back);
+            plateText.Build("PlateBadge", root, decalMat, false);
+            // front air curtains (dark vertical intakes at the bumper corners)
+            for (int s = -1; s <= 1; s += 2)
+                tb.AddBox(new Vector3(s * 0.84f, 0.3f, 2.17f), new Vector3(0.12f, 0.22f, 0.03f), Quaternion.Euler(0f, s * 32f, 0f));
             // hood vents, louvres, door intakes
             for (int s = -1; s <= 1; s += 2)
             {
@@ -152,19 +180,53 @@ namespace Apex.Vehicle
             ib.Build("Intakes", root, intakeMat, false);
 
             // lights
+            // headlights: chrome reflector housing, projector lenses, LED DRL strip, clear lens cover
+            var housing = new MeshBuilder();
             var hb = new MeshBuilder();
+            var drl = new MeshBuilder();
+            var lens = new MeshBuilder();
             for (int s = -1; s <= 1; s += 2)
             {
-                hb.AddSphere(new Vector3(s * 0.66f, SurfaceTop(1.95f, s * 0.66f) - 0.03f, 1.95f), new Vector3(0.26f, 0.07f, 0.17f), 16);
+                float hy = SurfaceTop(1.95f, s * 0.66f) - 0.035f;
+                Vector3 hc = new Vector3(s * 0.66f, hy, 1.95f);
+                housing.AddSphere(hc, new Vector3(0.25f, 0.065f, 0.165f), 20);
+                hb.AddSphere(hc + new Vector3(s * -0.06f, 0.035f, 0.07f), new Vector3(0.045f, 0.03f, 0.03f), 12);
+                hb.AddSphere(hc + new Vector3(s * 0.06f, 0.03f, 0.05f), new Vector3(0.04f, 0.028f, 0.028f), 12);
+                for (int k = 0; k < 7; k++)
+                {
+                    float t = k / 6f;
+                    Vector3 dp = hc + new Vector3(s * Mathf.Lerp(-0.2f, 0.17f, t), 0.008f + Mathf.Sin(t * Mathf.PI) * 0.01f, Mathf.Lerp(0.1f, 0.02f, t * t) - 0.05f);
+                    drl.AddBox(dp, new Vector3(0.055f, 0.012f, 0.02f), Quaternion.Euler(0f, s * Mathf.Lerp(-12f, 20f, t), 0f));
+                }
+                lens.AddSphere(hc + Vector3.up * 0.006f, new Vector3(0.262f, 0.074f, 0.175f), 20);
                 visual.HeadlightPoints.Add(new Vector3(s * 0.66f, 0.68f, 2.1f));
             }
+            housing.Build("HeadlightHousings", root, chrome, false);
             hb.Build("Headlights", root, headMat, false);
+            drl.Build("DaytimeRunningLights", root, drlMat, false);
+            lens.Build("HeadlightLenses", root, lensMat, false);
+
+            // tail lights: segmented LED bar behind red glass
             var lb = new MeshBuilder();
-            lb.AddBox(new Vector3(0f, 0.82f, -2.355f), new Vector3(1.5f, 0.035f, 0.02f));
+            for (int k = 0; k < 22; k++)
+                lb.AddBox(new Vector3(-0.735f + k * 0.07f, 0.82f, -2.352f), new Vector3(0.055f, 0.026f, 0.015f));
             for (int s = -1; s <= 1; s += 2)
-                lb.AddBox(new Vector3(s * 0.74f, 0.78f, -2.35f), new Vector3(0.22f, 0.08f, 0.03f));
-            lb.AddBox(new Vector3(0f, 1.21f, -1.15f), new Vector3(0.25f, 0.025f, 0.02f)); // rain/brake light
+                for (int k = 0; k < 4; k++)
+                    lb.AddBox(new Vector3(s * (0.66f + k * 0.05f), 0.78f - k * 0.008f, -2.348f), new Vector3(0.04f, 0.07f, 0.02f));
+            lb.AddBox(new Vector3(0f, 1.21f, -1.15f), new Vector3(0.25f, 0.025f, 0.02f)); // high-level brake light
+            lb.AddBox(new Vector3(0f, 0.36f, -2.395f), new Vector3(0.1f, 0.05f, 0.01f));    // rear fog light
             lb.Build("TailLights", root, tailMat, false);
+            var tg = new MeshBuilder();
+            tg.AddBox(new Vector3(0f, 0.815f, -2.358f), new Vector3(1.6f, 0.05f, 0.025f));
+            for (int s = -1; s <= 1; s += 2) tg.AddBox(new Vector3(s * 0.74f, 0.78f, -2.355f), new Vector3(0.24f, 0.095f, 0.03f));
+            tg.Build("TailLightGlass", root, tailGlass, false);
+
+            // soft contact shadow grounding the car
+            var cs = new MeshBuilder();
+            cs.AddQuad(new Vector3(-1.25f, 0.025f, -2.65f), new Vector3(-1.25f, 0.025f, 2.6f), new Vector3(1.25f, 0.025f, 2.6f), new Vector3(1.25f, 0.025f, -2.65f),
+                new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0));
+            FixWindingTowards(cs, Vector3.up);
+            cs.Build("ContactShadow", root, MaterialLibrary.UnlitTransparent(MaterialLibrary.Tex("pbr/car_shadow"), new Color(1f, 1f, 1f, 0.9f)), false);
 
             // decals: door numbers, sponsors
             BuildDecals(root, decalMat, digitsMat, livery);
@@ -329,6 +391,27 @@ namespace Apex.Vehicle
                 rb.AddLoft(a, false);
             }
             rb.Build("Roof", root, paint);
+        }
+
+        /// <summary>Black rubber window seals along the base of the greenhouse.</summary>
+        private static void BuildWindowSeals(Transform root, Material seal)
+        {
+            var mb = new MeshBuilder();
+            for (int side = -1; side <= 1; side += 2)
+            {
+                var rings = new List<Vector3[]>();
+                for (int i = 0; i <= 24; i++)
+                {
+                    float z = Mathf.Lerp(-1.1f, 0.6f, i / 24f);
+                    float baseY = Top(z) - 0.03f;
+                    float wBase = Width(z) * 0.86f * 0.93f;
+                    float x = side * (wBase * 0.5f + 0.004f);
+                    rings.Add(new[] { new Vector3(x, baseY - 0.025f, z), new Vector3(x * 0.995f, baseY + 0.035f, z) });
+                }
+                mb.AddLoft(rings, false);
+                mb.AddLoft(rings, false, 1f, null, true);   // both facings: thin strip visible from any side
+            }
+            mb.Build("WindowSeals", root, seal, false);
         }
 
         private static float CabinTop(float z)
@@ -561,6 +644,9 @@ namespace Apex.Vehicle
             suit.Build("Driver", root, trim, false);
         }
 
+        private static Material _chromeShared;
+        private static Material ChromeShared => _chromeShared != null ? _chromeShared : (_chromeShared = MaterialLibrary.Lit(new Color(0.88f, 0.88f, 0.9f), 1f, 0.95f));
+
         private static (Transform knuckle, Transform spinner) BuildWheel(Transform root, int index, Vector3 pos, float radius,
             Material rubber, Material rimMat, Material discMat, Material caliperMat, Material nutMat, bool highDetail)
         {
@@ -615,6 +701,12 @@ namespace Apex.Vehicle
                 new Vector2(0f, 0f), new Vector2(0f, 0.06f), new Vector2(0f, 0.06f), new Vector2(0.035f, 0.055f), new Vector2(0.035f, 0.055f), new Vector2(0.035f, 0f)
             }, 16);
             rim.Build("Rim", spinner, rimMat);
+            var lip = new MeshBuilder();
+            lip.AddLathe(Vector3.zero, Quaternion.identity, new List<Vector2>
+            {
+                new Vector2(0.128f, rimR - 0.004f), new Vector2(0.138f, rimR + 0.004f), new Vector2(0.138f, rimR + 0.004f), new Vector2(0.141f, rimR + 0.012f)
+            }, seg);
+            lip.Build("RimLip", spinner, ChromeShared, false);
 
             var nut = new MeshBuilder();
             nut.AddLathe(new Vector3(0.115f, 0f, 0f), Quaternion.identity, new List<Vector2>

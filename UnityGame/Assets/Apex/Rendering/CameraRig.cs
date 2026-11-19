@@ -69,7 +69,8 @@ namespace Apex.Rendering
             Vector3 fwd = _lookBack ? -flatFwd : _smoothFwd;
 
             float baseFov = _settings.fieldOfView;
-            float targetFov = baseFov + Mathf.Clamp01(speed / 80f) * 9f;
+            float targetFov = baseFov + Mathf.Clamp01(speed / 80f) * 11f;
+            Vector3 prevPos = transform.position;
 
             Vector3 desiredPos;
             Quaternion desiredRot;
@@ -79,11 +80,13 @@ namespace Apex.Rendering
                 case CameraView.ChaseNear:
                 {
                     bool far = View == CameraView.ChaseFar;
-                    float dist = far ? 7.6f : 5.6f;
-                    float height = far ? 2.5f : 1.75f;
+                    float dist = far ? 7.2f : 5.1f;
+                    float height = far ? 2.15f : 1.42f;
                     dist += Mathf.Clamp(Target.LongitudinalG, -1.5f, 1.5f) * 0.35f;
                     desiredPos = t.position - fwd * dist + Vector3.up * height;
-                    Vector3 look = t.position + fwd * 3f + Vector3.up * (far ? 0.9f : 0.8f);
+                    // look slightly into the corner, NFS-style
+                    Vector3 lateralVel = Vector3.ProjectOnPlane(vel, t.up) - Vector3.Project(vel, t.forward);
+                    Vector3 look = t.position + fwd * 3.5f + Vector3.up * (far ? 0.95f : 0.85f) + Vector3.ClampMagnitude(lateralVel * 0.08f, 1.2f);
                     // keep the camera above the road / out of walls
                     if (Physics.Linecast(t.position + Vector3.up * 1.2f, desiredPos, out RaycastHit hit, ~0, QueryTriggerInteraction.Ignore) && hit.rigidbody != Target.Body)
                         desiredPos = hit.point + hit.normal * 0.3f;
@@ -125,7 +128,25 @@ namespace Apex.Rendering
                 transform.position += new Vector3(Mathf.PerlinNoise(Time.time * 23f, 0f) - 0.5f, Mathf.PerlinNoise(0f, Time.time * 21f) - 0.5f, 0f) * s;
             }
             _shake = Mathf.MoveTowards(_shake, 0f, dt * 0.5f);
+            UpdateMotionBlur(speed, Vector3.Distance(prevPos, transform.position) / dt);
             _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, targetFov, dt * 3f);
+        }
+
+        private int _blurHold;
+        private CameraView _lastView;
+
+        /// <summary>Speed-dependent camera motion blur; suppressed on cuts so teleports never smear.</summary>
+        private void UpdateMotionBlur(float carSpeed, float camSpeed)
+        {
+            var mb = SceneLighting.RaceMotionBlur;
+            if (mb == null) return;
+            bool cut = View != _lastView || camSpeed > 160f || _introT >= 0f || View == CameraView.TV;
+            _lastView = View;
+            if (cut) _blurHold = 4;
+            float target = Mathf.Clamp01((carSpeed - 28f) / 45f) * 0.32f;
+            if (_blurHold > 0) { _blurHold--; target = 0f; }
+            mb.intensity.Override(Mathf.MoveTowards(mb.intensity.value, target, Time.deltaTime * 0.8f));
+            if (_blurHold > 0) mb.intensity.Override(0f);
         }
 
         private void UpdateTv(float dt, Transform t)

@@ -37,7 +37,9 @@ namespace Apex.UI
             _camera = cam.gameObject.AddComponent<ShowroomCamera>();
             _probe = SceneLighting.AddReflectionProbe(_root, new Vector3(0f, 2f, 0f));
             _probe.size = new Vector3(60f, 20f, 60f);
+            _probe.resolution = 256;
             _probe.RenderProbe();
+            SceneLighting.AddShowroomReflection(_root, cam, 13f);
             yield return null;
             SceneReady.Progress = 0.7f;
             BuildUI();
@@ -71,7 +73,7 @@ namespace Apex.UI
 
         private void BuildShowroom()
         {
-            var floorMat = MaterialLibrary.Lit(new Color(0.03f, 0.03f, 0.035f), 0.2f, 0.93f);
+            var floorMat = MaterialLibrary.Lit(new Color(0.018f, 0.018f, 0.021f), 0.25f, 0.9f);
             var floor = new MeshBuilder();
             floor.AddLathe(Vector3.zero, Quaternion.Euler(0f, 0f, 90f), new List<Vector2> { new Vector2(0f, 60f), new Vector2(0f, 0.01f) }, 64);
             floor.Build("Floor", _root, floorMat, false);
@@ -107,7 +109,16 @@ namespace Apex.UI
                 rings.Add(r);
             }
             wall.AddLoft(rings, false, 1f, null, false);
-            wall.Build("Backdrop", _root, MaterialLibrary.Lit(new Color(0.035f, 0.035f, 0.04f), 0.1f, 0.4f), false);
+            wall.Build("Backdrop", _root, MaterialLibrary.Lit(new Color(0.07f, 0.072f, 0.08f), 0.05f, 0.3f), false);
+            // commercial light rig: twin overhead strip lights (long highlights along the clear coat) + LED floor ribbon
+            var rig = new MeshBuilder();
+            for (int s = -1; s <= 1; s += 2) rig.AddBox(new Vector3(s * 2.6f, 6.8f, 0f), new Vector3(0.22f, 0.05f, 15f));
+            rig.AddBox(new Vector3(0f, 6.9f, 5.5f), new Vector3(5.4f, 0.05f, 0.22f));
+            rig.AddBox(new Vector3(0f, 6.9f, -5.5f), new Vector3(5.4f, 0.05f, 0.22f));
+            rig.Build("StripLights", _root, MaterialLibrary.Emissive(Color.white, new Color(0.95f, 0.97f, 1f), 3.2f), false);
+            var ribbon = new MeshBuilder();
+            ribbon.AddLathe(Vector3.zero, Quaternion.Euler(0f, 0f, 90f), new List<Vector2> { new Vector2(0.01f, 6.05f), new Vector2(0.01f, 5.95f) }, 128);
+            ribbon.Build("FloorRibbon", _root, MaterialLibrary.Emissive(new Color(0.8f, 0.85f, 1f), new Color(0.75f, 0.85f, 1f), 1.6f), false);
             var strips = new MeshBuilder();
             var redStrips = new MeshBuilder();
             for (int k = 0; k < 13; k++)

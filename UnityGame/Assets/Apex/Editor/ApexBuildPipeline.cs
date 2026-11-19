@@ -33,6 +33,7 @@ namespace Apex.EditorTools
                 EnsureFolder(ResUI);
                 EnsureFolder(Scenes);
                 AssetDatabase.Refresh();
+                ImportTextMeshPro();
                 ConfigureTextures();
                 CreateTemplateMaterials();
                 ConfigureRenderPipeline();
@@ -89,6 +90,8 @@ namespace Apex.EditorTools
                 bool changed = false;
                 string name = Path.GetFileNameWithoutExtension(path);
                 bool isNormal = name.EndsWith("_n");
+                bool isLinearData = name.EndsWith("_ms") || name.EndsWith("_ao");
+                if (imp.sRGBTexture == isLinearData) { imp.sRGBTexture = !isLinearData; changed = true; }
                 bool isUi = path.StartsWith(ResUI);
                 var type = isNormal ? TextureImporterType.NormalMap : TextureImporterType.Default;
                 if (imp.textureType != type) { imp.textureType = type; changed = true; }
@@ -96,11 +99,11 @@ namespace Apex.EditorTools
                 if (imp.mipmapEnabled != mips) { imp.mipmapEnabled = mips; changed = true; }
                 int aniso = isUi ? 1 : 8;
                 if (imp.anisoLevel != aniso) { imp.anisoLevel = aniso; changed = true; }
-                bool alpha = isUi || name is "fence" or "crowd" or "palm" or "sponsors" or "digits" or "smoke" or "spark" or "flame" or "skid";
+                bool alpha = isUi || name is "fence" or "crowd" or "palm" or "sponsors" or "digits" or "smoke" or "spark" or "flame" or "skid" or "car_shadow" or "line_paint" or "foliage" or "signs";
                 if (imp.alphaIsTransparency != alpha) { imp.alphaIsTransparency = alpha; changed = true; }
-                var wrap = isUi || name is "sponsors" or "digits" or "brakeboards" or "logo_sign" or "timing_tower" or "banner_start" ? TextureWrapMode.Clamp : TextureWrapMode.Repeat;
+                var wrap = isUi || name is "signs" or "sponsors" or "digits" or "brakeboards" or "logo_sign" or "timing_tower" or "banner_start" ? TextureWrapMode.Clamp : TextureWrapMode.Repeat;
                 if (imp.wrapMode != wrap) { imp.wrapMode = wrap; changed = true; }
-                int max = isUi ? 2048 : 2048;
+                int max = 2048;
                 if (imp.maxTextureSize != max) { imp.maxTextureSize = max; changed = true; }
                 if (isUi && imp.textureCompression != TextureImporterCompression.Uncompressed) { imp.textureCompression = TextureImporterCompression.Uncompressed; changed = true; }
                 if (changed) imp.SaveAndReimport();
@@ -160,6 +163,54 @@ namespace Apex.EditorTools
                 m.renderQueue = (int)RenderQueue.AlphaTest;
                 m.SetOverrideTag("RenderType", "TransparentCutout");
             });
+            var road = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/road_albedo.jpg");
+            var roadN = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/road_n.png");
+            var roadMs = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/road_ms.png");
+            var roadAo = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/road_ao.jpg");
+            var wear = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/road_wear.png");
+            var flake = AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/paint_flake_n.png");
+            MakeMaterial("M_LitPBR", "Universal Render Pipeline/Lit", m =>
+            {
+                m.SetTexture("_BaseMap", road);
+                m.SetTexture("_BumpMap", roadN);
+                m.SetTexture("_MetallicGlossMap", roadMs);
+                m.SetTexture("_OcclusionMap", roadAo);
+                m.EnableKeyword("_NORMALMAP");
+                m.EnableKeyword("_METALLICSPECGLOSSMAP");
+                m.EnableKeyword("_OCCLUSIONMAP");
+            });
+            MakeMaterial("M_Road", "Universal Render Pipeline/Lit", m =>
+            {
+                m.SetTexture("_BaseMap", road);
+                m.SetTexture("_BumpMap", roadN);
+                m.SetTexture("_MetallicGlossMap", roadMs);
+                m.SetTexture("_OcclusionMap", roadAo);
+                m.SetTexture("_DetailAlbedoMap", wear);
+                m.SetFloat("_DetailAlbedoMapScale", 1f);
+                m.EnableKeyword("_NORMALMAP");
+                m.EnableKeyword("_METALLICSPECGLOSSMAP");
+                m.EnableKeyword("_OCCLUSIONMAP");
+                m.EnableKeyword("_DETAIL_MULX2");
+            });
+            MakeMaterial("M_CarPaint", "Universal Render Pipeline/Complex Lit", m =>
+            {
+                m.SetTexture("_BaseMap", white);
+                m.SetTexture("_BumpMap", flake);
+                m.SetFloat("_BumpScale", 0.12f);
+                m.SetFloat("_ClearCoatMask", 1f);
+                m.SetFloat("_ClearCoatSmoothness", 0.96f);
+                m.EnableKeyword("_NORMALMAP");
+                m.EnableKeyword("_CLEARCOAT");
+            });
+            MakeMaterial("M_UnlitTransparent", "Universal Render Pipeline/Unlit", m =>
+            {
+                SetTransparent(m, false);
+                m.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>($"{ResTextures}/pbr/car_shadow.png"));
+            });
+            MakeMaterial("M_PlanarReflection", "Apex/PlanarReflection", m => { });
+            // keep TextMeshPro shaders in builds (runtime-created font assets look them up by name)
+            if (Shader.Find("TextMeshPro/Distance Field") != null) MakeMaterial("M_TMP_SDF", "TextMeshPro/Distance Field", m => { });
+            if (Shader.Find("TextMeshPro/Mobile/Distance Field") != null) MakeMaterial("M_TMP_MobileSDF", "TextMeshPro/Mobile/Distance Field", m => { });
             MakeMaterial("M_LitTransparent", "Universal Render Pipeline/Lit", m =>
             {
                 SetTransparent(m, false);
@@ -221,6 +272,9 @@ namespace Apex.EditorTools
             SetProp(so, "m_AdditionalLightsRenderingMode", 1);
             SetProp(so, "m_RequireDepthTexture", true);
             SetProp(so, "m_RequireOpaqueTexture", false);
+            SetProp(so, "m_ReflectionProbeBlending", true);
+            SetProp(so, "m_ReflectionProbeBoxProjection", true);
+            SetProp(so, "m_SoftShadowQuality", 3);
             so.ApplyModifiedPropertiesWithoutUndo();
 
             // Forward+ renderer: many floodlights/spotlights without per-object light limits
@@ -228,6 +282,7 @@ namespace Apex.EditorTools
             if (renderer != null)
             {
                 renderer.renderingMode = RenderingMode.ForwardPlus;
+                EnsureSsao(renderer);
                 EditorUtility.SetDirty(renderer);
             }
 
@@ -240,6 +295,54 @@ namespace Apex.EditorTools
             }
             QualitySettings.SetQualityLevel(Mathf.Clamp(current, 0, QualitySettings.names.Length - 1), false);
             EditorUtility.SetDirty(asset);
+        }
+
+        /// <summary>Adds URP's (internal) Screen Space Ambient Occlusion renderer feature once.</summary>
+        private static void EnsureSsao(UniversalRendererData renderer)
+        {
+            if (renderer.rendererFeatures.Any(f => f != null && f.GetType().Name == "ScreenSpaceAmbientOcclusion")) return;
+            var type = typeof(UniversalRendererData).Assembly.GetType("UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion");
+            if (type == null) { Debug.LogWarning("[ApexBuild] SSAO feature type not found"); return; }
+            var feature = (ScriptableRendererFeature)ScriptableObject.CreateInstance(type);
+            feature.name = "SSAO";
+            AssetDatabase.AddObjectToAsset(feature, renderer);
+            var so = new SerializedObject(renderer);
+            var list = so.FindProperty("m_RendererFeatures");
+            var map = so.FindProperty("m_RendererFeatureMap");
+            list.arraySize++;
+            list.GetArrayElementAtIndex(list.arraySize - 1).objectReferenceValue = feature;
+            if (AssetDatabase.TryGetGUIDAndLocalFileIdentifier(feature, out string _, out long localId))
+            {
+                map.arraySize++;
+                map.GetArrayElementAtIndex(map.arraySize - 1).longValue = localId;
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+            var fso = new SerializedObject(feature);
+            var settings = fso.FindProperty("m_Settings");
+            if (settings != null)
+            {
+                SetFloatSafe(settings.FindPropertyRelative("Intensity"), 0.9f);
+                SetFloatSafe(settings.FindPropertyRelative("Radius"), 0.45f);
+                SetFloatSafe(settings.FindPropertyRelative("DirectLightingStrength"), 0.2f);
+            }
+            fso.ApplyModifiedPropertiesWithoutUndo();
+            Debug.Log("[ApexBuild] SSAO renderer feature added");
+        }
+
+        private static void SetFloatSafe(SerializedProperty p, float v)
+        {
+            if (p != null && p.propertyType == SerializedPropertyType.Float) p.floatValue = v;
+        }
+
+        private static void ImportTextMeshPro()
+        {
+            if (AssetDatabase.IsValidFolder("Assets/TextMesh Pro")) return;
+            var ugui = UnityEditor.PackageManager.PackageInfo.FindForAssetPath("Packages/com.unity.ugui");
+            string pkg = ugui != null ? Path.Combine(ugui.resolvedPath, "Package Resources", "TMP Essential Resources.unitypackage") : null;
+            if (pkg == null || !File.Exists(pkg)) { Debug.LogWarning("[ApexBuild] TMP essentials package not found"); return; }
+            AssetDatabase.ImportPackage(pkg, false);
+            AssetDatabase.Refresh();
+            Debug.Log("[ApexBuild] TextMeshPro essential resources imported");
         }
 
         private static void SetProp(SerializedObject so, string name, object value)

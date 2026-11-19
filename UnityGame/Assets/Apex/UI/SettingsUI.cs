@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Apex.Core;
 using Apex.Rendering;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ namespace Apex.UI
     {
         private static readonly string[] Tabs = { "GRAPHICS", "AUDIO", "CONTROLS", "CAMERA", "GAMEPLAY" };
         private readonly List<RectTransform> _pages = new List<RectTransform>();
-        private readonly List<Text> _tabLabels = new List<Text>();
+        private readonly List<TMP_Text> _tabLabels = new List<TMP_Text>();
         private readonly List<Image> _tabBars = new List<Image>();
         private int _tab;
         private GameSettings _s;

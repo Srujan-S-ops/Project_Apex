@@ -3,6 +3,7 @@ using Apex.Core;
 using Apex.Net;
 using Apex.Race;
 using Apex.Vehicle;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,32 +18,32 @@ namespace Apex.UI
 
         // cluster
         private Image _rpmFill, _shiftFlash;
-        private Text _gear, _speed, _unit, _rpmText;
+        private TMP_Text _gear, _speed, _unit, _rpmText;
         private Image[] _shiftLights;
         private Image _throttle, _brake;
-        private Text _abs, _tcs;
+        private TMP_Text _abs, _tcs;
         private Image _absBg, _tcsBg;
 
         // race info
-        private Text _pos, _posOf, _lap, _raceTime, _posLabel;
-        private Text _current, _last, _best, _pb;
+        private TMP_Text _pos, _posOf, _lap, _raceTime, _posLabel;
+        private TMP_Text _current, _last, _best, _pb;
         private Image[] _sectorBg;
-        private Text[] _sectorText;
-        private Text _delta, _deltaLabel;
+        private TMP_Text[] _sectorText;
+        private TMP_Text _delta, _deltaLabel;
         private RectTransform _tower;
-        private readonly List<(Image bg, Image stripe, Text pos, Text code, Text gap)> _rows = new List<(Image, Image, Text, Text, Text)>();
-        private Text _towerHeader;
+        private readonly List<(Image bg, Image stripe, TMP_Text pos, TMP_Text code, TMP_Text gap)> _rows = new List<(Image, Image, TMP_Text, TMP_Text, TMP_Text)>();
+        private TMP_Text _towerHeader;
 
         // centre
         private Image[] _lights;
         private RectTransform _lightsRoot;
-        private Text _bigMessage;
+        private TMP_Text _bigMessage;
         private CanvasGroup _bigGroup;
         private float _bigTimer;
         private Image _flag;
-        private Text _flagText;
-        private Text _warning;
-        private Text _engineLink;
+        private TMP_Text _flagText;
+        private TMP_Text _warning;
+        private TMP_Text _engineLink;
         private Minimap _minimap;
 
         private readonly SectorStatus[] _sectorStatus = new SectorStatus[3];
@@ -168,7 +169,7 @@ namespace Apex.UI
             UIFactory.Label(panel, "PERSONAL BEST", 16, UITheme.Metal, UITheme.Mono, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(24f, -158f), 200f);
             _pb = UIFactory.Label(panel, "--:--.---", 24, UITheme.Purple, UITheme.Mono, TextAnchor.UpperRight, new Vector2(1, 1), new Vector2(-24f, -154f), 200f);
             _sectorBg = new Image[3];
-            _sectorText = new Text[3];
+            _sectorText = new TMP_Text[3];
             for (int i = 0; i < 3; i++)
             {
                 _sectorBg[i] = UIFactory.Image(panel, "S" + i, UITheme.Solid, new Color(1f, 1f, 1f, 0.08f), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(24f + i * 112f, 14f), new Vector2(106f, 32f));
@@ -217,9 +218,9 @@ namespace Apex.UI
             _bigGroup.alpha = 0f;
             UIFactory.Image(bigRt, "Band", UITheme.GradientH, new Color(0f, 0f, 0f, 0.0f), Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
             _bigMessage = UIFactory.Text(bigRt, "Text", "", 54, UITheme.White, UITheme.Title, TextAnchor.MiddleCenter, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
-            var shadow = _bigMessage.gameObject.AddComponent<Shadow>();
-            shadow.effectColor = new Color(0f, 0f, 0f, 0.8f);
-            shadow.effectDistance = new Vector2(3f, -3f);
+            _bigMessage.fontStyle = FontStyles.Italic;
+            _bigMessage.outlineWidth = 0.12f;
+            _bigMessage.outlineColor = new Color32(0, 0, 0, 200);
 
             _flag = UIFactory.Image(transform, "Flag", UITheme.Skew, UITheme.Green, c, c, new Vector2(0.5f, 1), new Vector2(0f, -110f), new Vector2(260f, 34f));
             _flagText = UIFactory.Text(_flag.transform, "T", "", 20, UITheme.Black, UITheme.Title, TextAnchor.MiddleCenter, Vector2.zero, Vector2.one, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
@@ -390,7 +391,7 @@ namespace Apex.UI
             if (_minimap != null) _minimap.transform.parent.gameObject.SetActive(_s.showMinimap);
         }
 
-        private static void SetPill(Image bg, Text t, bool enabled, bool active, Color activeColor)
+        private static void SetPill(Image bg, TMP_Text t, bool enabled, bool active, Color activeColor)
         {
             if (!enabled) { bg.color = new Color(1f, 1f, 1f, 0.04f); t.color = new Color(1f, 1f, 1f, 0.2f); return; }
             bool blink = active && Mathf.Repeat(Time.time * 8f, 1f) > 0.35f;

@@ -185,7 +185,8 @@ namespace Apex.Track
 
         private void BuildRoad()
         {
-            var asphalt = MaterialLibrary.LitNormal(new Color(0.78f, 0.78f, 0.8f), 0f, 0.42f, MaterialLibrary.Tex("asphalt"), MaterialLibrary.Tex("asphalt_n"), 0.6f);
+            // PBR asphalt (~3.5 m tiles) + large-scale wear/repair/tar-snake layer (full width × 56 m)
+            var asphalt = MaterialLibrary.Road(new Vector2(3.7f, 4f), new Vector2(1f, 0.25f), new Color(0.92f, 0.92f, 0.94f));
             var parent = new GameObject("Road").transform;
             parent.SetParent(_root, false);
             int n = _s.Count;
@@ -210,7 +211,7 @@ namespace Apex.Track
 
         private void BuildKerbs()
         {
-            var kerbMat = MaterialLibrary.Lit(Color.white, 0f, 0.55f, MaterialLibrary.Tex("kerb"));
+            var kerbMat = MaterialLibrary.LitNormal(new Color(0.95f, 0.95f, 0.95f), 0f, 0.5f, MaterialLibrary.Tex("kerb"), MaterialLibrary.Tex("pbr/kerb_n"), 0.8f);
             var mb = new MeshBuilder();
             int n = _s.Count;
             for (int side = -1; side <= 1; side += 2)
@@ -243,7 +244,7 @@ namespace Apex.Track
 
         private void BuildRunoff()
         {
-            var mat = MaterialLibrary.LitNormal(new Color(0.55f, 0.55f, 0.57f), 0f, 0.3f, MaterialLibrary.Tex("asphalt"), MaterialLibrary.Tex("asphalt_n"), 0.4f, new Vector2(2f, 1f));
+            var mat = MaterialLibrary.PBR("road", new Vector2(2.5f, 3f), new Color(0.62f, 0.62f, 0.64f), 0.75f, 0.8f);
             var parent = new GameObject("Runoff").transform;
             parent.SetParent(_root, false);
             int n = _s.Count;
@@ -269,7 +270,7 @@ namespace Apex.Track
 
         private void BuildWalls()
         {
-            var concrete = MaterialLibrary.LitNormal(new Color(0.85f, 0.85f, 0.86f), 0f, 0.25f, MaterialLibrary.Tex("concrete"), MaterialLibrary.Tex("concrete_n"), 0.5f);
+            var concrete = MaterialLibrary.PBR("concrete", new Vector2(0.7f, 1.6f), new Color(0.88f, 0.88f, 0.87f), 1f, 1f);
             var ads = MaterialLibrary.Lit(Color.white, 0f, 0.5f, MaterialLibrary.Tex("adboard"));
             var parent = new GameObject("Barriers").transform;
             parent.SetParent(_root, false);
@@ -345,9 +346,20 @@ namespace Apex.Track
 
         private void BuildMarkings()
         {
-            var white = MaterialLibrary.Lit(new Color(0.92f, 0.92f, 0.9f), 0f, 0.35f);
+            var white = MaterialLibrary.Cutout(MaterialLibrary.Tex("pbr/line_paint"), new Color(0.95f, 0.95f, 0.93f), 0.32f, null, 0.45f);
             var mb = new MeshBuilder();
             int n = _s.Count;
+            // dashed lane separator on straights (3 m paint / 6 m gap)
+            var dash = new MeshBuilder();
+            for (int i = 0; i < n; i++)
+            {
+                float d = V(i);
+                if (Mathf.Abs(_s.Curvature[i]) > 1f / 450f || d % 9f > 3f) continue;
+                Vector3 a0 = P(i, -0.07f, 0.014f), a1 = P(i, 0.07f, 0.014f), b0 = P(i + 1, -0.07f, 0.014f), b1 = P(i + 1, 0.07f, 0.014f);
+                dash.AddQuad(a0, b0, b1, a1, new Vector2(0, d / 10f), new Vector2(0, (d + 2f) / 10f), new Vector2(1, (d + 2f) / 10f), new Vector2(1, d / 10f));
+            }
+            FixUp(dash);
+            if (dash.VertexCount > 0) dash.Build("LaneSeparators", _root, white, false);
             // edge lines
             for (int c = 0; c < n; c += Chunk)
             {
@@ -527,7 +539,7 @@ namespace Apex.Track
                 }
             }
 
-            var ground = MaterialLibrary.LitNormal(new Color(0.8f, 0.8f, 0.8f), 0f, 0.2f, MaterialLibrary.Tex("paving"), MaterialLibrary.Tex("paving_n"), 0.5f);
+            var ground = MaterialLibrary.PBR("concrete", new Vector2(1f, 1f), new Color(0.78f, 0.77f, 0.75f), 0.8f, 0.8f);
             var parent = new GameObject("Terrain").transform;
             parent.SetParent(_root, false);
             const int chunkCells = 50;
@@ -542,7 +554,7 @@ namespace Apex.Track
                         for (int x = cx; x <= x1; x++)
                         {
                             float wx = b.min.x + x * step, wz = b.min.z + z * step;
-                            mb.AddVertex(new Vector3(wx, heights[z * (nx + 1) + x], wz), Vector3.up, new Vector2(wx / 6f, wz / 6f));
+                            mb.AddVertex(new Vector3(wx, heights[z * (nx + 1) + x], wz), Vector3.up, new Vector2(wx / 7f, wz / 7f));
                         }
                     for (int z = 0; z < z1 - cz; z++)
                         for (int x = 0; x < x1 - cx; x++)

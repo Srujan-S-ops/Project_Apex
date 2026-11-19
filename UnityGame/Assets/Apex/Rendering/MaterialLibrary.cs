@@ -111,6 +111,75 @@ namespace Apex.Rendering
             return m;
         }
 
+        // ------------------------------------------------------------------ PBR (visual overhaul)
+
+        private static readonly int MetallicGlossMap = Shader.PropertyToID("_MetallicGlossMap");
+        private static readonly int OcclusionMap = Shader.PropertyToID("_OcclusionMap");
+        private static readonly int OcclusionStrength = Shader.PropertyToID("_OcclusionStrength");
+        private static readonly int DetailAlbedoMap = Shader.PropertyToID("_DetailAlbedoMap");
+
+        /// <summary>
+        /// Full PBR material from a processed set in Resources/Textures/pbr (albedo, normal, metallic/smoothness, AO).
+        /// smoothness acts as a multiplier on the smoothness map.
+        /// </summary>
+        public static Material PBR(string set, Vector2 tiling, Color tint, float smoothness = 1f, float normalStrength = 1f)
+        {
+            var m = new Material(Template("M_LitPBR"));
+            ApplySet(m, set, tiling, tint, smoothness, normalStrength);
+            return m;
+        }
+
+        /// <summary>Road surface: PBR asphalt plus a large-scale wear / repair / tar-snake detail layer.</summary>
+        public static Material Road(Vector2 tiling, Vector2 wearTiling, Color tint)
+        {
+            var m = new Material(Template("M_Road"));
+            ApplySet(m, "road", tiling, tint, 1f, 1f);
+            var wear = Tex("pbr/road_wear");
+            if (wear != null)
+            {
+                m.SetTexture(DetailAlbedoMap, wear);
+                m.SetTextureScale(DetailAlbedoMap, wearTiling);
+            }
+            return m;
+        }
+
+        private static void ApplySet(Material m, string set, Vector2 tiling, Color tint, float smoothness, float normalStrength)
+        {
+            m.SetColor(BaseColor, tint);
+            var albedo = Tex($"pbr/{set}_albedo");
+            var normal = Tex($"pbr/{set}_n");
+            var ms = Tex($"pbr/{set}_ms");
+            var ao = Tex($"pbr/{set}_ao");
+            if (albedo != null) { m.SetTexture(BaseMap, albedo); m.SetTextureScale(BaseMap, tiling); }
+            if (normal != null) m.SetTexture(BumpMap, normal);
+            m.SetFloat(BumpScale, normalStrength);
+            if (ms != null) m.SetTexture(MetallicGlossMap, ms);
+            m.SetFloat(Smoothness, smoothness);
+            m.SetFloat(Metallic, 1f);
+            if (ao != null) { m.SetTexture(OcclusionMap, ao); m.SetFloat(OcclusionStrength, 1f); }
+            else m.SetFloat(OcclusionStrength, 0f);
+        }
+
+        /// <summary>Multi-layer automotive paint: metallic base with flake normal and a clear coat.</summary>
+        public static Material CarPaint(Texture livery, float metallic = 0.55f, float baseSmoothness = 0.62f)
+        {
+            var m = new Material(Template("M_CarPaint"));
+            m.SetColor(BaseColor, Color.white);
+            if (livery != null) m.SetTexture(BaseMap, livery);
+            m.SetFloat(Metallic, metallic);
+            m.SetFloat(Smoothness, baseSmoothness);
+            m.SetTextureScale(BumpMap, new Vector2(18f, 9f));
+            return m;
+        }
+
+        public static Material UnlitTransparent(Texture tex, Color color)
+        {
+            var m = new Material(Template("M_UnlitTransparent"));
+            m.SetColor(BaseColor, color);
+            if (tex != null) m.SetTexture(BaseMap, tex);
+            return m;
+        }
+
         private static void Configure(Material m, Color color, float metallic, float smoothness, Texture tex, Vector2? tiling)
         {
             m.SetColor(BaseColor, color);

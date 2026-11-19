@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Apex.Core;
 using Apex.Race;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace Apex.UI
     public sealed class PauseUI : UIScreen
     {
         public Action Resume, Restart, OpenSettings, MainMenu, EndSession;
-        private Text _summary;
+        private TMP_Text _summary;
         private RaceManager _race;
 
         public static PauseUI Create(Transform parent, RaceManager race)
@@ -39,7 +40,7 @@ namespace Apex.UI
             UIFactory.MenuItem(list, _race.Config.mode == GameMode.TimeTrial ? "05" : "04", "MAIN MENU", "Abandon the session", () => MainMenu?.Invoke());
             FirstSelected = first.gameObject;
             _summary = UIFactory.Label(transform, "", 22, UITheme.Metal, UITheme.Body, TextAnchor.LowerLeft, new Vector2(0, 0), new Vector2(100f, 70f), 900f);
-            _summary.lineSpacing = 1.3f;
+            _summary.lineSpacing = 30f;
             InitScreen();
             BackRequested = () => Resume?.Invoke();
         }

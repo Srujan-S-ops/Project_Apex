@@ -3,6 +3,7 @@ using Apex.Core;
 using Apex.Net;
 using Apex.Track;
 using Apex.Vehicle;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ namespace Apex.UI
     public sealed class MainMenuUI : UIScreen
     {
         public Action QuickRace, TimeTrial, Garage, Settings, Exit;
-        private Text _status, _statusDot, _profile, _carLine;
+        private TMP_Text _status, _statusDot, _profile, _carLine;
 
         public static MainMenuUI Create(Transform parent)
         {
@@ -49,7 +50,7 @@ namespace Apex.UI
             var card = UIFactory.Panel(transform, "Profile", new Vector2(1, 0), new Vector2(1, 0), new Vector2(1, 0), new Vector2(-70f, 110f), new Vector2(520f, 250f));
             UIFactory.Label(card, "DRIVER PROFILE", 18, UITheme.Red, UITheme.Mono, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(28f, -22f), 400f);
             _profile = UIFactory.Label(card, "", 22, UITheme.White, UITheme.Body, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(28f, -56f), 470f);
-            _profile.lineSpacing = 1.25f;
+            _profile.lineSpacing = 25f;
             _carLine = UIFactory.Label(transform, "", 22, UITheme.Metal, UITheme.Mono, TextAnchor.UpperRight, new Vector2(1, 1), new Vector2(-70f, -70f), 900f);
 
             _statusDot = UIFactory.Label(transform, "●", 22, UITheme.Steel, UITheme.Body, TextAnchor.LowerLeft, new Vector2(0, 0), new Vector2(96f, 40f), 40f);
@@ -92,7 +93,7 @@ namespace Apex.UI
     {
         public Action StartRace;
         private ApexStepper _mode, _diff, _opp, _laps, _car;
-        private Text _info, _pb;
+        private TMP_Text _info, _pb;
         private RawImage _map;
 
         public static RaceSetupUI Create(Transform parent)
@@ -127,7 +128,7 @@ namespace Apex.UI
             var spline = TrackSpline.FromLayout(TrackLayout.ControlPoints, TrackLayout.TargetLength);
             _map.texture = Minimap.RenderTrack(spline, 640, 330, 3f, out _);
             _info = UIFactory.Label(card, "", 20, UITheme.Metal, UITheme.Body, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(30f, -460f), 660f);
-            _info.lineSpacing = 1.2f;
+            _info.lineSpacing = 20f;
             _pb = UIFactory.Label(card, "", 22, UITheme.White, UITheme.Mono, TextAnchor.UpperRight, new Vector2(1, 1), new Vector2(-30f, -460f), 360f);
 
             UIFactory.ActionButton(transform, "START RACE", () => StartRace?.Invoke(), true, new Vector2(1, 0), new Vector2(1, 0), new Vector2(-80f, 70f), new Vector2(360f, 72f));
@@ -175,9 +176,9 @@ namespace Apex.UI
         public Action<int> CarChanged;
         public Action Confirmed;
         private ApexStepper _car;
-        private Text _maker, _name, _engine;
+        private TMP_Text _maker, _name, _engine;
         private Image[] _bars;
-        private Text[] _values;
+        private TMP_Text[] _values;
         private int _index;
 
         public static GarageUI Create(Transform parent)
@@ -199,7 +200,7 @@ namespace Apex.UI
 
             string[] labels = { "POWER", "WEIGHT", "DOWNFORCE", "TOP SPEED", "POWER / WEIGHT" };
             _bars = new Image[labels.Length];
-            _values = new Text[labels.Length];
+            _values = new TMP_Text[labels.Length];
             for (int i = 0; i < labels.Length; i++)
             {
                 float y = -400f - i * 66f;

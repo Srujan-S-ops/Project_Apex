@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace Apex.UI
@@ -20,9 +21,9 @@ namespace Apex.UI
         public static readonly Color PanelBg = new Color(0.035f, 0.037f, 0.043f, 0.86f);
         public static readonly Color PanelBgSolid = new Color(0.05f, 0.052f, 0.06f, 0.97f);
 
-        public static Font Title { get; private set; }
-        public static Font Body { get; private set; }
-        public static Font Mono { get; private set; }
+        public static TMP_FontAsset Title { get; private set; }
+        public static TMP_FontAsset Body { get; private set; }
+        public static TMP_FontAsset Mono { get; private set; }
 
         public static Sprite Rounded, Chamfer, Circle, Ring, Glow, GradientV, GradientH, Skew, Solid, Stripes;
 
@@ -32,11 +33,20 @@ namespace Apex.UI
         {
             if (_ready) return;
             _ready = true;
-            // System font (not redistributed): Bahnschrift ships with Windows 10/11.
-            Title = Font.CreateDynamicFontFromOSFont(new[] { "Bahnschrift SemiBold Condensed", "Bahnschrift", "Segoe UI Semibold", "Arial" }, 64);
-            Body = Font.CreateDynamicFontFromOSFont(new[] { "Bahnschrift", "Segoe UI", "Arial" }, 48);
-            Mono = Font.CreateDynamicFontFromOSFont(new[] { "Bahnschrift SemiBold", "Bahnschrift", "Consolas" }, 48);
-            if (Title == null) Title = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            // TextMeshPro dynamic font assets built at runtime from installed system fonts (Bahnschrift ships
+            // with Windows 10/11; the font file is never copied into the project).
+            var symbols = SystemFont(("Segoe UI Symbol", "Regular"), ("Segoe UI", "Regular"));
+            Title = SystemFont(("Bahnschrift", "SemiBold Condensed"), ("Bahnschrift", "Bold"), ("Bahnschrift", "Regular"), ("Segoe UI", "Bold"), ("Arial", "Bold"));
+            Body = SystemFont(("Bahnschrift", "Regular"), ("Segoe UI", "Regular"), ("Arial", "Regular"));
+            Mono = SystemFont(("Bahnschrift", "SemiBold"), ("Bahnschrift", "Regular"), ("Consolas", "Regular"));
+            var fallbackDefault = TMP_Settings.defaultFontAsset;
+            foreach (var f in new[] { Title, Body, Mono })
+            {
+                if (f == null) continue;
+                if (symbols != null && symbols != f) f.fallbackFontAssetTable.Add(symbols);
+                if (fallbackDefault != null && fallbackDefault != f) f.fallbackFontAssetTable.Add(fallbackDefault);
+            }
+            if (Title == null) Title = fallbackDefault;
             if (Body == null) Body = Title;
             if (Mono == null) Mono = Body;
 
@@ -62,6 +72,24 @@ namespace Apex.UI
                 return Mathf.Clamp01(x - edge + 0.5f) * Mathf.Clamp01(63f - 12f + edge - x + 0.5f);
             }), 14);
             Stripes = MakeSprite(Tex(32, 32, (x, y) => ((x + y) / 8) % 2 == 0 ? 1f : 0.35f), 0, TextureWrapMode.Repeat);
+        }
+
+        private static TMP_FontAsset SystemFont(params (string family, string style)[] candidates)
+        {
+            foreach (var (family, style) in candidates)
+            {
+                try
+                {
+                    var fa = TMP_FontAsset.CreateFontAsset(family, style, 90);
+                    if (fa != null)
+                    {
+                        fa.name = family + " " + style;
+                        return fa;
+                    }
+                }
+                catch (System.Exception e) { Debug.LogWarning($"[UITheme] font {family} {style} unavailable: {e.Message}"); }
+            }
+            return null;
         }
 
         private static float RoundRect(int x, int y, int w, int h, float r)

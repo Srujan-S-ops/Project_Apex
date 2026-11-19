@@ -8,7 +8,7 @@ namespace Apex.Track
     /// Trackside environment: city, grandstands, pit complex, paddock, floodlights, braking boards,
     /// footbridges, harbour. Geometry is batched per material to keep draw calls low.
     /// </summary>
-    public sealed class EnvironmentBuilder
+    public sealed partial class EnvironmentBuilder
     {
         private readonly TrackWorld _w;
         private readonly TrackSpline _s;
@@ -19,8 +19,6 @@ namespace Apex.Track
         private readonly List<Rect> _blocked = new List<Rect>();   // axis-aligned exclusion zones (x/z)
 
         private Material _concrete, _roof, _steel, _glassEmit, _crowd, _seatRed, _adsEmit, _white, _dark;
-        private Material[] _facades;
-        private MeshBuilder[] _facadeMb;
         private MeshBuilder _roofMb, _concreteMb, _steelMb, _darkMb, _whiteMb;
 
         public EnvironmentBuilder(TrackWorld world, Transform root, int quality)
@@ -41,8 +39,8 @@ namespace Apex.Track
 
         public IEnumerable<float> Build()
         {
-            _concrete = MaterialLibrary.LitNormal(new Color(0.8f, 0.8f, 0.8f), 0f, 0.25f, MaterialLibrary.Tex("concrete"), MaterialLibrary.Tex("concrete_n"), 0.5f, new Vector2(0.25f, 0.25f));
-            _roof = MaterialLibrary.Lit(new Color(0.22f, 0.22f, 0.24f), 0.1f, 0.3f);
+            _concrete = MaterialLibrary.PBR("concrete", new Vector2(0.25f, 0.25f), new Color(0.85f, 0.85f, 0.84f), 1f, 1f);
+            _roof = MaterialLibrary.PBR("concrete", new Vector2(0.12f, 0.12f), new Color(0.32f, 0.32f, 0.34f), 0.6f, 1f);
             _steel = MaterialLibrary.Lit(new Color(0.3f, 0.31f, 0.33f), 0.75f, 0.55f);
             _glassEmit = MaterialLibrary.Emissive(new Color(0.15f, 0.18f, 0.22f), new Color(1f, 0.85f, 0.65f), 1.1f, MaterialLibrary.Tex("glass_band"));
             _crowd = MaterialLibrary.Cutout(MaterialLibrary.Tex("crowd"), Color.white, 0.45f, null, 0.2f);
@@ -50,14 +48,7 @@ namespace Apex.Track
             _adsEmit = MaterialLibrary.Emissive(Color.white, Color.white, 0.9f, MaterialLibrary.Tex("adboard"));
             _white = MaterialLibrary.Lit(new Color(0.92f, 0.92f, 0.92f), 0f, 0.5f);
             _dark = MaterialLibrary.Lit(new Color(0.04f, 0.04f, 0.05f), 0f, 0.3f);
-            _facades = new Material[3];
-            _facadeMb = new MeshBuilder[3];
-            for (int i = 0; i < 3; i++)
-            {
-                _facades[i] = MaterialLibrary.Emissive(Color.white, new Color(1f, 0.82f, 0.6f), 1.15f, MaterialLibrary.Tex("facade_" + i));
-                _facades[i].SetTexture("_EmissionMap", MaterialLibrary.Tex("facade_" + i + "_e"));
-                _facadeMb[i] = new MeshBuilder();
-            }
+            InitCityMaterials();
             _roofMb = new MeshBuilder();
             _concreteMb = new MeshBuilder();
             _steelMb = new MeshBuilder();
@@ -74,6 +65,7 @@ namespace Apex.Track
             yield return 0.85f;
             BuildHarbour();
             BuildCity();
+            BuildStreetscape();
             yield return 0.92f;
             Flush();
             BuildTvPosts();
@@ -82,7 +74,7 @@ namespace Apex.Track
 
         private void Flush()
         {
-            for (int i = 0; i < 3; i++) if (_facadeMb[i].VertexCount > 0) BuildSplit(_facadeMb[i], "City" + i, _facades[i]);
+            FlushCity();
             BuildSplit(_roofMb, "Roofs", _roof);
             BuildSplit(_concreteMb, "Concrete", _concrete);
             BuildSplit(_steelMb, "Steel", _steel);
@@ -100,36 +92,6 @@ namespace Apex.Track
         // ------------------------------------------------------------------ helpers
 
         private static Quaternion Yaw(Vector3 fwd) => Quaternion.LookRotation(new Vector3(fwd.x, 0f, fwd.z).normalized, Vector3.up);
-
-        /// <summary>Building box with façade UVs (1 u = 4 m bay, 1 v = 3.4 m floor).</summary>
-        private void Building(Vector3 baseCenter, Quaternion rot, float width, float depth, float height, int facade)
-        {
-            var mb = _facadeMb[facade];
-            float sink = 18f;
-            Vector3 c = baseCenter + Vector3.up * (height - sink) * 0.5f;
-            float h = height + sink;
-            Vector3 hx = rot * Vector3.right * width * 0.5f, hz = rot * Vector3.forward * depth * 0.5f, hy = Vector3.up * h * 0.5f;
-            float v0 = -sink / 13.6f, v1 = height / 13.6f;   // texture tile = 2 bays (8 m) x 4 floors (13.6 m)
-            void Face(Vector3 a, Vector3 b, float len)   // a→b horizontal bottom edge, outward is to the right of a→b looking from outside
-            {
-                Vector3 up = Vector3.up * h;
-                Vector3 bottomA = a - hy, bottomB = b - hy;
-                mb.AddQuad(bottomA, bottomA + up, bottomB + up, bottomB,
-                    new Vector2(0, v0), new Vector2(0, v1), new Vector2(len / 8f, v1), new Vector2(len / 8f, v0));
-            }
-            Vector3 p0 = c - hx - hz, p1 = c + hx - hz, p2 = c + hx + hz, p3 = c - hx + hz;
-            Face(p0, p1, width);   // front (-z) seen from outside: left→right is -x → +x
-            Face(p1, p2, depth);
-            Face(p2, p3, width);
-            Face(p3, p0, depth);
-            // roof + parapet
-            Vector3 top = c + hy;
-            _roofMb.AddQuad(top - hx - hz, top - hx + hz, top + hx + hz, top + hx - hz);
-            _concreteMb.AddBox(top + Vector3.up * 0.5f + hz * 0.98f, new Vector3(width, 1f, 0.4f), rot);
-            _concreteMb.AddBox(top + Vector3.up * 0.5f - hz * 0.98f, new Vector3(width, 1f, 0.4f), rot);
-            if (_rng.NextDouble() < 0.4)
-                _steelMb.AddBox(top + Vector3.up * 1.4f + hx * R(-0.5f, 0.5f), new Vector3(R(3f, 6f), 2.8f, R(3f, 6f)), rot);
-        }
 
         private bool Clear(Vector3 center, Quaternion rot, float width, float depth, float minTrackGap)
         {

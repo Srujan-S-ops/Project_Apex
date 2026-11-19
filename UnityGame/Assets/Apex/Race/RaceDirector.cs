@@ -73,6 +73,7 @@ namespace Apex.Race
 
             Vector3 probePos = _world.GridSlots[0].position + Vector3.up * 12f;
             SceneLighting.AddReflectionProbe(_root, probePos);
+            SceneLighting.AddTrackProbes(_root, _world);
 
             // ---------------- camera, audio, UI
             var cam = SceneLighting.CreateCamera(_root, "RaceCamera", _settings.fieldOfView);
