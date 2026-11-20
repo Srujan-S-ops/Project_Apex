@@ -17,6 +17,13 @@ namespace Apex.Track
         {
             Mu = 1.35f, MassKg = 1300f, DownforceCoef = 0.5f * 1.225f * 3.1f, MaxAccel = 7.5f, MaxBrake = 13.5f, TopSpeed = 78f
         };
+
+        public static VehicleEnvelope Formula => new VehicleEnvelope
+        {
+            Mu = 1.5f, MassKg = 800f, DownforceCoef = 0.5f * 1.225f * 4.8f, MaxAccel = 10f, MaxBrake = 17f, TopSpeed = 90f
+        };
+
+        public static VehicleEnvelope For(Apex.Vehicle.CarClass c) => c == Apex.Vehicle.CarClass.Formula ? Formula : Gt3;
     }
 
     public struct CornerInfo

@@ -544,7 +544,7 @@ namespace Apex.Vehicle
             db.Build("Sponsors", root, sponsors, false);
         }
 
-        private static Vector2 Cell(int cell, int u, int v)
+        internal static Vector2 Cell(int cell, int u, int v)
         {
             int cx = cell % 4, cy = 1 - cell / 4;
             return new Vector2((cx + u) / 4f, (cy + v) / 2f);
@@ -647,8 +647,8 @@ namespace Apex.Vehicle
         private static Material _chromeShared;
         private static Material ChromeShared => _chromeShared != null ? _chromeShared : (_chromeShared = MaterialLibrary.Lit(new Color(0.88f, 0.88f, 0.9f), 1f, 0.95f));
 
-        private static (Transform knuckle, Transform spinner) BuildWheel(Transform root, int index, Vector3 pos, float radius,
-            Material rubber, Material rimMat, Material discMat, Material caliperMat, Material nutMat, bool highDetail)
+        internal static (Transform knuckle, Transform spinner) BuildWheel(Transform root, int index, Vector3 pos, float radius,
+            Material rubber, Material rimMat, Material discMat, Material caliperMat, Material nutMat, bool highDetail, float halfWidth = 0.155f)
         {
             bool left = index == 0 || index == 2;
             var knuckle = new GameObject("Knuckle_" + index).transform;
@@ -669,7 +669,7 @@ namespace Apex.Vehicle
             spinner.SetParent(orient, false);
             int seg = highDetail ? 36 : 24;
 
-            float w = 0.155f, rimR = 0.235f;
+            float w = halfWidth, rimR = 0.235f;
             var tyre = new MeshBuilder();
             tyre.AddLathe(Vector3.zero, Quaternion.identity, new List<Vector2>
             {

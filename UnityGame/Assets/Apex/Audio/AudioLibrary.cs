@@ -19,6 +19,10 @@ namespace Apex.Audio
             switch (carId)
             {
                 case "vanta_evo": return new EngineVoice { Id = carId, Cylinders = 10, Resonance = 330f, Brightness = 0.7f, Lope = 0.1f, Grit = 0.3f };
+                // turbo-hybrid V6 single-seaters: high-revving, bright, smooth
+                case "apex_f1": return new EngineVoice { Id = carId, Cylinders = 6, Resonance = 540f, Brightness = 0.86f, Lope = 0.03f, Grit = 0.22f };
+                case "vanta_f1": return new EngineVoice { Id = carId, Cylinders = 6, Resonance = 600f, Brightness = 0.9f, Lope = 0.02f, Grit = 0.2f };
+                case "kaiser_f1": return new EngineVoice { Id = carId, Cylinders = 6, Resonance = 500f, Brightness = 0.82f, Lope = 0.04f, Grit = 0.26f };
                 case "kaiser_rs": return new EngineVoice { Id = carId, Cylinders = 8, Resonance = 190f, Brightness = 0.45f, Lope = 0.3f, Grit = 0.42f };
                 default: return new EngineVoice { Id = carId, Cylinders = 6, Resonance = 280f, Brightness = 0.62f, Lope = 0.16f, Grit = 0.33f };
             }

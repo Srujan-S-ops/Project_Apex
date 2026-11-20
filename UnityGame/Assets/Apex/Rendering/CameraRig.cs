@@ -95,7 +95,7 @@ namespace Apex.Rendering
                     break;
                 }
                 case CameraView.Hood:
-                    transform.position = t.TransformPoint(new Vector3(0f, 1.2f, 0.3f));
+                    transform.position = t.TransformPoint(Target.Spec != null ? Target.Spec.HoodCamera : new Vector3(0f, 1.2f, 0.3f));
                     transform.rotation = _lookBack ? Quaternion.LookRotation(-t.forward, t.up) : Quaternion.LookRotation(t.forward, t.up);
                     targetFov += 4f;
                     break;

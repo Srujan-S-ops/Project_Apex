@@ -53,7 +53,9 @@ namespace Apex.Race
 
             // ---------------- circuit
             var spline = TrackSpline.FromLayout(TrackLayout.ControlPoints, TrackLayout.TargetLength);
+            // circuit dressing (kerbs, boards) always uses the GT3 reference envelope; the AI uses its class envelope
             var analysis = TrackAnalysis.Compute(spline, VehicleEnvelope.Gt3);
+            var aiAnalysis = _cfg.carClass == CarClass.GT3 ? analysis : TrackAnalysis.Compute(spline, VehicleEnvelope.For(_cfg.carClass));
             SceneReady.Progress = 0.05f;
             yield return null;
             var builder = new TrackBuilder(spline, analysis, _root, quality);
@@ -65,7 +67,7 @@ namespace Apex.Race
 
             // ---------------- race + field
             _race = gameObject.AddComponent<RaceManager>();
-            var aiModel = new AITrackModel(spline, analysis);
+            var aiModel = new AITrackModel(spline, aiAnalysis);
             _race.Initialise(_cfg, _world, aiModel);
             SpawnField(aiModel);
             SceneReady.Progress = 0.97f;
@@ -109,13 +111,14 @@ namespace Apex.Race
             int opponents = _cfg.mode == GameMode.QuickRace ? Mathf.Clamp(_cfg.opponents, 1, 4) : 0;
             var raceRoot = new GameObject("Cars").transform;
             raceRoot.SetParent(_root, false);
-            var playerSpec = CarSpec.Roster[Mathf.Clamp(_cfg.carIndex, 0, CarSpec.Roster.Length - 1)];
+            var roster = CarSpec.RosterFor(_cfg.carClass);
+            var playerSpec = _cfg.CarSpec;
 
             for (int i = 0; i < opponents; i++)
             {
                 var rival = Rivals[i];
                 var liv = CarSpec.AiLiveries[i];
-                var spec = CarSpec.Roster[(i + 1) % CarSpec.Roster.Length].WithColors(liv.body, liv.accent);
+                var spec = roster[(i + 1) % roster.Length].WithColors(liv.body, liv.accent);
                 var livery = new CarVisualBuilder.Livery { Body = liv.body, Accent = liv.accent, Trim = spec.TrimColor, Helmet = liv.accent, Number = liv.number, Team = liv.team };
                 var car = CarFactory.Create(raceRoot, spec, livery, false, true, "AI_" + rival.code);
                 var pose = _world.GridSlots[i];

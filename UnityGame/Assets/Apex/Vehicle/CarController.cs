@@ -13,7 +13,7 @@ namespace Apex.Vehicle
     {
         public const int FL = 0, FR = 1, RL = 2, RR = 3;
         private const float AirDensity = 1.225f;
-        private const float SuspensionDistance = 0.14f;
+        private float SuspensionDistance = 0.14f;
 
         public CarSpec Spec { get; private set; }
         public ICarInput Input { get; set; }
@@ -70,6 +70,7 @@ namespace Apex.Vehicle
         public void Setup(CarSpec spec)
         {
             Spec = spec;
+            SuspensionDistance = spec.SuspensionDistance;
             Body = GetComponent<Rigidbody>();
             Body.mass = spec.MassKg;
             Body.linearDamping = 0f;
@@ -102,7 +103,7 @@ namespace Apex.Vehicle
                 Wheels[i] = wc;
             }
             Wheels[0].ConfigureVehicleSubsteps(5f, 16, 22);
-            Body.centerOfMass = new Vector3(0f, 0.33f, 0.04f);
+            Body.centerOfMass = new Vector3(0f, spec.CenterOfMassHeight, 0.04f);
             Body.ResetInertiaTensor();
             Body.inertiaTensor *= 1.1f;
             EngineRpm = spec.IdleRpm;
@@ -110,15 +111,15 @@ namespace Apex.Vehicle
 
         private void ConfigureWheel(WheelCollider wc, bool front)
         {
-            wc.mass = 22f;
+            wc.mass = Spec.WheelMass;
             wc.radius = Spec.WheelRadius;
             wc.wheelDampingRate = 0.3f;
             wc.suspensionDistance = SuspensionDistance;
             wc.forceAppPointDistance = 0.12f;
             var spring = new JointSpring
             {
-                spring = front ? 82000f : 88000f,
-                damper = front ? 5600f : 6000f,
+                spring = front ? Spec.SpringFront : Spec.SpringRear,
+                damper = front ? Spec.DamperFront : Spec.DamperRear,
                 targetPosition = 0.45f
             };
             wc.suspensionSpring = spring;
@@ -445,8 +446,8 @@ namespace Apex.Vehicle
 
         private void ApplyAntiRoll()
         {
-            AntiRoll(Wheels[FL], Wheels[FR], 11000f);
-            AntiRoll(Wheels[RL], Wheels[RR], 8500f);
+            AntiRoll(Wheels[FL], Wheels[FR], Spec.AntiRollFront);
+            AntiRoll(Wheels[RL], Wheels[RR], Spec.AntiRollRear);
         }
 
         private void AntiRoll(WheelCollider left, WheelCollider right, float stiffness)
@@ -472,13 +473,28 @@ namespace Apex.Vehicle
 
         private void OnCollisionEnter(Collision c)
         {
+            if (c.contactCount == 0) return;
+            // ContinuousSpeculative CCD reports contacts that are still apart (margin grows with speed, ~0.8 m at
+            // 80 m/s). Those are not impacts: ignore them for effects and contact statistics.
+            // A contact is real when its gap closes within one physics step at the closing speed along its normal.
+            int best = -1;
+            float bestMargin = float.MaxValue;
+            for (int i = 0; i < c.contactCount; i++)
+            {
+                var cp = c.GetContact(i);
+                float closing = Mathf.Abs(Vector3.Dot(c.relativeVelocity, cp.normal));
+                float margin = cp.separation - closing * Time.fixedDeltaTime - 0.02f;
+                if (margin < bestMargin) { bestMargin = margin; best = i; }
+            }
+            if (best < 0 || bestMargin > 0f) return;
+            var contact = c.GetContact(best);
             float impact = c.relativeVelocity.magnitude;
-            if (impact > 4f && c.contactCount > 0)
+            if (impact > 4f)
             {
                 if (c.rigidbody != null) CarContacts++;
-                else if (Mathf.Abs(c.GetContact(0).normal.y) < 0.5f) WallContacts++;
+                else if (Mathf.Abs(contact.normal.y) < 0.5f) WallContacts++;
             }
-            if (impact > 1.5f && c.contactCount > 0) Collided?.Invoke(impact, c.GetContact(0).point);
+            if (impact > 1.5f) Collided?.Invoke(impact, contact.point);
         }
 
         /// <summary>True when the car is upside down or on its side.</summary>

@@ -82,6 +82,7 @@ namespace Apex.Core
         public int Laps = 1;
         public Difficulty Difficulty = Difficulty.Hard;
         public int Quality = -1;
+        public Apex.Vehicle.CarClass CarClass = Apex.Vehicle.CarClass.GT3;
 
         public static AutoTestOptions FromCommandLine()
         {
@@ -95,6 +96,7 @@ namespace Apex.Core
                 else if (a == "-apexOut" && i + 1 < args.Length) o.OutputDir = args[++i];
                 else if (a == "-apexLaps" && i + 1 < args.Length && int.TryParse(args[++i], out int l)) o.Laps = Mathf.Clamp(l, 1, 10);
                 else if (a == "-apexTimeTrial") o.Mode = GameMode.TimeTrial;
+                else if (a == "-apexClass" && i + 1 < args.Length && Enum.TryParse(args[++i], true, out Apex.Vehicle.CarClass cc)) o.CarClass = cc;
                 else if (a == "-apexQuality" && i + 1 < args.Length && int.TryParse(args[++i], out int q)) o.Quality = Mathf.Clamp(q, 0, 3);
                 else if (a == "-apexDifficulty" && i + 1 < args.Length && Enum.TryParse(args[++i], true, out Difficulty d)) o.Difficulty = d;
             }

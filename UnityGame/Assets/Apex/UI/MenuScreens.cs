@@ -82,7 +82,7 @@ namespace Apex.UI
                     _status.text = $"OFFLINE MODE  ·  LOCAL AI + LOCAL RECORDS  ({svc.Launcher.Status})";
                     break;
             }
-            var spec = CarSpec.Roster[Mathf.Clamp(RaceConfig.Current.carIndex, 0, CarSpec.Roster.Length - 1)];
+            var spec = RaceConfig.Current.CarSpec;
             _carLine.text = $"{spec.Name}   ·   {TrackIds.HarbourGPName}";
             _profile.text = ProfileCache.Describe();
         }
@@ -92,7 +92,8 @@ namespace Apex.UI
     public sealed class RaceSetupUI : UIScreen
     {
         public Action StartRace;
-        private ApexStepper _mode, _diff, _opp, _laps, _car;
+        public Action<CarClass> ClassChanged;
+        private ApexStepper _mode, _diff, _opp, _laps, _class, _car;
         private TMP_Text _info, _pb;
         private RawImage _map;
 
@@ -109,13 +110,21 @@ namespace Apex.UI
             UIFactory.FullImage(transform, "Dim", UITheme.GradientH, new Color(0f, 0f, 0f, 0.9f)).rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             UIFactory.Heading(transform, "EVENT · CONFIGURATION", "RACE SETUP", new Vector2(0, 1), new Vector2(96f, -70f));
             var cfg = RaceConfig.Current;
-            var list = UIFactory.VerticalList(transform, "Options", new Vector2(0, 1), new Vector2(0, 1), new Vector2(96f, -230f), new Vector2(900f, 600f), 8f);
+            var list = UIFactory.VerticalList(transform, "Options", new Vector2(0, 1), new Vector2(0, 1), new Vector2(96f, -230f), new Vector2(900f, 700f), 8f);
             UIFactory.Stepper(list, "TRACK", new[] { "PORTO VELA" }, 0, _ => { }, 900f, "Street circuit · 3.50 km · 9 named corners");
             _mode = UIFactory.Stepper(list, "GAME MODE", new[] { "QUICK RACE", "TIME TRIAL" }, (int)cfg.mode, i => { cfg.mode = (GameMode)i; RefreshInteractable(); RefreshInfo(); }, 900f);
             _diff = UIFactory.Stepper(list, "AI DIFFICULTY", new[] { "EASY", "MEDIUM", "HARD" }, (int)cfg.difficulty, i => { cfg.difficulty = (Difficulty)i; RefreshInfo(); }, 900f, "Pace, consistency and racecraft of the field");
             _opp = UIFactory.Stepper(list, "OPPONENTS", new[] { "1", "2", "3", "4" }, Mathf.Clamp(cfg.opponents, 1, 4) - 1, i => { cfg.opponents = i + 1; RefreshInfo(); }, 900f, "Aggressive · Defensive · Balanced personalities");
             _laps = UIFactory.Stepper(list, "RACE LENGTH", new[] { "1 LAP", "2 LAPS", "3 LAPS", "4 LAPS", "5 LAPS", "6 LAPS", "7 LAPS", "8 LAPS", "9 LAPS", "10 LAPS" }, Mathf.Clamp(cfg.laps, 1, 10) - 1, i => { cfg.laps = i + 1; RefreshInfo(); }, 900f);
-            var names = Array.ConvertAll(CarSpec.Roster, c => c.Name);
+            _class = UIFactory.Stepper(list, "CAR CLASS", ClassNames, (int)cfg.carClass, i =>
+            {
+                cfg.carClass = (CarClass)i;
+                cfg.carIndex = Mathf.Clamp(cfg.carIndex, 0, CarSpec.RosterFor(cfg.carClass).Length - 1);
+                RefreshCarNames(_car, cfg.carClass, cfg.carIndex);
+                RefreshInfo();
+                ClassChanged?.Invoke(cfg.carClass);
+            }, 900f, "GT3 sports cars · Formula open-wheel single-seaters");
+            var names = Array.ConvertAll(CarSpec.RosterFor(cfg.carClass), c => c.Name);
             _car = UIFactory.Stepper(list, "CAR", names, cfg.carIndex, i => { cfg.carIndex = i; RefreshInfo(); }, 900f);
             FirstSelected = _mode.gameObject;
 
@@ -140,10 +149,14 @@ namespace Apex.UI
         {
             var cfg = RaceConfig.Current;
             _mode.SetIndex((int)cfg.mode, false);
-            _car.SetIndex(cfg.carIndex, false);
+            _class.SetIndex((int)cfg.carClass, false);
+            RefreshCarNames(_car, cfg.carClass, cfg.carIndex);
             RefreshInteractable();
             RefreshInfo();
         }
+
+        private static string[] ClassNames => ClassUi.Names;
+        private static void RefreshCarNames(ApexStepper s, CarClass c, int i) => ClassUi.SetCarNames(s, c, i);
 
         private void RefreshInteractable()
         {
@@ -160,13 +173,24 @@ namespace Apex.UI
         private void RefreshInfo()
         {
             var cfg = RaceConfig.Current;
-            var spec = CarSpec.Roster[cfg.carIndex];
+            var spec = cfg.CarSpec;
             string mode = cfg.mode == GameMode.QuickRace
                 ? $"Quick Race · {cfg.laps} lap{(cfg.laps > 1 ? "s" : "")} · {cfg.opponents} opponent{(cfg.opponents > 1 ? "s" : "")} · {cfg.difficulty}"
                 : "Time Trial · unlimited laps · rolling start";
             _info.text = $"LENGTH  3.50 KM\nELEVATION  16 M\nCORNERS  {TrackLayout.Corners.Length} NAMED\n{mode}\n{spec.Name} · {spec.PowerHp:0} HP";
-            float pb = GameServices.Instance.Records.BestLap(cfg.trackId, cfg.mode.ToString(), out _, out _);
+            float pb = GameServices.Instance.Records.BestLap(cfg.trackId, cfg.RecordKey, out _, out _);
             _pb.text = $"PERSONAL BEST\n<size=34>{UITheme.FormatTime(pb)}</size>";
+        }
+    }
+
+    internal static class ClassUi
+    {
+        public static readonly string[] Names = { "GT3", "FORMULA" };
+
+        public static void SetCarNames(ApexStepper stepper, CarClass c, int index)
+        {
+            stepper.Options = Array.ConvertAll(CarSpec.RosterFor(c), s => s.Name);
+            stepper.SetIndex(index, false);
         }
     }
 
@@ -175,7 +199,8 @@ namespace Apex.UI
     {
         public Action<int> CarChanged;
         public Action Confirmed;
-        private ApexStepper _car;
+        private ApexStepper _class, _car;
+        private CarClass _carClass;
         private TMP_Text _maker, _name, _engine;
         private Image[] _bars;
         private TMP_Text[] _values;
@@ -209,11 +234,23 @@ namespace Apex.UI
                 UIFactory.Image(transform, "BarBg" + i, UITheme.Solid, new Color(1f, 1f, 1f, 0.1f), new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(96f, y - 32f), new Vector2(520f, 6f));
                 _bars[i] = UIFactory.Image(transform, "Bar" + i, UITheme.Solid, UITheme.Red, new Vector2(0, 1), new Vector2(0, 1), new Vector2(0, 1), new Vector2(96f, y - 32f), new Vector2(0f, 6f));
             }
-            var list = UIFactory.VerticalList(transform, "Select", new Vector2(0, 0), new Vector2(0, 0), new Vector2(96f, 250f), new Vector2(640f, 70f), 0f);
-            var names = Array.ConvertAll(CarSpec.Roster, c => c.Name);
+            var list = UIFactory.VerticalList(transform, "Select", new Vector2(0, 0), new Vector2(0, 0), new Vector2(96f, 200f), new Vector2(640f, 70f), 0f);
+            var classList = UIFactory.VerticalList(transform, "Class", new Vector2(0, 0), new Vector2(0, 0), new Vector2(96f, 280f), new Vector2(640f, 70f), 0f);
+            _carClass = RaceConfig.Current.carClass;
+            _class = UIFactory.Stepper(classList, "CLASS", ClassUi.Names, (int)_carClass, i =>
+            {
+                _carClass = (CarClass)i;
+                _index = 0;
+                ClassUi.SetCarNames(_car, _carClass, 0);
+                // the showroom spawns from the configured class; selection is committed with SELECT CAR or restored on back
+                RaceConfig.Current.carClass = _carClass;
+                RefreshSpecs();
+                CarChanged?.Invoke(0);
+            }, 620f);
+            var names = Array.ConvertAll(CarSpec.RosterFor(_carClass), c => c.Name);
             _car = UIFactory.Stepper(list, "CAR", names, RaceConfig.Current.carIndex, i => { _index = i; RefreshSpecs(); CarChanged?.Invoke(i); }, 620f);
             FirstSelected = _car.gameObject;
-            UIFactory.ActionButton(transform, "SELECT CAR", () => { RaceConfig.Current.carIndex = _index; Confirmed?.Invoke(); }, true, new Vector2(0, 0), new Vector2(0, 0), new Vector2(96f, 140f), new Vector2(320f, 66f));
+            UIFactory.ActionButton(transform, "SELECT CAR", () => { RaceConfig.Current.carClass = _carClass; RaceConfig.Current.carIndex = _index; _committedClass = _carClass; Confirmed?.Invoke(); }, true, new Vector2(0, 0), new Vector2(0, 0), new Vector2(96f, 100f), new Vector2(320f, 66f));
             UIFactory.Label(transform, "DRAG / RIGHT STICK  ORBIT     ← →  CHANGE CAR     ESC  BACK", 16, UITheme.Steel, UITheme.Mono, TextAnchor.LowerRight, new Vector2(1, 0), new Vector2(-70f, 42f), 1000f);
             InitScreen();
         }
@@ -221,18 +258,27 @@ namespace Apex.UI
         protected override void OnShown()
         {
             _index = RaceConfig.Current.carIndex;
-            _car.SetIndex(_index, false);
+            _carClass = _committedClass = RaceConfig.Current.carClass;
+            _class.SetIndex((int)_carClass, false);
+            ClassUi.SetCarNames(_car, _carClass, _index);
             RefreshSpecs();
         }
 
+        private CarClass _committedClass;
+
+        /// <summary>Called when leaving without SELECT CAR: restores the committed class.</summary>
+        public void RevertClass() => RaceConfig.Current.carClass = _committedClass;
+
         private void RefreshSpecs()
         {
-            var s = CarSpec.Roster[_index];
+            var roster = CarSpec.RosterFor(_carClass);
+            var s = roster[Mathf.Clamp(_index, 0, roster.Length - 1)];
             _maker.text = s.Maker;
             _name.text = s.Name;
-            _engine.text = s.Engine + "  ·  6-SPEED SEQUENTIAL (AUTO)  ·  RWD";
+            _engine.text = s.Engine + $"  ·  {s.GearRatios.Length}-SPEED SEQUENTIAL (AUTO)  ·  RWD";
             float hp = s.PowerHp, kg = s.MassKg, df = s.DownforceClA, top = s.TopSpeedKmh;
-            float[] norm = { Mathf.InverseLerp(450f, 650f, hp), Mathf.InverseLerp(1450f, 1200f, kg), Mathf.InverseLerp(2.4f, 3.6f, df), Mathf.InverseLerp(240f, 300f, top), Mathf.InverseLerp(0.35f, 0.5f, hp / kg) };
+            // shared scale covering both classes so GT3 and Formula compare honestly
+            float[] norm = { Mathf.InverseLerp(400f, 1100f, hp), Mathf.InverseLerp(1450f, 750f, kg), Mathf.InverseLerp(2f, 5.2f, df), Mathf.InverseLerp(220f, 360f, top), Mathf.InverseLerp(0.3f, 1.35f, hp / kg) };
             string[] vals = { $"{hp:0} HP", $"{kg:0} KG", $"{df * 0.5f * 1.225f * 69.4f * 69.4f / 9.81f:0} KG @250", $"{top:0} KM/H", $"{hp / kg * 1000f:0} HP/T" };
             for (int i = 0; i < _bars.Length; i++)
             {

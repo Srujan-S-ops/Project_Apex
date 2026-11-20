@@ -24,16 +24,29 @@ namespace Apex.Vehicle
                     frictionCombine = PhysicsMaterialCombine.Minimum, bounceCombine = PhysicsMaterialCombine.Average
                 };
             }
-            AddBox(root, new Vector3(0f, 0.57f, -0.05f), new Vector3(1.94f, 0.54f, 4.55f));
-            AddBox(root, new Vector3(0f, 1.0f, -0.35f), new Vector3(1.3f, 0.4f, 1.6f));
-            AddBox(root, new Vector3(0f, 1.2f, -2.25f), new Vector3(1.9f, 0.12f, 0.35f));   // wing
+            bool formula = spec.Class == CarClass.Formula;
+            if (formula)
+            {
+                // all boxes stay >= 0.26 m above the road so the floor never scrapes under downforce / over kerbs
+                AddBox(root, new Vector3(0f, 0.49f, 0.3f), new Vector3(0.9f, 0.46f, 5.3f));     // monocoque + nose
+                AddBox(root, new Vector3(0f, 0.45f, -0.6f), new Vector3(1.5f, 0.38f, 1.9f));    // sidepods
+                AddBox(root, new Vector3(0f, 0.62f, 0.0f), new Vector3(1.96f, 0.44f, 3.6f));    // wheels (keeps open wheels from interlocking)
+                AddBox(root, new Vector3(0f, 0.3f, 2.75f), new Vector3(1.9f, 0.08f, 0.5f));     // front wing
+                AddBox(root, new Vector3(0f, 0.85f, -2.42f), new Vector3(1.04f, 0.2f, 0.45f));  // rear wing
+            }
+            else
+            {
+                AddBox(root, new Vector3(0f, 0.57f, -0.05f), new Vector3(1.94f, 0.54f, 4.55f));
+                AddBox(root, new Vector3(0f, 1.0f, -0.35f), new Vector3(1.3f, 0.4f, 1.6f));
+                AddBox(root, new Vector3(0f, 1.2f, -2.25f), new Vector3(1.9f, 0.12f, 0.35f));   // wing
+            }
 
             var car = root.AddComponent<CarController>();
             car.Setup(spec);
 
             var settings = GameServices.Instance.Settings;
             bool high = isPlayer || settings.qualityPreset >= 2;
-            var visual = CarVisualBuilder.Build(root.transform, spec, livery, high);
+            var visual = BuildVisual(root.transform, spec, livery, high);
             visual.Bind(car);
 
             var fx = root.AddComponent<CarEffects>();
@@ -46,6 +59,9 @@ namespace Apex.Vehicle
             if (isPlayer) AddHeadlights(root.transform, visual);
             return car;
         }
+
+        private static CarVisual BuildVisual(Transform root, CarSpec spec, CarVisualBuilder.Livery livery, bool high) =>
+            spec.Class == CarClass.Formula ? FormulaVisualBuilder.Build(root, spec, livery, high) : CarVisualBuilder.Build(root, spec, livery, high);
 
         private static void AddBox(GameObject root, Vector3 center, Vector3 size)
         {
@@ -79,7 +95,7 @@ namespace Apex.Vehicle
         {
             var root = new GameObject("ShowroomCar_" + spec.Id);
             root.transform.SetParent(parent, false);
-            var visual = CarVisualBuilder.Build(root.transform, spec, livery, true);
+            var visual = BuildVisual(root.transform, spec, livery, true);
             return visual;
         }
 

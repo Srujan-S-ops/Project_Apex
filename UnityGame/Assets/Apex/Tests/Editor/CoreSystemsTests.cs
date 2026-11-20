@@ -127,6 +127,23 @@ namespace Apex.Tests
         }
 
         [Test]
+        public void FormulaRosterIsLightPowerfulEightSpeed()
+        {
+            foreach (var c in CarSpec.FormulaRoster)
+            {
+                Assert.That(c.Class, Is.EqualTo(CarClass.Formula), c.Name);
+                Assert.That(c.PowerHp, Is.InRange(880f, 1150f), c.Name);
+                Assert.That(c.MassKg, Is.EqualTo(798f), c.Name);
+                Assert.That(c.TopSpeedKmh, Is.InRange(300f, 380f), c.Name);
+                Assert.That(c.GearRatios.Length, Is.EqualTo(8), c.Name);
+                Assert.That(c.DownforceClA, Is.GreaterThan(CarSpec.Roster[0].DownforceClA), c.Name);
+                for (int g = 1; g < c.GearRatios.Length; g++) Assert.That(c.GearRatios[g], Is.LessThan(c.GearRatios[g - 1]));
+            }
+            Assert.That(CarSpec.RosterFor(CarClass.GT3), Is.SameAs(CarSpec.Roster));
+            Assert.That(CarSpec.RosterFor(CarClass.Formula), Is.SameAs(CarSpec.FormulaRoster));
+        }
+
+        [Test]
         public void TorqueCurvePeaksAtPeakRpm()
         {
             var c = CarSpec.Roster[0];

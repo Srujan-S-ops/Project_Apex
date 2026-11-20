@@ -70,7 +70,7 @@ namespace Apex.Race
             Track = track;
             AiModel = aiModel;
             SessionId = Guid.NewGuid().ToString("N").Substring(0, 12);
-            PersonalBest = GameServices.Instance.Records.BestLap(config.trackId, config.mode.ToString(), out var sectors, out _reference);
+            PersonalBest = GameServices.Instance.Records.BestLap(config.trackId, config.RecordKey, out var sectors, out _reference);
             PersonalBestSectors = sectors;
             _backend = GameServices.Instance.Backend;
             _backend.MessageReceived += OnBackendMessage;
@@ -310,7 +310,7 @@ namespace Apex.Race
             if (p.IsPlayer && lap.valid)
             {
                 var reference = p.ReferenceSamples.ToArray();
-                pb = GameServices.Instance.Records.SubmitLap(Config.trackId, Config.mode.ToString(), p.CarName, lap, reference);
+                pb = GameServices.Instance.Records.SubmitLap(Config.trackId, Config.RecordKey, p.CarName, lap, reference);
                 if (pb)
                 {
                     PersonalBest = lapTime;
@@ -535,7 +535,7 @@ namespace Apex.Race
             {
                 msg.x[i] = s.Pos[i].x; msg.y[i] = s.Pos[i].y; msg.z[i] = s.Pos[i].z; msg.width[i] = s.Width[i];
             }
-            var env = VehicleEnvelope.Gt3;
+            var env = VehicleEnvelope.For(Config.carClass);
             msg.mu = env.Mu; msg.massKg = env.MassKg; msg.downforceCoef = env.DownforceCoef;
             msg.maxAccel = env.MaxAccel; msg.maxBrake = env.MaxBrake; msg.topSpeed = env.TopSpeed;
             _backend.Send(MsgType.TrackData, msg);

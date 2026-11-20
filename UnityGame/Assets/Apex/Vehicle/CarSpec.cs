@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace Apex.Vehicle
 {
+    public enum CarClass { GT3, Formula }
+
     /// <summary>Immutable-by-convention vehicle definition (physics + presentation data).</summary>
     public sealed class CarSpec
     {
@@ -31,6 +33,17 @@ namespace Apex.Vehicle
         public Color BodyColor = new Color(0.75f, 0.02f, 0.04f);
         public Color AccentColor = Color.white;
         public Color TrimColor = new Color(0.05f, 0.05f, 0.06f);
+
+        // Class-specific chassis parameters. Defaults reproduce the original GT3 setup exactly.
+        public CarClass Class = CarClass.GT3;
+        public float CenterOfMassHeight = 0.33f;
+        public float SuspensionDistance = 0.14f;
+        public float SpringFront = 82000f, SpringRear = 88000f;
+        public float DamperFront = 5600f, DamperRear = 6000f;
+        public float AntiRollFront = 11000f, AntiRollRear = 8500f;
+        public float WheelMass = 22f;
+        public float FrontTyreHalfWidth = 0.155f, RearTyreHalfWidth = 0.155f;
+        public Vector3 HoodCamera = new Vector3(0f, 1.2f, 0.3f);
 
         public float PowerKw
         {
@@ -69,6 +82,32 @@ namespace Apex.Vehicle
                 DragCdA = 0.84f, FinalDrive = 3.35f, BodyColor = new Color(0.82f, 0.84f, 0.86f), AccentColor = new Color(0.8f, 0.02f, 0.05f)
             }
         };
+
+        /// <summary>Original open-wheel single-seaters (~1000 hp, 798 kg, 8-speed, very high downforce).</summary>
+        public static readonly CarSpec[] FormulaRoster =
+        {
+            Formula("apex_f1", "APEX FX-26", "APEX ENGINEERING", new Color(0.8f, 0.02f, 0.05f), new Color(0.95f, 0.95f, 0.95f), 640f, 1f),
+            Formula("vanta_f1", "VANTA VF-1", "VANTA AUTOMOBILI", new Color(0.05f, 0.05f, 0.06f), new Color(0.9f, 0.75f, 0.2f), 655f, 0.97f),
+            Formula("kaiser_f1", "KAISER K-26", "KAISER MOTORSPORT", new Color(0.82f, 0.84f, 0.86f), new Color(0.05f, 0.25f, 0.65f), 625f, 1.04f),
+        };
+
+        private static CarSpec Formula(string id, string name, string maker, Color body, Color accent, float torque, float downforceScale) => new CarSpec
+        {
+            Id = id, Name = name, Maker = maker, Engine = "1.6L V6 TURBO HYBRID", Class = CarClass.Formula,
+            MassKg = 798f, MaxTorqueNm = torque, PeakTorqueRpm = 10800f, IdleRpm = 4000f, MaxRpm = 12500f,
+            GearRatios = new[] { 3.05f, 2.45f, 2.02f, 1.72f, 1.48f, 1.31f, 1.18f, 1.08f }, FinalDrive = 4.6f, ReverseRatio = 3.2f,
+            DrivetrainEfficiency = 0.92f, BrakeTorqueNm = 10500f, BrakeBias = 0.57f,
+            DownforceClA = 4.8f * downforceScale, AeroBalanceFront = 0.42f, DragCdA = 1.15f,
+            WheelRadius = 0.36f, Wheelbase = 3.6f, TrackWidth = 1.6f, MaxSteerDeg = 22f, GripMultiplier = 1.12f,
+            CenterOfMassHeight = 0.24f, SuspensionDistance = 0.09f,
+            SpringFront = 150000f, SpringRear = 165000f, DamperFront = 7200f, DamperRear = 7800f,
+            AntiRollFront = 16000f, AntiRollRear = 12000f, WheelMass = 18f,
+            FrontTyreHalfWidth = 0.15f, RearTyreHalfWidth = 0.2f,
+            HoodCamera = new Vector3(0f, 1.05f, -0.25f),
+            BodyColor = body, AccentColor = accent, TrimColor = new Color(0.04f, 0.04f, 0.045f)
+        };
+
+        public static CarSpec[] RosterFor(CarClass c) => c == CarClass.Formula ? FormulaRoster : Roster;
 
         /// <summary>Liveries for AI teams (body, accent).</summary>
         public static readonly (Color body, Color accent, string team, int number)[] AiLiveries =

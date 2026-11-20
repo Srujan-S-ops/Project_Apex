@@ -52,6 +52,9 @@ namespace Apex.UI
             var auto = GameServices.Instance.AutoTest;
             if (auto.Enabled)
             {
+                RaceConfig.Current.carClass = auto.CarClass;
+                RaceConfig.Current.carIndex = 0;
+                SpawnCar(0);
                 yield return new WaitForSecondsRealtime(auto.Screenshots ? 3f : 1f);
                 if (auto.Screenshots) { AutoTestCapture.Shot("01_main_menu"); yield return new WaitForSecondsRealtime(0.5f); }
                 Show(_settings);
@@ -148,7 +151,8 @@ namespace Apex.UI
         private void SpawnCar(int index)
         {
             if (_car != null) Destroy(_car.transform.parent.gameObject);
-            var spec = CarSpec.Roster[Mathf.Clamp(index, 0, CarSpec.Roster.Length - 1)];
+            var roster = CarSpec.RosterFor(RaceConfig.Current.carClass);
+            var spec = roster[Mathf.Clamp(index, 0, roster.Length - 1)];
             _car = CarFactory.CreateShowroom(_turntable, spec, CarFactory.PlayerLivery(spec));
             _car.SetShowroomPose(-14f);
             _car.transform.parent.localPosition = Vector3.up * 0.006f;
@@ -178,7 +182,7 @@ namespace Apex.UI
             _main.BackRequested = () => { };
             _setup.BackRequested = () => Show(_main);
             _setup.StartRace = StartRace;
-            _garage.BackRequested = () => { SpawnCar(RaceConfig.Current.carIndex); BackToMain(); };
+            _garage.BackRequested = () => { _garage.RevertClass(); SpawnCar(RaceConfig.Current.carIndex); BackToMain(); };
             _garage.CarChanged = SpawnCar;
             _garage.Confirmed = BackToMain;
             _settings.Closed = () => Show(_main);

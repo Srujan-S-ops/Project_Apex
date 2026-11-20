@@ -1,4 +1,5 @@
 using System;
+using Apex.Vehicle;
 
 namespace Apex.Core
 {
@@ -14,12 +15,26 @@ namespace Apex.Core
         public Difficulty difficulty = Difficulty.Medium;
         public int opponents = 4;      // 0..4
         public int laps = 3;           // 1..10 (quick race)
-        public int carIndex;           // index into CarSpec.Roster
+        public CarClass carClass = CarClass.GT3;
+        public int carIndex;           // index into CarSpec.RosterFor(carClass)
         public string trackId = TrackIds.HarbourGP;
 
         public static RaceConfig Current = new RaceConfig();
 
         public RaceConfig Clone() => (RaceConfig)MemberwiseClone();
+
+        /// <summary>The selected car's spec (class roster, clamped index).</summary>
+        public CarSpec CarSpec
+        {
+            get
+            {
+                var r = Vehicle.CarSpec.RosterFor(carClass);
+                return r[UnityEngine.Mathf.Clamp(carIndex, 0, r.Length - 1)];
+            }
+        }
+
+        /// <summary>Local records key: GT3 keeps the original key, Formula laps are stored separately.</summary>
+        public string RecordKey => mode.ToString() + (carClass == CarClass.Formula ? "_F1" : "");
     }
 
     public static class TrackIds

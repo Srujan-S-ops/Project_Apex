@@ -5,6 +5,10 @@ rivals with distinct personalities, an original 3.5 km harbour street circuit, Q
 Trial modes, a motorsport-style UI, and a Java 21 / Spring Boot engine for AI tactics, race
 management and H2 persistence.
 
+Two car classes: **GT3** (three ~550 hp sports cars) and **Formula** (three original open-wheel
+single-seaters: ~1000 hp, 798 kg, 8-speed, high downforce, halo). Pick the class in the Garage or
+in Race Setup; the AI field races in the same class.
+
 ## Play
 
 ```
@@ -75,3 +79,4 @@ See `Documentation/04_Testing_Report.md` for results.
 - [Testing report](Documentation/04_Testing_Report.md)
 - [Known limitations](Documentation/05_Known_Limitations.md)
 - [Visual overhaul](Documentation/06_Visual_Overhaul.md) · [before/after](Documentation/screenshots/before_after.jpg)
+- [Formula car class](Documentation/07_Formula_Class.md)
