@@ -84,13 +84,13 @@ namespace Apex.UI
             var disc = new MeshBuilder();
             disc.AddLathe(Vector3.zero, Quaternion.Euler(0f, 0f, 90f), new List<Vector2>
             {
-                new Vector2(0f, 3.4f), new Vector2(0.06f, 3.4f), new Vector2(0.06f, 3.4f), new Vector2(0.06f, 0.01f)
+                new Vector2(0f, 3.4f), new Vector2(0.006f, 3.4f), new Vector2(0.006f, 3.4f), new Vector2(0.006f, 0.01f)
             }, 72);
             disc.Build("Disc", tt, MaterialLibrary.Lit(new Color(0.16f, 0.16f, 0.18f), 0.85f, 0.55f));
             var ring = new MeshBuilder();
             ring.AddLathe(Vector3.zero, Quaternion.Euler(0f, 0f, 90f), new List<Vector2>
             {
-                new Vector2(0.062f, 3.42f), new Vector2(0.062f, 3.3f)
+                new Vector2(0.011f, 3.42f), new Vector2(0.011f, 3.3f)
             }, 96);
             ring.Build("Ring", _root, MaterialLibrary.Emissive(UITheme.Red, UITheme.Red, 6f), false);
 
@@ -151,7 +151,7 @@ namespace Apex.UI
             var spec = CarSpec.Roster[Mathf.Clamp(index, 0, CarSpec.Roster.Length - 1)];
             _car = CarFactory.CreateShowroom(_turntable, spec, CarFactory.PlayerLivery(spec));
             _car.SetShowroomPose(-14f);
-            _car.transform.parent.localPosition = Vector3.up * 0.06f;
+            _car.transform.parent.localPosition = Vector3.up * 0.006f;
             if (_probe != null) _probe.RenderProbe();
         }
 

@@ -107,7 +107,10 @@ namespace Apex.Core
             float avg = sorted.Count > 0 ? sorted.Average() : 0f;
             float p99 = sorted.Count > 0 ? sorted[Mathf.Min(sorted.Count - 1, (int)(sorted.Count * 0.99f))] : 0f;
             sb.AppendLine("{");
-            sb.AppendLine($"  \"mode\": \"{_race.Config.mode}\", \"laps\": {_race.Config.laps}, \"difficulty\": \"{_race.Config.difficulty}\",");
+            sb.AppendLine($"  \"mode\": \"{_race.Config.mode}\", \"laps\": {_race.Config.laps}, \"difficulty\": \"{_race.Config.difficulty}\", \"quality\": \"{Apex.Rendering.GraphicsQuality.PresetNames[Apex.Rendering.GraphicsQuality.Current]}\",");
+            foreach (var p in _race.Field)
+                if (!p.Finished && _race.Config.mode == GameMode.QuickRace)
+                    _events.Add($"UNFINISHED {p.Code} line={p.DistFromLine:0} lateral={p.Lateral:0.0} speed={p.Car.SpeedMs * 3.6f:0} offTrack={p.OffTrack} wrongWay={p.WrongWay} ai={p.AI?.DebugState}");
             sb.AppendLine($"  \"failure\": \"{_failure ?? ""}\", \"loggedErrors\": {AutoTestWatchdog.ErrorCount},");
             sb.AppendLine($"  \"raceTime\": {_race.RaceTime:0.000}, \"wallClock\": {Time.realtimeSinceStartup - _startRealtime:0.0},");
             sb.AppendLine($"  \"fpsAvg\": {(avg > 0 ? 1f / avg : 0):0.0}, \"fps1pctLow\": {(p99 > 0 ? 1f / p99 : 0):0.0}, \"frames\": {sorted.Count},");

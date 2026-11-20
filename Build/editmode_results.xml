@@ -1,110 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.8294758">
-  <test-suite type="TestSuite" id="1000" name="PROJECT APEX" fullname="PROJECT APEX" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.829476" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.6210303">
+  <test-suite type="TestSuite" id="1000" name="PROJECT APEX" fullname="PROJECT APEX" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.621030" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
       <property name="platform" value="EditMode" />
     </properties>
-    <test-suite type="Assembly" id="1019" name="Apex.Tests.dll" fullname="E:/PROJECT_APEX_2/UnityGame/Library/ScriptAssemblies/Apex.Tests.dll" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.817418" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="Assembly" id="1019" name="Apex.Tests.dll" fullname="E:/PROJECT_APEX_2/UnityGame/Library/ScriptAssemblies/Apex.Tests.dll" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.611265" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties>
-        <property name="_PID" value="29872" />
+        <property name="_PID" value="22284" />
         <property name="_APPDOMAIN" value="Unity Child Domain" />
         <property name="platform" value="EditMode" />
         <property name="EditorOnly" value="True" />
       </properties>
-      <test-suite type="TestSuite" id="1020" name="Apex" fullname="Apex" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.816710" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="1020" name="Apex" fullname="Apex" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.610701" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <test-suite type="TestSuite" id="1021" name="Tests" fullname="Apex.Tests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.816228" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="1021" name="Tests" fullname="Apex.Tests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.610378" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <test-suite type="TestFixture" id="1017" name="FormattingTests" fullname="Apex.Tests.FormattingTests" classname="Apex.Tests.FormattingTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.150445" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1017" name="FormattingTests" fullname="Apex.Tests.FormattingTests" classname="Apex.Tests.FormattingTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.026212" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1018" name="LapTimesFormatAsMinutesSecondsMillis" fullname="Apex.Tests.FormattingTests.LapTimesFormatAsMinutesSecondsMillis" methodname="LapTimesFormatAsMinutesSecondsMillis" classname="Apex.Tests.FormattingTests" runstate="Runnable" seed="270095472" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.131924" asserts="0">
+            <test-case id="1018" name="LapTimesFormatAsMinutesSecondsMillis" fullname="Apex.Tests.FormattingTests.LapTimesFormatAsMinutesSecondsMillis" methodname="LapTimesFormatAsMinutesSecondsMillis" classname="Apex.Tests.FormattingTests" runstate="Runnable" seed="1169010753" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.013697" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1013" name="ProtocolTests" fullname="Apex.Tests.ProtocolTests" classname="Apex.Tests.ProtocolTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.270549" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1013" name="ProtocolTests" fullname="Apex.Tests.ProtocolTests" classname="Apex.Tests.ProtocolTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.003662" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1014" name="EnvelopeRoundTripsWithEscapedPayload" fullname="Apex.Tests.ProtocolTests.EnvelopeRoundTripsWithEscapedPayload" methodname="EnvelopeRoundTripsWithEscapedPayload" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="297541570" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.001620" asserts="0">
+            <test-case id="1014" name="EnvelopeRoundTripsWithEscapedPayload" fullname="Apex.Tests.ProtocolTests.EnvelopeRoundTripsWithEscapedPayload" methodname="EnvelopeRoundTripsWithEscapedPayload" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="752258968" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.001377" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1015" name="JavaStyleJsonParsesIntoUnityDtos" fullname="Apex.Tests.ProtocolTests.JavaStyleJsonParsesIntoUnityDtos" methodname="JavaStyleJsonParsesIntoUnityDtos" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="2136013200" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.000862" asserts="0">
+            <test-case id="1015" name="JavaStyleJsonParsesIntoUnityDtos" fullname="Apex.Tests.ProtocolTests.JavaStyleJsonParsesIntoUnityDtos" methodname="JavaStyleJsonParsesIntoUnityDtos" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="1822822264" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.000764" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1016" name="TacticalModesMatchJavaEnumNames" fullname="Apex.Tests.ProtocolTests.TacticalModesMatchJavaEnumNames" methodname="TacticalModesMatchJavaEnumNames" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="433565109" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.000562" asserts="0">
+            <test-case id="1016" name="TacticalModesMatchJavaEnumNames" fullname="Apex.Tests.ProtocolTests.TacticalModesMatchJavaEnumNames" methodname="TacticalModesMatchJavaEnumNames" classname="Apex.Tests.ProtocolTests" runstate="Runnable" seed="2062555285" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.000609" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1001" name="TrackTests" fullname="Apex.Tests.TrackTests" classname="Apex.Tests.TrackTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.390579" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1001" name="TrackTests" fullname="Apex.Tests.TrackTests" classname="Apex.Tests.TrackTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.403412" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1003" name="CentreLineIsAClosedLoopWithUniformSpacing" fullname="Apex.Tests.TrackTests.CentreLineIsAClosedLoopWithUniformSpacing" methodname="CentreLineIsAClosedLoopWithUniformSpacing" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="33084772" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.010464" asserts="0">
+            <test-case id="1003" name="CentreLineIsAClosedLoopWithUniformSpacing" fullname="Apex.Tests.TrackTests.CentreLineIsAClosedLoopWithUniformSpacing" methodname="CentreLineIsAClosedLoopWithUniformSpacing" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="2089729317" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.008792" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1002" name="CircuitLengthIsAboutThreePointFiveKilometres" fullname="Apex.Tests.TrackTests.CircuitLengthIsAboutThreePointFiveKilometres" methodname="CircuitLengthIsAboutThreePointFiveKilometres" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="1523712266" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.002154" asserts="0">
+            <test-case id="1002" name="CircuitLengthIsAboutThreePointFiveKilometres" fullname="Apex.Tests.TrackTests.CircuitLengthIsAboutThreePointFiveKilometres" methodname="CircuitLengthIsAboutThreePointFiveKilometres" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="2031134275" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.002116" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1007" name="CornerSetIncludesHairpinAndHeavyBrakingZones" fullname="Apex.Tests.TrackTests.CornerSetIncludesHairpinAndHeavyBrakingZones" methodname="CornerSetIncludesHairpinAndHeavyBrakingZones" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="1887338298" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.054782" asserts="0">
+            <test-case id="1007" name="CornerSetIncludesHairpinAndHeavyBrakingZones" fullname="Apex.Tests.TrackTests.CornerSetIncludesHairpinAndHeavyBrakingZones" methodname="CornerSetIncludesHairpinAndHeavyBrakingZones" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="779966222" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.051953" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1005" name="ElevationVariesAcrossTheLap" fullname="Apex.Tests.TrackTests.ElevationVariesAcrossTheLap" methodname="ElevationVariesAcrossTheLap" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="1742761197" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.002711" asserts="0">
+            <test-case id="1005" name="ElevationVariesAcrossTheLap" fullname="Apex.Tests.TrackTests.ElevationVariesAcrossTheLap" methodname="ElevationVariesAcrossTheLap" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="801670103" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.002532" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1006" name="ProjectionRecoversDistanceAndLateralOffset" fullname="Apex.Tests.TrackTests.ProjectionRecoversDistanceAndLateralOffset" methodname="ProjectionRecoversDistanceAndLateralOffset" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="636588991" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:57Z" duration="0.003999" asserts="0">
+            <test-case id="1006" name="ProjectionRecoversDistanceAndLateralOffset" fullname="Apex.Tests.TrackTests.ProjectionRecoversDistanceAndLateralOffset" methodname="ProjectionRecoversDistanceAndLateralOffset" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="1138663491" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.004541" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1008" name="RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" fullname="Apex.Tests.TrackTests.RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" methodname="RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="306168828" result="Passed" start-time="2026-11-19 22:48:57Z" end-time="2026-11-19 22:48:58Z" duration="0.053861" asserts="0">
+            <test-case id="1008" name="RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" fullname="Apex.Tests.TrackTests.RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" methodname="RacingLineStaysInsideTrackLimitsAndSpeedProfileIsPhysical" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="44745899" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.054621" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1009" name="SignedCurvatureIsPositiveForRightTurns" fullname="Apex.Tests.TrackTests.SignedCurvatureIsPositiveForRightTurns" methodname="SignedCurvatureIsPositiveForRightTurns" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="773173046" result="Passed" start-time="2026-11-19 22:48:58Z" end-time="2026-11-19 22:48:58Z" duration="0.000548" asserts="0">
+            <test-case id="1009" name="SignedCurvatureIsPositiveForRightTurns" fullname="Apex.Tests.TrackTests.SignedCurvatureIsPositiveForRightTurns" methodname="SignedCurvatureIsPositiveForRightTurns" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="892748068" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.000495" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1004" name="TrackDoesNotSelfIntersect" fullname="Apex.Tests.TrackTests.TrackDoesNotSelfIntersect" methodname="TrackDoesNotSelfIntersect" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="167688100" result="Passed" start-time="2026-11-19 22:48:58Z" end-time="2026-11-19 22:48:58Z" duration="0.259641" asserts="0">
+            <test-case id="1004" name="TrackDoesNotSelfIntersect" fullname="Apex.Tests.TrackTests.TrackDoesNotSelfIntersect" methodname="TrackDoesNotSelfIntersect" classname="Apex.Tests.TrackTests" runstate="Runnable" seed="1293198577" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:11Z" duration="0.276462" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
           </test-suite>
-          <test-suite type="TestFixture" id="1010" name="VehicleTests" fullname="Apex.Tests.VehicleTests" classname="Apex.Tests.VehicleTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-19 22:48:58Z" end-time="2026-11-19 22:48:58Z" duration="0.003147" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestFixture" id="1010" name="VehicleTests" fullname="Apex.Tests.VehicleTests" classname="Apex.Tests.VehicleTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-20 04:57:11Z" end-time="2026-11-20 04:57:12Z" duration="0.175758" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-case id="1011" name="RosterHasGt3PowerAndTopSpeeds" fullname="Apex.Tests.VehicleTests.RosterHasGt3PowerAndTopSpeeds" methodname="RosterHasGt3PowerAndTopSpeeds" classname="Apex.Tests.VehicleTests" runstate="Runnable" seed="102416245" result="Passed" start-time="2026-11-19 22:48:58Z" end-time="2026-11-19 22:48:58Z" duration="0.001500" asserts="0">
+            <test-case id="1011" name="RosterHasGt3PowerAndTopSpeeds" fullname="Apex.Tests.VehicleTests.RosterHasGt3PowerAndTopSpeeds" methodname="RosterHasGt3PowerAndTopSpeeds" classname="Apex.Tests.VehicleTests" runstate="Runnable" seed="791410580" result="Passed" start-time="2026-11-20 04:57:12Z" end-time="2026-11-20 04:57:12Z" duration="0.001475" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />
               </properties>
             </test-case>
-            <test-case id="1012" name="TorqueCurvePeaksAtPeakRpm" fullname="Apex.Tests.VehicleTests.TorqueCurvePeaksAtPeakRpm" methodname="TorqueCurvePeaksAtPeakRpm" classname="Apex.Tests.VehicleTests" runstate="Runnable" seed="520376994" result="Passed" start-time="2026-11-19 22:48:58Z" end-time="2026-11-19 22:48:58Z" duration="0.000216" asserts="0">
+            <test-case id="1012" name="TorqueCurvePeaksAtPeakRpm" fullname="Apex.Tests.VehicleTests.TorqueCurvePeaksAtPeakRpm" methodname="TorqueCurvePeaksAtPeakRpm" classname="Apex.Tests.VehicleTests" runstate="Runnable" seed="203491253" result="Passed" start-time="2026-11-20 04:57:12Z" end-time="2026-11-20 04:57:12Z" duration="0.000330" asserts="0">
               <properties>
                 <property name="retryIteration" value="0" />
                 <property name="repeatIteration" value="0" />

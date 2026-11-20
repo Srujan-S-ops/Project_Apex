@@ -74,3 +74,4 @@ See `Documentation/04_Testing_Report.md` for results.
 - [Implementation notes](Documentation/03_Implementation.md)
 - [Testing report](Documentation/04_Testing_Report.md)
 - [Known limitations](Documentation/05_Known_Limitations.md)
+- [Visual overhaul](Documentation/06_Visual_Overhaul.md) · [before/after](Documentation/screenshots/before_after.jpg)

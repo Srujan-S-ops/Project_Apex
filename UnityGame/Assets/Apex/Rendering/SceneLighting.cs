@@ -24,7 +24,7 @@ namespace Apex.Rendering
                 sky = new Material(sky);
                 sky.SetFloat("_SunSize", 0.03f);
                 sky.SetFloat("_SunSizeConvergence", 7f);
-                sky.SetFloat("_AtmosphereThickness", 0.95f);
+                sky.SetFloat("_AtmosphereThickness", 1.1f);
                 sky.SetColor("_SkyTint", new Color(0.46f, 0.52f, 0.64f));
                 sky.SetColor("_GroundColor", new Color(0.42f, 0.41f, 0.40f));
                 sky.SetFloat("_Exposure", 1.35f);
@@ -167,7 +167,8 @@ namespace Apex.Rendering
             mat.SetFloat("_FadeRadius", radius);
             var mb = new MeshBuilder();
             float r = radius;
-            mb.AddQuad(new Vector3(-r, 0.004f, -r), new Vector3(-r, 0.004f, r), new Vector3(r, 0.004f, r), new Vector3(r, 0.004f, -r));
+            // just above the (flush) turntable so the reflection shows directly beneath the car
+            mb.AddQuad(new Vector3(-r, 0.009f, -r), new Vector3(-r, 0.009f, r), new Vector3(r, 0.009f, r), new Vector3(r, 0.009f, -r));
             var quad = mb.Build("ReflectionLayer", root, mat, false);
             quad.layer = 2;
             var pr = quad.AddComponent<PlanarReflection>();

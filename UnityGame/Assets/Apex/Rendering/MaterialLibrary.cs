@@ -139,6 +139,7 @@ namespace Apex.Rendering
             {
                 m.SetTexture(DetailAlbedoMap, wear);
                 m.SetTextureScale(DetailAlbedoMap, wearTiling);
+                m.SetFloat("_DetailAlbedoMapScale", 0.55f);   // subtle: patches read at distance without blotching close up
             }
             return m;
         }

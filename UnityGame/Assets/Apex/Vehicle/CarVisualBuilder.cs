@@ -138,9 +138,9 @@ namespace Apex.Vehicle
             plate.AddBox(new Vector3(0f, 0.5f, -2.385f), new Vector3(0.42f, 0.11f, 0.01f));
             plate.Build("NumberPlate", root, MaterialLibrary.Lit(new Color(0.95f, 0.95f, 0.93f), 0f, 0.5f), false);
             var plateText = new MeshBuilder();
-            plateText.AddQuad(new Vector3(0.19f, 0.455f, -2.392f), new Vector3(0.19f, 0.545f, -2.392f), new Vector3(-0.19f, 0.545f, -2.392f), new Vector3(-0.19f, 0.455f, -2.392f),
+            // seen from behind, +x is the viewer's right: u runs -x → +x and the quad faces -z
+            plateText.AddQuad(new Vector3(-0.19f, 0.455f, -2.392f), new Vector3(-0.19f, 0.545f, -2.392f), new Vector3(0.19f, 0.545f, -2.392f), new Vector3(0.19f, 0.455f, -2.392f),
                 Cell(7, 0, 0), Cell(7, 0, 1), Cell(7, 1, 1), Cell(7, 1, 0));
-            FixWindingTowards(plateText, Vector3.back);
             plateText.Build("PlateBadge", root, decalMat, false);
             // front air curtains (dark vertical intakes at the bumper corners)
             for (int s = -1; s <= 1; s += 2)

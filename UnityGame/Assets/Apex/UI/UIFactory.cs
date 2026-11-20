@@ -83,6 +83,8 @@ namespace Apex.UI
             t.color = color;
             t.alignment = Align(align);
             t.fontStyle = style == FontStyle.Bold ? FontStyles.Bold : (style == FontStyle.Italic ? FontStyles.Italic : (style == FontStyle.BoldAndItalic ? FontStyles.Bold | FontStyles.Italic : FontStyles.Normal));
+            // titles: if only the Regular weight of Bahnschrift was found, use TMP's synthetic bold
+            if (font != null && font == UITheme.Title && font.name == "Bahnschrift Regular") t.fontStyle |= FontStyles.Bold;
             t.raycastTarget = false;
             t.textWrappingMode = TextWrappingModes.NoWrap;
             t.overflowMode = TextOverflowModes.Overflow;

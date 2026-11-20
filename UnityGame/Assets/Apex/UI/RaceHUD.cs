@@ -70,6 +70,9 @@ namespace Apex.UI
             BuildTower();
             BuildCentre();
             if (_s.showMinimap) _minimap = Minimap.Create(transform, _race, new Vector2(0, 0), new Vector2(0, 0), new Vector2(40f, 40f), 300f);
+            // NFS-style slanted numerals for the live readouts
+            foreach (var t in new[] { _gear, _speed, _pos, _lap, _raceTime, _current, _last, _best, _pb, _delta })
+                if (t != null) t.fontStyle |= FontStyles.Italic;
             _engineLink = UIFactory.Label(transform, "", 14, UITheme.Steel, UITheme.Mono, TextAnchor.LowerLeft, new Vector2(0, 0), new Vector2(44f, 14f), 700f);
 
             _race.CountdownLight += n => { _lightsRoot.gameObject.SetActive(true); };
@@ -86,6 +89,8 @@ namespace Apex.UI
             Vector2 a = new Vector2(1, 0);
             var root = UIFactory.Rect("Cluster", transform, a, a, new Vector2(1, 0), new Vector2(-50f, 40f), new Vector2(420f, 420f));
             UIFactory.Image(root, "Glow", UITheme.Glow, new Color(0f, 0f, 0f, 0.75f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(520f, 520f));
+            // dark disc backplate so the dial reads over bright scenery
+            UIFactory.Image(root, "Backplate", UITheme.Circle, new Color(0.02f, 0.02f, 0.025f, 0.55f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(330f, 330f));
             Image Arc(string n, Color c, float fill)
             {
                 var img = UIFactory.Image(root, n, UITheme.Ring, c, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(360f, 360f));
@@ -115,7 +120,7 @@ namespace Apex.UI
                 tick.rectTransform.anchoredPosition = Quaternion.Euler(0, 0, -ang) * new Vector3(0f, 150f, 0f);
             }
             _gear = UIFactory.Text(root, "Gear", "N", 150, UITheme.White, UITheme.Title, TextAnchor.MiddleCenter, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 28f), new Vector2(200f, 160f));
-            _speed = UIFactory.Text(root, "Speed", "0", 58, UITheme.White, UITheme.Mono, TextAnchor.MiddleCenter, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -78f), new Vector2(220f, 64f));
+            _speed = UIFactory.Text(root, "Speed", "0", 66, UITheme.White, UITheme.Mono, TextAnchor.MiddleCenter, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -78f), new Vector2(220f, 64f));
             _unit = UIFactory.Text(root, "Unit", "KM/H", 18, UITheme.Metal, UITheme.Mono, TextAnchor.MiddleCenter, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -116f), new Vector2(200f, 24f));
             _rpmText = UIFactory.Text(root, "Rpm", "", 16, UITheme.Steel, UITheme.Mono, TextAnchor.MiddleCenter, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, 120f), new Vector2(200f, 24f));
 

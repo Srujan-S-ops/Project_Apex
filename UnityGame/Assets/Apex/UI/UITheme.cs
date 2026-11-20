@@ -36,13 +36,14 @@ namespace Apex.UI
             // TextMeshPro dynamic font assets built at runtime from installed system fonts (Bahnschrift ships
             // with Windows 10/11; the font file is never copied into the project).
             var symbols = SystemFont(("Segoe UI Symbol", "Regular"), ("Segoe UI", "Regular"));
-            Title = SystemFont(("Bahnschrift", "SemiBold Condensed"), ("Bahnschrift", "Bold"), ("Bahnschrift", "Regular"), ("Segoe UI", "Bold"), ("Arial", "Bold"));
+            Title = SystemFont(("Bahnschrift SemiBold Condensed", "Regular"), ("Bahnschrift SemiBold", "Regular"), ("Bahnschrift", "Regular"), ("Segoe UI", "Bold"), ("Arial", "Bold"));
             Body = SystemFont(("Bahnschrift", "Regular"), ("Segoe UI", "Regular"), ("Arial", "Regular"));
-            Mono = SystemFont(("Bahnschrift", "SemiBold"), ("Bahnschrift", "Regular"), ("Consolas", "Regular"));
+            Mono = SystemFont(("Bahnschrift SemiBold", "Regular"), ("Bahnschrift", "Regular"), ("Consolas", "Regular"));
             var fallbackDefault = TMP_Settings.defaultFontAsset;
             foreach (var f in new[] { Title, Body, Mono })
             {
                 if (f == null) continue;
+                if (f.fallbackFontAssetTable == null) f.fallbackFontAssetTable = new System.Collections.Generic.List<TMP_FontAsset>();
                 if (symbols != null && symbols != f) f.fallbackFontAssetTable.Add(symbols);
                 if (fallbackDefault != null && fallbackDefault != f) f.fallbackFontAssetTable.Add(fallbackDefault);
             }

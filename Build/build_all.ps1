@@ -27,6 +27,11 @@ try {
 } finally { Pop-Location }
 
 if (-not $SkipUnity) {
+    if (-not (Test-Path (Join-Path $root "UnityGame\Assets\TextMesh Pro"))) {
+        # AssetDatabase.ImportPackage is asynchronous in batch mode, so import TMP essentials via the command line
+        $tmp = (Get-ChildItem (Join-Path $root "UnityGame\Library\PackageCache\com.unity.ugui@*\Package Resources\TMP Essential Resources.unitypackage") | Select-Object -First 1).FullName
+        if ($tmp) { & $unity -batchmode -quit -projectPath (Join-Path $root "UnityGame") -importPackage $tmp -logFile (Join-Path $root "Build\unity_tmp.log") | Out-Null }
+    }
     Write-Host "== Building Unity player (this takes several minutes)" -ForegroundColor Cyan
     & $unity -batchmode -quit -projectPath (Join-Path $root "UnityGame") -buildTarget Win64 `
         -executeMethod Apex.EditorTools.ApexBuildPipeline.BuildWindows -logFile (Join-Path $root "Build\unity_build.log") | Out-Null

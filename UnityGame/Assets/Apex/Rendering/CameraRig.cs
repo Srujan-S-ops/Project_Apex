@@ -88,15 +88,14 @@ namespace Apex.Rendering
                     Vector3 lateralVel = Vector3.ProjectOnPlane(vel, t.up) - Vector3.Project(vel, t.forward);
                     Vector3 look = t.position + fwd * 3.5f + Vector3.up * (far ? 0.95f : 0.85f) + Vector3.ClampMagnitude(lateralVel * 0.08f, 1.2f);
                     // keep the camera above the road / out of walls
-                    if (Physics.Linecast(t.position + Vector3.up * 1.2f, desiredPos, out RaycastHit hit, ~0, QueryTriggerInteraction.Ignore) && hit.rigidbody != Target.Body)
-                        desiredPos = hit.point + hit.normal * 0.3f;
+                    desiredPos = ClipToScenery(t.position + Vector3.up * 1.2f, desiredPos);
                     transform.position = Vector3.SmoothDamp(transform.position, desiredPos, ref _vel, 0.06f, Mathf.Infinity, dt);
                     desiredRot = Quaternion.LookRotation(look - transform.position, Vector3.up);
                     transform.rotation = Quaternion.Slerp(transform.rotation, desiredRot, dt * 14f);
                     break;
                 }
                 case CameraView.Hood:
-                    transform.position = t.TransformPoint(new Vector3(0f, 1.08f, 0.55f));
+                    transform.position = t.TransformPoint(new Vector3(0f, 1.2f, 0.3f));
                     transform.rotation = _lookBack ? Quaternion.LookRotation(-t.forward, t.up) : Quaternion.LookRotation(t.forward, t.up);
                     targetFov += 4f;
                     break;
@@ -130,6 +129,25 @@ namespace Apex.Rendering
             _shake = Mathf.MoveTowards(_shake, 0f, dt * 0.5f);
             UpdateMotionBlur(speed, Vector3.Distance(prevPos, transform.position) / dt);
             _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, targetFov, dt * 3f);
+        }
+
+        private static readonly RaycastHit[] Hits = new RaycastHit[16];
+
+        /// <summary>Pulls the camera in front of walls / buildings, ignoring every car (rigidbodies).</summary>
+        private static Vector3 ClipToScenery(Vector3 from, Vector3 to)
+        {
+            Vector3 dir = to - from;
+            float len = dir.magnitude;
+            if (len < 1e-3f) return to;
+            int n = Physics.RaycastNonAlloc(from, dir / len, Hits, len, ~0, QueryTriggerInteraction.Ignore);
+            float best = len;
+            Vector3 result = to;
+            for (int i = 0; i < n; i++)
+            {
+                if (Hits[i].rigidbody != null) continue;
+                if (Hits[i].distance < best) { best = Hits[i].distance; result = Hits[i].point + Hits[i].normal * 0.3f; }
+            }
+            return result;
         }
 
         private int _blurHold;

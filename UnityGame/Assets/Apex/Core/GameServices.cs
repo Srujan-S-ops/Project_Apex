@@ -45,6 +45,7 @@ namespace Apex.Core
             AutoTest = AutoTestOptions.FromCommandLine();
             if (AutoTest.Enabled) gameObject.AddComponent<AutoTestWatchdog>().Begin(AutoTest);
             Settings = GameSettings.Load();
+            if (AutoTest.Enabled && AutoTest.Quality >= 0) Settings.qualityPreset = AutoTest.Quality;
             Records = new RecordsStore();
             AudioLib = new AudioLibrary();
 
@@ -80,6 +81,7 @@ namespace Apex.Core
         public GameMode Mode = GameMode.QuickRace;
         public int Laps = 1;
         public Difficulty Difficulty = Difficulty.Hard;
+        public int Quality = -1;
 
         public static AutoTestOptions FromCommandLine()
         {
@@ -93,6 +95,7 @@ namespace Apex.Core
                 else if (a == "-apexOut" && i + 1 < args.Length) o.OutputDir = args[++i];
                 else if (a == "-apexLaps" && i + 1 < args.Length && int.TryParse(args[++i], out int l)) o.Laps = Mathf.Clamp(l, 1, 10);
                 else if (a == "-apexTimeTrial") o.Mode = GameMode.TimeTrial;
+                else if (a == "-apexQuality" && i + 1 < args.Length && int.TryParse(args[++i], out int q)) o.Quality = Mathf.Clamp(q, 0, 3);
                 else if (a == "-apexDifficulty" && i + 1 < args.Length && Enum.TryParse(args[++i], true, out Difficulty d)) o.Difficulty = d;
             }
             if (string.IsNullOrEmpty(o.OutputDir)) o.OutputDir = System.IO.Path.Combine(Application.persistentDataPath, "autotest");
