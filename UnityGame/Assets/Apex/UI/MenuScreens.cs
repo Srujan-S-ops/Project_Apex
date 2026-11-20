@@ -36,7 +36,7 @@ namespace Apex.UI
             var raw = lrt.gameObject.AddComponent<RawImage>();
             raw.texture = logoTex;
             raw.raycastTarget = false;
-            UIFactory.Label(transform, "GT3 RACING SIMULATOR", 20, UITheme.Metal, UITheme.Mono, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(100f, -70f - lrt.sizeDelta.y - 6f), 600f);
+            UIFactory.Label(transform, "REAL RACING", 20, UITheme.Metal, UITheme.Mono, TextAnchor.UpperLeft, new Vector2(0, 1), new Vector2(100f, -70f - lrt.sizeDelta.y - 6f), 600f);
 
             var list = UIFactory.VerticalList(transform, "Menu", new Vector2(0, 1f), new Vector2(0, 1f), new Vector2(70f, -340f), new Vector2(640f, 520f), 6f);
             var q = UIFactory.MenuItem(list, "01", "QUICK RACE", "Five-car sprint against AI rivals with a standing start", () => QuickRace?.Invoke());

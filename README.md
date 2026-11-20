@@ -1,4 +1,4 @@
-# PROJECT APEX 2.0 — GT3 Racing Simulator
+# PROJECT APEX 2.0 — Real Racing
 
 A complete 3D GT3 racing game for Windows: a physically simulated GT3 car, four physics-driven AI
 rivals with distinct personalities, an original 3.5 km harbour street circuit, Quick Race and Time
