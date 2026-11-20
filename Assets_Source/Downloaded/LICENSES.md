@@ -12,3 +12,13 @@ All material sets in `ambientcg/` come from https://ambientcg.com and are licens
 - Facade018A → `Resources/Textures/pbr/facade_brick_*`
 - Bricks105 → `Resources/Textures/pbr/bricks_*`
 - Metal049A → `Resources/Textures/pbr/brushed_*`
+
+## Poly Haven models (CC0 1.0, https://polyhaven.com)
+
+- street_lamp_01 → `Resources/Props/street_lamp_01.fbx`, `Resources/Textures/pbr/ph_street_lamp_01_*`
+- street_lamp_02 → `Resources/Props/street_lamp_02.fbx`, `Resources/Textures/pbr/ph_street_lamp_02_*`
+- concrete_road_barrier → `Resources/Props/concrete_road_barrier.fbx`, `Resources/Textures/pbr/ph_concrete_road_barrier_*`
+- utility_box_01 → `Resources/Props/utility_box_01.fbx`, `Resources/Textures/pbr/ph_utility_box_01_*`
+- planter_box_01 → `Resources/Props/planter_box_01.fbx`, `Resources/Textures/pbr/ph_planter_box_01_*`
+- fire_hydrant → `Resources/Props/fire_hydrant.fbx`, `Resources/Textures/pbr/ph_fire_hydrant_*`
+- shrub_02 → `Resources/Props/shrub_02.fbx`, `Resources/Textures/pbr/ph_shrub_02_*`

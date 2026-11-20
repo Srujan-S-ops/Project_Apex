@@ -295,6 +295,24 @@ namespace Apex.Race
                     _rig.SetView(CameraView.ChaseNear);
                 }
             }
+            // close-up of the photoscanned street props (verifies scale / orientation / materials)
+            if (_auto.Screenshots && _race.Phase != RacePhase.Results)
+            {
+                var lamp = GameObject.Find(Apex.Rendering.PropLibrary.Lamp);
+                Debug.Log($"[AutoTest] props spawned: {Apex.Rendering.PropLibrary.Spawned}");
+                if (lamp != null)
+                {
+                    _rig.enabled = false;
+                    var camT = _rig.transform;
+                    Vector3 lp = lamp.transform.position;
+                    camT.position = lp - lamp.transform.forward * 7f + lamp.transform.right * 3f + Vector3.up * 1.8f;
+                    camT.rotation = Quaternion.LookRotation(lp + Vector3.up * 2.2f - camT.position, Vector3.up);
+                    yield return new WaitForSeconds(0.8f);
+                    AutoTestCapture.Shot("08b_street_props");
+                    yield return new WaitForSeconds(0.3f);
+                    _rig.enabled = true;
+                }
+            }
             if (_cfg.mode == GameMode.TimeTrial)
             {
                 while (_race.Player.LapsCompleted < _auto.Laps) yield return null;

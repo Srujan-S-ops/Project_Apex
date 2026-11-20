@@ -236,8 +236,25 @@ namespace Apex.Track
                     Vector3 toRoad = -_s.Right[_s.Wrap(i)] * side;
                     Vector3 along = _s.Fwd[_s.Wrap(i)];
                     int kind = (k2 + (side > 0 ? 0 : 1)) % 4;
-                    if (kind == 0) StreetLamp(basePos, toRoad);
-                    else if (kind == 1) Tree(P(i, side * (Wall(i, side) + 4.2f), 0.12f));
+                    if (kind == 0)
+                    {
+                        StreetLamp(basePos, toRoad);
+                        float r = (float)_rng.NextDouble();
+                        Vector3 extra = basePos + along * 2.2f - toRoad * 0.3f;
+                        if (r < 0.25f) PropLibrary.Spawn(PropLibrary.UtilityBox, _root, extra, Quaternion.LookRotation(toRoad, Vector3.up));
+                        else if (r < 0.38f) PropLibrary.Spawn(PropLibrary.Hydrant, _root, extra, Quaternion.LookRotation(along, Vector3.up));
+                    }
+                    else if (kind == 1)
+                    {
+                        Vector3 tp = P(i, side * (Wall(i, side) + 4.2f), 0.12f);
+                        if (_rng.NextDouble() < 0.6 || !PropLibrary.Available(PropLibrary.Planter)) Tree(tp);
+                        else
+                        {
+                            Quaternion pr = Quaternion.LookRotation(along, Vector3.up);
+                            PropLibrary.Spawn(PropLibrary.Planter, _root, tp, pr, 1.6f);
+                            PropLibrary.Spawn(PropLibrary.Shrub, _root, tp + Vector3.up * 0.62f, pr * Quaternion.Euler(0f, R(0f, 360f), 0f), 0.22f, false);
+                        }
+                    }
                     else if (kind == 2 && _rng.NextDouble() < 0.6) Bench(P(i, side * (Wall(i, side) + 4.6f), 0.12f), along, toRoad);
                     else if (kind == 3)
                     {
@@ -245,6 +262,21 @@ namespace Apex.Track
                         else if (_rng.NextDouble() < 0.5) Sign(basePos + along * 1.5f, toRoad, _rng.Next(0, 4));
                     }
                 }
+            }
+        }
+
+        /// <summary>Photoscanned Jersey barriers along the paddock side of the pit lane.</summary>
+        private void BuildPitBarriers()
+        {
+            if (!PropLibrary.Available(PropLibrary.Barrier)) return;
+            int iMid = _s.IndexAt(280f);
+            float lat = -(_w.LeftWall[iMid] + 1.0f) - 15.6f;
+            for (float d = 45f; d < 535f; d += 1.58f)
+            {
+                if (d > 104f && d < 456f) continue;   // garage frontage (110–450 m) stays open
+                int i = _s.IndexAt(d);
+                Vector3 p = P(i, lat, -0.02f);
+                PropLibrary.Spawn(PropLibrary.Barrier, _root, p, Quaternion.LookRotation(_s.Right[i], Vector3.up), 1f);
             }
         }
 
@@ -273,6 +305,8 @@ namespace Apex.Track
 
         private void StreetLamp(Vector3 p, Vector3 toRoad)
         {
+            // photoscanned CC0 lamppost (3.9 m real size, scaled to a road-side 5.2 m)
+            if (PropLibrary.Spawn(PropLibrary.Lamp, _root, p, Quaternion.LookRotation(toRoad, Vector3.up), 1.35f) != null) return;
             Vector3 top = p + Vector3.up * 8.2f;
             _poleMb.AddCylinder(p, top, 0.09f, 8, false);
             _poleMb.AddCylinder(p, p + Vector3.up * 0.6f, 0.16f, 8, false);

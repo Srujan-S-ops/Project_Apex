@@ -35,6 +35,7 @@ namespace Apex.EditorTools
                 AssetDatabase.Refresh();
                 ImportTextMeshPro();
                 ConfigureTextures();
+                ConfigureModels();
                 CreateTemplateMaterials();
                 ConfigureRenderPipeline();
                 ConfigurePlayer();
@@ -107,6 +108,37 @@ namespace Apex.EditorTools
                 if (imp.maxTextureSize != max) { imp.maxTextureSize = max; changed = true; }
                 if (isUi && imp.textureCompression != TextureImporterCompression.Uncompressed) { imp.textureCompression = TextureImporterCompression.Uncompressed; changed = true; }
                 if (changed) imp.SaveAndReimport();
+            }
+        }
+
+        /// <summary>Poly Haven props: geometry only (materials are applied at runtime), and log real-world sizes.</summary>
+        private static void ConfigureModels()
+        {
+            foreach (string guid in AssetDatabase.FindAssets("t:Model", new[] { "Assets/Resources/Props" }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var imp = (ModelImporter)AssetImporter.GetAtPath(path);
+                if (imp == null) continue;
+                bool changed = false;
+                if (imp.materialImportMode != ModelImporterMaterialImportMode.None) { imp.materialImportMode = ModelImporterMaterialImportMode.None; changed = true; }
+                if (imp.importAnimation) { imp.importAnimation = false; changed = true; }
+                if (imp.importCameras || imp.importLights) { imp.importCameras = false; imp.importLights = false; changed = true; }
+                if (changed) imp.SaveAndReimport();
+                var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (go == null) continue;
+                var b = new Bounds();
+                bool first = true;
+                foreach (var mf in go.GetComponentsInChildren<MeshFilter>())
+                {
+                    var mb = mf.sharedMesh.bounds;
+                    var m = mf.transform.localToWorldMatrix;
+                    foreach (var c in new[] { mb.min, mb.max, new Vector3(mb.min.x, mb.max.y, mb.min.z), new Vector3(mb.max.x, mb.min.y, mb.max.z) })
+                    {
+                        var w = m.MultiplyPoint3x4(c);
+                        if (first) { b = new Bounds(w, Vector3.zero); first = false; } else b.Encapsulate(w);
+                    }
+                }
+                Debug.Log($"[ApexBuild] prop {go.name}: size {b.size.x:0.00} x {b.size.y:0.00} x {b.size.z:0.00} m, min.y {b.min.y:0.00}");
             }
         }
 

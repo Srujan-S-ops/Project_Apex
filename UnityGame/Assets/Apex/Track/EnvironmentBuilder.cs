@@ -66,6 +66,7 @@ namespace Apex.Track
             BuildHarbour();
             BuildCity();
             BuildStreetscape();
+            BuildPitBarriers();
             yield return 0.92f;
             Flush();
             BuildTvPosts();
